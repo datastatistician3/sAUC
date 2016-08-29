@@ -1,0 +1,21 @@
+Package: sAUC
+Title: Semi-parametric Area Under the Curve (AUC) regression
+Description: Perform AUC analyses with discrete covariates and a semi-parametric estimation.
+Version: 0.0.1.9000
+Date: 2016-03-23
+Authors@R: person("Som", "Bohora", email="energeticsom@gmail.com", role=c("aut", "cre"))
+Author: Som Bohora [aut, cre]
+Maintainer: Som Bohora <energeticsom@gmail.com>
+URL: https://github.com/sbohora/sAUC
+BugReports: https://github.com/sbohora/sAUC/issues
+License: GPL-2
+LazyData: TRUE
+Depends:
+    R(>= 3.1.0)
+Imports:
+  Matrix,
+  stats,
+  base
+Suggests:
+  testthat
+RoxygenNote: 5.0.1

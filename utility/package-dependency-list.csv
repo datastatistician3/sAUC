@@ -1,0 +1,8 @@
+package_name,on_cran,install,github_username,description
+dplyr,TRUE,TRUE,,Data manipulation
+ggplot2,TRUE,TRUE,,Graphing
+knitr,TRUE,TRUE,,For reporting
+rmarkdown,TRUE,TRUE,rstudio,Needed for knitr and reports.
+roxygen2,TRUE,TRUE,klutometis,Creates documentation Rd file from (well-formed) comments
+testit,TRUE,TRUE,,has the useful `assert()` function
+testthat,TRUE,TRUE,hadley,Heavier testing framework that's good for package development
