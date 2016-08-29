@@ -4,12 +4,14 @@
 \alias{calculate_auc}
 \title{Calculate different estimates related to AUC}
 \usage{
-calculate_auc(ya, yb)
+calculate_auc(x, y = NULL, data = NULL)
 }
 \arguments{
-\item{ya}{A vector responses at each level of covariates for treatment A.}
+\item{x}{A vector responses at each level of covariates for treatment A.}
 
-\item{yb}{A vector responses at each level of covariates for treatment B.}
+\item{y}{A vector responses at each level of covariates for treatment B.}
+
+\item{data}{An R dataframe object}
 }
 \value{
 A list of AUC estimates.
@@ -19,7 +21,7 @@ Calculate variance of predicted AUC, logit of predicted AUC, and variance of log
 to calculate_auc variables to snake_case, even if it's already in snake_case.
 }
 \examples{
-calculate_auc(ya = rnorm(100), yb = rnorm(100))
+calculate_auc(mpg ~ am, data = mtcars)
 }
 \author{
 Som Bohora

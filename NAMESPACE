@@ -2,3 +2,4 @@
 
 export(analyze_data)
 export(calculate_auc)
+export(snake_case)

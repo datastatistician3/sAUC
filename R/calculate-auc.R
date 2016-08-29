@@ -10,6 +10,8 @@
 #'
 #' @param y A vector responses at each level of covariates for treatment B.
 #'
+#' @param data An R dataframe object
+#'
 #' @return A list of AUC estimates.
 #'
 #' @author Som Bohora
