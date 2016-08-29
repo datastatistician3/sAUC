@@ -60,4 +60,3 @@ calculate_auc <- function (x, y=NULL, data=NULL){
   list(auchat = auchat, finvhat = finvhat, vhat_auchat = vhat_auchat,
            v_finv_auchat=v_finv_auchat, logitauchat=logitauchat, var_logitauchat=var_logitauchat)
 }
-# calculate_auc(response ~ group,  data = d)
