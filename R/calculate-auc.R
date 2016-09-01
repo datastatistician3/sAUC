@@ -1,4 +1,5 @@
 #' @name calculate_auc
+#'
 #' @export
 #'
 #' @title Calculate different estimates related to AUC

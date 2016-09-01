@@ -1,4 +1,5 @@
-#' @name analyze_data
+#' @name sAUC
+#'
 #' @export
 #'
 #' @title Run semiparametric AUC regression model adjusting for categorical covariates
@@ -28,7 +29,7 @@
 #'  }
 #' }
 
-analyze_data <- function(data) {
+sAUC <- function(data) {
     # stopifnot(!missing(data), "Input data argument cannot be missing.")
     input_response <- readline(prompt = "What is your response variable?")
     if (input_response == ""){
