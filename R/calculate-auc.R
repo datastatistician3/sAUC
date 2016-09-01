@@ -21,16 +21,19 @@
 #' calculate_auc(mpg ~ am, data = mtcars)
 
 calculate_auc <- function (x, y=NULL, data=NULL){
-  if(is.numeric(x)){
+    if (is.numeric(x)){
     ya <- x
     yb <- y
-  } else if("formula" %in% is(x)){
+  } else if ("formula" %in% is(x)){
     cx <- as.character(x)
-    # if(){}# error processing and checking for x being a two-sided formula with a numeric outcome and a single two-valued factor right hand side
-    theFactor <- as.factor(data[,cx[3]])
-    theNumber <- data[,cx[2]]
-    ya <- theNumber[theFactor %in% levels(theFactor)[1]]
-    yb <- theNumber[theFactor %in% levels(theFactor)[2]]
+    testit::assert("Outcome needs to be in left-hand side of formula. For example, outcome ~ x",
+                   length(cx) == 3L)
+    factor_vars <- as.factor(data[,cx[3]])
+    numeric_data <- data[,cx[2]]
+    ya <- numeric_data[factor_vars %in% levels(factor_vars)[1]]
+    yb <- numeric_data[factor_vars %in% levels(factor_vars)[2]]
+  } else {
+    message("That's great!")
   }
 
   finv <- function(x){
