@@ -4,9 +4,13 @@
 \alias{sAUC}
 \title{Run semiparametric AUC regression model adjusting for categorical covariates}
 \usage{
-sAUC(data)
+sAUC(x = FALSE, y = FALSE, data = NULL)
 }
 \arguments{
+\item{x}{A formula with response and covariates such as response ~ x1 + x2}
+
+\item{y}{A treatment group for which a comparision is to be made}
+
 \item{data}{A dataframe that contains only variables needed for the analysis. At this point,
 this dataframe should not contain any extra variables}
 }
@@ -31,6 +35,7 @@ for (x1 in 0:1){
   }
  }
 }
+sAUC(x = response ~ x1 + x2 + x3, y = "group", data = d)
 }
 \author{
 Som Bohora

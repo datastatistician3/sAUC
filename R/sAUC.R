@@ -8,9 +8,9 @@
 #' Request to define response and treatment group, convert variables other than response
 #' into factors, estimate model parameters, and display results.
 #'
-#' @param x
+#' @param x A formula with response and covariates such as response ~ x1 + x2
 #'
-#' @param y
+#' @param y A treatment group for which a comparision is to be made
 #'
 #' @param data A dataframe that contains only variables needed for the analysis. At this point,
 #' this dataframe should not contain any extra variables
