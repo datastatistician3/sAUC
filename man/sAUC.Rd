@@ -4,7 +4,7 @@
 \alias{sAUC}
 \title{Run semiparametric AUC regression model adjusting for categorical covariates}
 \usage{
-sAUC(x = FALSE, y = FALSE, data = NULL)
+sAUC(x = FALSE, y = FALSE, data = FALSE)
 }
 \arguments{
 \item{x}{A formula with response and covariates such as response ~ x1 + x2}
