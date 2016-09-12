@@ -34,11 +34,18 @@
 #' }
 #' sAUC(x = response ~ x1 + x2 + x3, y = "group", data = d)
 
-sAUC <- function(x = FALSE, y = FALSE, data = NULL) {
-    # stopifnot(!missing(data), "Input data argument cannot be missing.")
+sAUC <- function(x = FALSE, y = FALSE, data = FALSE) {
+    if (missing(x)){
+      stop(paste0("Argument x (for e.g. response ~ x1 + x2) is missing."))
+    } else if (missing(y)){
+      stop(paste0("Argument y (treatment group) is missing."))
+    } else if (missing(data)){
+      stop(paste0("Argument data is missing. Please, specify name of dataframe."))
+    } else {
+      message(" ")
+    }
 
     if ("formula" %in% is(x)){
-
     x_vars <- attr(terms(x), "term.labels")
     y_var <- as.character(x)[2]
     input_covariates <- x_vars
@@ -49,22 +56,6 @@ sAUC <- function(x = FALSE, y = FALSE, data = NULL) {
     }
 
     input_treatment <- y
-
-    # readline(prompt = "What is your response variable?")
-    # if (input_response == ""){
-    #   stop("The response needs to be defined.")
-    # }
-    #
-    # input_treatment <- readline(prompt = "What is your treatment/grouping variable?")
-    # if (input_treatment == ""){
-    #   stop("The treatment group need to be defined.")
-    # }
-
-    # if (!exists(x = input_covariates)){
-    #     warning("Make sure that covariates are comma-separated.")
-    # }
-    # input_message <- "What are your covariates (comma-separated list)?"
-    # input_covariates <- gsub("\\s+", "", unlist(strsplit(readline(input_message),",")))
     message("Data are being analyzed. Please, be patient.")
 
     d <- as.data.frame(data)
@@ -129,5 +120,5 @@ sAUC <- function(x = FALSE, y = FALSE, data = NULL) {
   list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
                      "Session information" = sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z)
   invisible(list_items)
-
+  list_items$"Model summary"
 }
