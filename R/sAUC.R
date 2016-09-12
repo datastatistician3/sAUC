@@ -8,6 +8,10 @@
 #' Request to define response and treatment group, convert variables other than response
 #' into factors, estimate model parameters, and display results.
 #'
+#' @param x
+#'
+#' @param y
+#'
 #' @param data A dataframe that contains only variables needed for the analysis. At this point,
 #' this dataframe should not contain any extra variables
 #'
@@ -28,24 +32,39 @@
 #'   }
 #'  }
 #' }
+#' sAUC(x = response ~ x1 + x2 + x3, y = "group", data = d)
 
-sAUC <- function(data) {
+sAUC <- function(x = FALSE, y = FALSE, data = NULL) {
     # stopifnot(!missing(data), "Input data argument cannot be missing.")
-    input_response <- readline(prompt = "What is your response variable?")
-    if (input_response == ""){
-      stop("The response needs to be defined.")
+
+    if ("formula" %in% is(x)){
+
+    x_vars <- attr(terms(x), "term.labels")
+    y_var <- as.character(x)[2]
+    input_covariates <- x_vars
+    input_response <- y_var
+    } else {
+      testit::assert("Please put response and input as formula. For example, response ~ x1 + x2",
+                     !"formula" %in% is(x))
     }
 
-    input_treatment <- readline(prompt = "What is your treatment/grouping variable?")
-    if (input_treatment == ""){
-      stop("The treatment group need to be defined.")
-    }
+    input_treatment <- y
+
+    # readline(prompt = "What is your response variable?")
+    # if (input_response == ""){
+    #   stop("The response needs to be defined.")
+    # }
+    #
+    # input_treatment <- readline(prompt = "What is your treatment/grouping variable?")
+    # if (input_treatment == ""){
+    #   stop("The treatment group need to be defined.")
+    # }
 
     # if (!exists(x = input_covariates)){
     #     warning("Make sure that covariates are comma-separated.")
     # }
-    input_message <- "What are your covariates (comma-separated list)?"
-    input_covariates <- gsub("\\s+", "", unlist(strsplit(readline(input_message),",")))
+    # input_message <- "What are your covariates (comma-separated list)?"
+    # input_covariates <- gsub("\\s+", "", unlist(strsplit(readline(input_message),",")))
     message("Data are being analyzed. Please, be patient.")
 
     d <- as.data.frame(data)
