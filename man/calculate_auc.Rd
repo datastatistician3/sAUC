@@ -7,21 +7,21 @@
 calculate_auc(x, y = NULL, data = NULL)
 }
 \arguments{
-\item{x}{A vector responses at each level of covariates for treatment A.}
+\item{x}{A formula with two vector responses (For e.g., y1 ~ y2) or a vector of responses.}
 
-\item{y}{A vector responses at each level of covariates for treatment B.}
+\item{y}{A vector responses.}
 
-\item{data}{An R dataframe object}
+\item{data}{An R dataframe object.}
 }
 \value{
 A list of AUC estimates.
 }
 \description{
 Calculate variance of predicted AUC, logit of predicted AUC, and variance of logit of predicted AUC responses passed
-to calculate_auc variables to snake_case, even if it's already in snake_case.
 }
 \examples{
 calculate_auc(mpg ~ am, data = mtcars)
+calculate_auc(iris$Sepal.Length, iris$Petal.Length)
 }
 \author{
 Som Bohora

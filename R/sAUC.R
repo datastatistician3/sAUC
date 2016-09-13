@@ -32,6 +32,8 @@
 #'   }
 #'  }
 #' }
+#' d[,c("x1", "x2", "x3", "group")] <- lapply(d[,c("x1", "x2", "x3", "group")], function(x) factor(x))
+#'
 #' sAUC(x = response ~ x1 + x2 + x3, y = "group", data = d)
 
 sAUC <- function(x = FALSE, y = FALSE, data = FALSE) {
@@ -56,11 +58,14 @@ sAUC <- function(x = FALSE, y = FALSE, data = FALSE) {
     }
 
     input_treatment <- y
+    if (any(sapply(data[c(y, input_covariates)], function(x) is.numeric(x)))){
+      stop("Covariates including treatment group should be factor.")
+    }
+
     message("Data are being analyzed. Please, be patient.")
 
     d <- as.data.frame(data)
     group_covariates <- as.vector(c(input_treatment,input_covariates))
-    d[,group_covariates] <- lapply(d[,group_covariates], factor)
 
     set1 <-  set2 <-  list()
     grouped_d <- with(d, split(d, d[group_covariates]))

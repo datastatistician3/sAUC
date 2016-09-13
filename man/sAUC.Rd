@@ -35,6 +35,8 @@ for (x1 in 0:1){
   }
  }
 }
+d[,c("x1", "x2", "x3", "group")] <- lapply(d[,c("x1", "x2", "x3", "group")], function(x) factor(x))
+
 sAUC(x = response ~ x1 + x2 + x3, y = "group", data = d)
 }
 \author{

@@ -5,13 +5,12 @@
 #' @title Calculate different estimates related to AUC
 #'
 #' @description Calculate variance of predicted AUC, logit of predicted AUC, and variance of logit of predicted AUC responses passed
-#' to calculate_auc variables to snake_case, even if it's already in snake_case.
 #'
-#' @param x A vector responses at each level of covariates for treatment A.
+#' @param x A formula with two vector responses (For e.g., y1 ~ y2) or a vector of responses.
 #'
-#' @param y A vector responses at each level of covariates for treatment B.
+#' @param y A vector responses.
 #'
-#' @param data An R dataframe object
+#' @param data An R dataframe object.
 #'
 #' @return A list of AUC estimates.
 #'
@@ -19,6 +18,7 @@
 #'
 #' @examples
 #' calculate_auc(mpg ~ am, data = mtcars)
+#' calculate_auc(iris$Sepal.Length, iris$Petal.Length)
 
 calculate_auc <- function (x, y=NULL, data=NULL){
     if (is.numeric(x)){
