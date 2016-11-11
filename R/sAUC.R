@@ -37,7 +37,7 @@
 #' sAUC(x = response ~ x1 + x2 + x3, y = "group", data = d)
 
 sAUC <- function(x = FALSE, y = FALSE, data = FALSE) {
-    if (missing(x)){
+      if (missing(x)){
       stop(paste0("Argument x (for e.g. response ~ x1 + x2) is missing."))
     } else if (missing(y)){
       stop(paste0("Argument y (treatment group) is missing."))
