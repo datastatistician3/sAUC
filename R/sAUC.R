@@ -70,7 +70,7 @@ sAUC <- function(x = FALSE, y = FALSE, data = FALSE) {
     set1 <-  set2 <-  list()
     grouped_d <- with(d, split(d, d[group_covariates]))
 
-    index <- seq(from=1, to = length(grouped_d), by = 1)
+    #index <- seq(from=1, to = length(grouped_d), by = 1)
     index_first_set <- seq(from=1, to = length(grouped_d), by = 1) %in%
       seq(from=1, to = length(grouped_d), by = 2)
     set1 <- grouped_d[index_first_set]
