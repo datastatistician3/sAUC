@@ -17,8 +17,8 @@
 #' @author Som Bohora
 #'
 #' @examples
-#' calculate_auc(mpg ~ am, data = mtcars)
-#' calculate_auc(iris$Sepal.Length, iris$Petal.Length)
+#' calculate_auc(mpg ~ am, data = datasets::mtcars)
+#' calculate_auc(datasets::iris$Sepal.Length, datasets::iris$Petal.Length)
 
 calculate_auc <- function (x, y=NULL, data=NULL){
     if (is.numeric(x)){
