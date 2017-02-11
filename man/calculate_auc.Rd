@@ -20,8 +20,8 @@ A list of AUC estimates.
 Calculate variance of predicted AUC, logit of predicted AUC, and variance of logit of predicted AUC responses passed
 }
 \examples{
-calculate_auc(mpg ~ am, data = mtcars)
-calculate_auc(iris$Sepal.Length, iris$Petal.Length)
+calculate_auc(mpg ~ am, data = datasets::mtcars)
+calculate_auc(datasets::iris$Sepal.Length, datasets::iris$Petal.Length)
 }
 \author{
 Som Bohora
