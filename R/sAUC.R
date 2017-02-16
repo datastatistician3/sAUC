@@ -141,7 +141,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   all_betas_labels <- c(all_remain_betas_label,gsub("\\+", "\\1", last_beta_label))
 
-  cat("The model is: ","logit","[","p","(",y,PA, " > ",PB,")","]", " = ", "beta_0 + ",
+  cat("The model is: ","logit","[","p","(",treatment_group,PA, " > ",PB,")","]", " = ", "beta_0 + ",
       all_betas_labels,"\n\n")
   cat("Model Summary\n\n")
   list_items$"Model summary"
