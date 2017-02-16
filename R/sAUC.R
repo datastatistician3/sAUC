@@ -20,24 +20,27 @@
 #' @author Som Bohora
 #'
 #' @examples
-#' ds <- NULL
-#' for (x1 in 0:1){
-#'  for (x2 in 0:2){
-#'    for (x3 in 0:2){
-#'      for (group in 0:1){
-#'          response <- round(rnorm(n = 100, mean = 0, sd = 1),4)
-#'          column <- cbind(x1,x2,x3, group, response)
-#'          ds <- as.data.frame(rbind(ds, column))
-#'    }
-#'   }
-#'  }
-#' }
-#'ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")], function(x) factor(x))
-#'
-#'sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
-#'
-#'sAUC(x = y ~ x1 + x2, treatment_group = "group", data = fasd)
+ds <- NULL
+for (x1 in 0:1){
+ for (x2 in 0:2){
+   for (x3 in 0:2){
+     for (group in 0:1){
+         response <- round(rnorm(n = 100, mean = 0, sd = 1),4)
+         column <- cbind(x1,x2,x3, group, response)
+         ds <- as.data.frame(rbind(ds, column))
+   }
+  }
+ }
+}
+ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")], function(x) factor(x))
 
+sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
+
+df <- read.csv("data/one_final.csv")
+df[,c("x1", "x2", "group")] <- lapply(df[,c("x1", "x2", "group")], function(x) factor(x))
+sAUC(x = y ~ x2 + x1, treatment_group = "group", data = df)
+
+# NOTE: Remove < from <<-
 sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   if (missing(x)){
     stop(paste0("Argument x (for e.g. response ~ x1 + x2) is missing."))
@@ -50,7 +53,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   }
 
   if ("formula" %in% is(x)){
-    x_vars <- attr(terms(x), "term.labels")
+    x_vars <<- attr(terms(x), "term.labels")
     y_var <- as.character(x)[2]
     input_covariates <- x_vars
     input_response <- y_var
@@ -70,7 +73,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   group_covariates <- as.vector(c(input_treatment,input_covariates))
 
   set1 <-  set2 <-  list()
-  grouped_d <- with(d, split(d, d[group_covariates]))
+  grouped_d <<- with(d, split(d, d[group_covariates]))
 
   #index <- seq(from=1, to = length(grouped_d), by = 1)
   index_first_set <- seq(from=1, to = length(grouped_d), by = 1) %in%
@@ -87,7 +90,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   logitauchat <- rep(NA,length_auc)
 
   for (k in seq_along(set1)){
-    result_auc <-  calculate_auc(as.numeric(unlist(set1[[k]][input_response])), as.numeric(unlist(set2[[k]][input_response])))
+    result_auc <<-  calculate_auc(as.numeric(unlist(set1[[k]][input_response])), as.numeric(unlist(set2[[k]][input_response])))
     label_A <- names(set1)[[1]]
     label_B <- names(set2)[[1]]
 
@@ -102,11 +105,11 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
     temp_data_frame  <-  cbind(auchat,finvhat,logitauchat, v_finv_auchat,var_logitauchat)
     auch  <-  as.data.frame(cbind(x_matrix,temp_data_frame))
     gamma1  <-  auch$logitauchat
-    var_logitauchat <- auch$var_logitauchat
+    var_logitauchat <<- auch$var_logitauchat
   }
 
-  unique_x_levels <- lapply(d[,names(d) %in% input_covariates, drop=F], function(x) levels(x))
-  matrix_x <- expand.grid(unique_x_levels)
+  unique_x_levels <<- lapply(d[,names(d) %in% input_covariates, drop=F], function(x) levels(x))
+  matrix_x <<- expand.grid(unique_x_levels)
 
   Z <- model.matrix(~., matrix_x)
 
@@ -141,7 +144,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   all_betas_labels <- c(all_remain_betas_label,gsub("\\+", "\\1", last_beta_label))
 
-  cat("The model is: ","logit","[","p","(",y,PA, " > ",PB,")","]", " = ", "beta_0 + ",
+  cat("The model is: ","logit","[","p","(",paste0("Y_",PA), " > ",paste0("Y_",PB),")","]", " = ", "beta_0 + ",
       all_betas_labels,"\n\n")
   cat("Model Summary\n\n")
   list_items$"Model summary"
