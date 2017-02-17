@@ -33,9 +33,9 @@
 #'  }
 #' }
 #' ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")], function(x) factor(x))
-#' 
+#'
 #' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
-#' 
+#'
 #' df <- read.csv("data/one_final.csv")
 #' df[,c("x1", "x2", "group")] <- lapply(df[,c("x1", "x2", "group")], function(x) factor(x))
 #' sAUC(x = y ~ x2 + x1, treatment_group = "group", data = df)
@@ -143,8 +143,6 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   all_remain_betas_label <- setdiff(betas_label, last_beta_label)
 
   all_betas_labels <- c(all_remain_betas_label,gsub("\\+", "\\1", last_beta_label))
-
-  cat("The model is: ","logit","[","p","(",treatment_group,PA, " > ",PB,")","]", " = ", "beta_0 + ",
 
   cat("The model is: ","logit","[","p","(",paste0("Y_",PA), " > ",paste0("Y_",PB),")","]", " = ", "beta_0 + ",
       all_betas_labels,"\n\n")
