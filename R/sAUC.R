@@ -36,9 +36,9 @@
 #'
 #' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 #'
-#' df <- read.csv("data/one_final.csv")
-#' df[,c("x1", "x2", "group")] <- lapply(df[,c("x1", "x2", "group")], function(x) factor(x))
-#' sAUC(x = y ~ x2 + x1, treatment_group = "group", data = df)
+df <- read.csv("data/one_final.csv")
+df[,c("x1", "x2", "group")] <- lapply(df[,c("x1", "x2", "group")], function(x) factor(x))
+sAUC(x = y ~ x2 + x1, treatment_group = "group", data = df)
 
 # NOTE: Remove < from <<-
 sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
@@ -70,7 +70,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   message("Data are being analyzed. Please, be patient.\n\n")
 
   d <- as.data.frame(data)
-  group_covariates <- as.vector(c(input_treatment,input_covariates))
+  group_covariates <<- as.vector(c(input_treatment,input_covariates))
 
   set1 <-  set2 <-  list()
   grouped_d <<- with(d, split(d, d[group_covariates]))
