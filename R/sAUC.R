@@ -91,8 +91,8 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   for (k in seq_along(set1)){
     result_auc <<-  calculate_auc(as.numeric(unlist(set1[[k]][input_response])), as.numeric(unlist(set2[[k]][input_response])))
-    label_A <- names(set1)[[1]]
-    label_B <- names(set2)[[1]]
+    label_A <<- names(set1)[[1]]
+    label_B <<- names(set2)[[1]]
 
     PA <- unlist(strsplit(label_A, "[.]"))[1]
     PB <- unlist(strsplit(label_B, "[.]"))[1]
