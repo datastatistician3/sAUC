@@ -36,9 +36,6 @@
 #'
 #' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 #'
-df <- read.csv("data/one_final.csv")
-df[,c("x1", "x2", "group")] <- lapply(df[,c("x1", "x2", "group")], function(x) factor(x))
-sAUC(x = y ~ x2 + x1, treatment_group = "group", data = df)
 
 # NOTE: Remove < from <<-
 sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
