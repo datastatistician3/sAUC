@@ -104,7 +104,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
     logitauchat[k] <-  result_auc$logitauchat
     temp_data_frame  <-  cbind(auchat,finvhat,logitauchat, v_finv_auchat,var_logitauchat)
     auch  <-  as.data.frame(cbind(x_matrix,temp_data_frame))
-    gamma1  <-  auch$logitauchat
+    gamma1  <<-  auch$logitauchat
     var_logitauchat <<- auch$var_logitauchat
   }
 
@@ -113,7 +113,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   Z <- model.matrix(~., matrix_x)
 
-  tau  <-  diag(1/var_logitauchat, nrow = length(var_logitauchat))
+  tau  <<-  diag(1/var_logitauchat, nrow = length(var_logitauchat))
 
   ztauz <- solve(t(Z)%*%tau%*%Z)
   var_betas <- diag(ztauz)
@@ -122,13 +122,13 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   lo <- betas - qnorm(.975)*std_error
   up <- betas + qnorm(.975)*std_error
-  ci <- cbind(betas,lo,up)
+  ci <<- cbind(betas,lo,up)
 
   p_values <- 2*pnorm(-abs(betas), mean=0,  sd=std_error)
 
   results <- round(cbind(betas, std_error, lo, up, p_values),4)
 
-  colnames(results) <- c("Coefficients","Std. Error", "2.5%", "97.5%", "Pr(>|t|)")
+  colnames(results) <- c("Coefficients","Std. Error", "2.5%", "97.5%", "Pr(>|z|)")
 
   varNames <- colnames(Z)
   rownames(results) <- varNames
