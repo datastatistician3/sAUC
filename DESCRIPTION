@@ -15,7 +15,9 @@ Depends:
 Imports:
   Matrix,
   stats,
-  base
+  base,
+  methods,
+  utils
 Suggests:
   testthat,
   testit

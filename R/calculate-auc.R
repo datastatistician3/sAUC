@@ -24,7 +24,7 @@ calculate_auc <- function (x, y=NULL, data=NULL){
     if (is.numeric(x)){
     ya <- x
     yb <- y
-  } else if ("formula" %in% is(x)){
+  } else if ("formula" %in% methods::is(x)){
     cx <- as.character(x)
     testit::assert("Outcome needs to be in left-hand side of formula. For example, outcome ~ x",
                    length(cx) == 3L)
@@ -54,8 +54,8 @@ calculate_auc <- function (x, y=NULL, data=NULL){
   finvhat <- finv(auchat)
   vya <- apply(I,1,mean)
   vyb <- apply(I,2,mean)
-  svarya <- var(vya)
-  svaryb <- var(vyb)
+  svarya <- stats::var(vya)
+  svaryb <- stats::var(vyb)
   vhat_auchat <- (svarya/m) + (svaryb/p)
   v_finv_auchat <- vhat_auchat/((auchat^2)*(1-auchat)^2)
   logitauchat <- log(auchat/(1-auchat))

@@ -47,14 +47,14 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
     message(" ")
   }
 
-  if ("formula" %in% is(x)){
-    x_vars <- attr(terms(x), "term.labels")
+  if ("formula" %in% methods::is(x)){
+    x_vars <- attr(stats::terms(x), "term.labels")
     y_var <- as.character(x)[2]
     input_covariates <- x_vars
     input_response <- y_var
   } else {
     testit::assert("Please put response and input as formula. For example, response ~ x1 + x2",
-                   !"formula" %in% is(x))
+                   !"formula" %in% methods::is(x))
   }
 
   input_treatment <- treatment_group
@@ -106,7 +106,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   unique_x_levels <- lapply(d[,names(d) %in% input_covariates, drop=F], function(x) levels(x))
   matrix_x <- expand.grid(unique_x_levels)
 
-  Z <- model.matrix(~., matrix_x)
+  Z <- stats::model.matrix(~., matrix_x)
 
   tau  <-  diag(1/var_logitauchat, nrow = length(var_logitauchat))
 
@@ -115,11 +115,11 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   std_error <- sqrt(var_betas)
   betas <- ztauz%*%t(Z)%*%tau%*%gamma1
 
-  lo <- betas - qnorm(.975)*std_error
-  up <- betas + qnorm(.975)*std_error
+  lo <- betas - stats::qnorm(.975)*std_error
+  up <- betas + stats::qnorm(.975)*std_error
   ci <- cbind(betas,lo,up)
 
-  p_values <- 2*pnorm(-abs(betas), mean=0,  sd=std_error)
+  p_values <- 2*stats::pnorm(-abs(betas), mean=0,  sd=std_error)
 
   results <- round(cbind(betas, std_error, lo, up, p_values),4)
 
@@ -129,7 +129,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   rownames(results) <- varNames
 
   list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
-                     "Session information" = sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z)
+                     "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z)
   invisible(list_items)
 
   betas_label <- c(paste0("beta_", 1:length(colnames(Z[,-1])), "*", colnames(Z[,-1]), " +"))
