@@ -35,7 +35,6 @@
 #' ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")], function(x) factor(x))
 #'
 #' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
-#'
 
 # NOTE: Remove < from <<-
 sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
