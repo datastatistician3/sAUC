@@ -36,7 +36,6 @@
 #'
 #' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 
-# NOTE: Remove < from <<-
 sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   if (missing(x)){
     stop(paste0("Argument x (for e.g. response ~ x1 + x2) is missing."))
@@ -49,7 +48,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   }
 
   if ("formula" %in% is(x)){
-    x_vars <<- attr(terms(x), "term.labels")
+    x_vars <- attr(terms(x), "term.labels")
     y_var <- as.character(x)[2]
     input_covariates <- x_vars
     input_response <- y_var
@@ -66,10 +65,10 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   message("Data are being analyzed. Please, be patient.\n\n")
 
   d <- as.data.frame(data)
-  group_covariates <<- as.vector(c(input_treatment,input_covariates))
+  group_covariates <- as.vector(c(input_treatment,input_covariates))
 
   set1 <-  set2 <-  list()
-  grouped_d <<- with(d, split(d, d[group_covariates]))
+  grouped_d <- with(d, split(d, d[group_covariates]))
 
   #index <- seq(from=1, to = length(grouped_d), by = 1)
   index_first_set <- seq(from=1, to = length(grouped_d), by = 1) %in%
@@ -86,9 +85,9 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   logitauchat <- rep(NA,length_auc)
 
   for (k in seq_along(set1)){
-    result_auc <<-  calculate_auc(as.numeric(unlist(set1[[k]][input_response])), as.numeric(unlist(set2[[k]][input_response])))
-    label_A <<- names(set1)[[1]]
-    label_B <<- names(set2)[[1]]
+    result_auc <-  calculate_auc(as.numeric(unlist(set1[[k]][input_response])), as.numeric(unlist(set2[[k]][input_response])))
+    label_A <- names(set1)[[1]]
+    label_B <- names(set2)[[1]]
 
     PA <- unlist(strsplit(label_A, "[.]"))[1]
     PB <- unlist(strsplit(label_B, "[.]"))[1]
@@ -100,16 +99,16 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
     logitauchat[k] <-  result_auc$logitauchat
     temp_data_frame  <-  cbind(auchat,finvhat,logitauchat, v_finv_auchat,var_logitauchat)
     auch  <-  as.data.frame(cbind(x_matrix,temp_data_frame))
-    gamma1  <<-  auch$logitauchat
-    var_logitauchat <<- auch$var_logitauchat
+    gamma1  <-  auch$logitauchat
+    var_logitauchat <- auch$var_logitauchat
   }
 
-  unique_x_levels <<- lapply(d[,names(d) %in% input_covariates, drop=F], function(x) levels(x))
-  matrix_x <<- expand.grid(unique_x_levels)
+  unique_x_levels <- lapply(d[,names(d) %in% input_covariates, drop=F], function(x) levels(x))
+  matrix_x <- expand.grid(unique_x_levels)
 
   Z <- model.matrix(~., matrix_x)
 
-  tau  <<-  diag(1/var_logitauchat, nrow = length(var_logitauchat))
+  tau  <-  diag(1/var_logitauchat, nrow = length(var_logitauchat))
 
   ztauz <- solve(t(Z)%*%tau%*%Z)
   var_betas <- diag(ztauz)
@@ -118,7 +117,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   lo <- betas - qnorm(.975)*std_error
   up <- betas + qnorm(.975)*std_error
-  ci <<- cbind(betas,lo,up)
+  ci <- cbind(betas,lo,up)
 
   p_values <- 2*pnorm(-abs(betas), mean=0,  sd=std_error)
 
