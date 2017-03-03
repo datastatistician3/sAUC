@@ -10,7 +10,7 @@ if( any(search()=="package:sAUC") ) detach("package:sAUC") #So the lazy-loaded d
 directory_dataset_csv <- "./inst/extdata" #These CSVs are in the repository, but not in the build.
 directory_datasets_rda <- "./data" #These RDAs are derived from the CSV, and included in the build as compressed binaries.
 
-path_input_data <- file.path(directory_dataset_csv, "fasd.csv")
+path_input_data <- read.csv(file.path(directory_dataset_csv, "fasd.csv"))
 path_output_data <- file.path(directory_datasets_rda, "fasd.rda")
 
 save(path_input_data, file=path_output_data, compress="xz")
