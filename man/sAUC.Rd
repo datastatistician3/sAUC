@@ -35,7 +35,8 @@ for (x1 in 0:1){
   }
  }
 }
-ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")], function(x) factor(x))
+ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")],
+                                          function(x) factor(x))
 
 sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 }

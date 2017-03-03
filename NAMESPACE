@@ -2,4 +2,3 @@
 
 export(calculate_auc)
 export(sAUC)
-export(snake_case)
