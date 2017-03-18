@@ -2,13 +2,14 @@
 #'
 #' @export
 #'
-#' @title Calculate different estimates related to AUC
+#' @title Ihis function calculates different estimates related to AUC
 #'
-#' @description Calculate variance of predicted AUC, logit of predicted AUC, and variance of logit of predicted AUC responses passed
+#' @description This function calculates variance of predicted AUC, logit of predicted AUC,
+#' and variance of logit of predicted AUC responses passed
 #'
-#' @param x A formula with two vector responses (For e.g., y1 ~ y2) or a vector of responses.
+#' @param x A formula object with two vector responses (For e.g., y1 ~ y2) or a vector of responses.
 #'
-#' @param y A vector responses.
+#' @param y A vector of responses.
 #'
 #' @param data An R dataframe object.
 #'
