@@ -2,16 +2,18 @@
 #'
 #' @export
 #'
-#' @title A function to run semiparametric AUC regression model adjusting for categorical covariates
+#' @title Run semiparametric AUC regression model adjusting for categorical covariates
 #'
-#' @description This function takes dataframe, a formula object with response ~ covariates, treatment group as character
-#' object which are required arguments in the model, estimate model parameters, and display results.
+#' @description Ask for data frame that contains only required variables in the model,
+#' Request to define response and treatment group, convert variables other than response
+#' into factors, estimate model parameters, and display results.
 #'
-#' @param x A formula object with response and covariates such as response ~ x1 + x2
+#' @param x A formula with response and covariates such as response ~ x1 + x2
 #'
 #' @param treatment_group A treatment group for which a comparision is to be made
 #'
-#' @param data A dataframe that contains variables needed for the analysis.
+#' @param data A dataframe that contains only variables needed for the analysis. At this point,
+#' this dataframe should not contain any extra variables
 #'
 #' @return A list of model summary, coefficients, AUC details, and session information.
 #'
