@@ -2,14 +2,14 @@
 % Please edit documentation in R/calculate-auc.R
 \name{calculate_auc}
 \alias{calculate_auc}
-\title{Calculate different estimates related to AUC}
+\title{Ihis function calculates different estimates related to AUC}
 \usage{
 calculate_auc(x, y = NULL, data = NULL)
 }
 \arguments{
-\item{x}{A formula with two vector responses (For e.g., y1 ~ y2) or a vector of responses.}
+\item{x}{A formula object with two vector responses (For e.g., y1 ~ y2) or a vector of responses.}
 
-\item{y}{A vector responses.}
+\item{y}{A vector of responses.}
 
 \item{data}{An R dataframe object.}
 }
@@ -17,7 +17,8 @@ calculate_auc(x, y = NULL, data = NULL)
 A list of AUC estimates.
 }
 \description{
-Calculate variance of predicted AUC, logit of predicted AUC, and variance of logit of predicted AUC responses passed
+This function calculates variance of predicted AUC, logit of predicted AUC,
+and variance of logit of predicted AUC responses passed
 }
 \examples{
 calculate_auc(mpg ~ am, data = datasets::mtcars)
