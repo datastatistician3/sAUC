@@ -37,6 +37,9 @@
 #'
 #' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 
+x = y ~ x1 + x2
+treatment_group = "group"
+data = fasd
 sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   if (missing(x)){
     stop(paste0("Argument x (for e.g. response ~ x1 + x2) is missing."))
@@ -104,7 +107,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
     var_logitauchat <- auch$var_logitauchat
   }
 
-  unique_x_levels <- lapply(d[,names(d) %in% input_covariates, drop=F], function(x) levels(x))
+  unique_x_levels <- lapply(d[,input_covariates, drop=F], function(x) levels(x))
   matrix_x <- expand.grid(unique_x_levels)
 
   Z <- stats::model.matrix(~., matrix_x)
