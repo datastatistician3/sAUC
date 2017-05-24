@@ -133,12 +133,18 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
                      "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z)
   invisible(list_items)
 
-  betas_label <- c(paste0("beta_", 1:length(colnames(Z[,-1])), "*", colnames(Z[,-1]), " +"))
+  betas_label <- c(paste0("beta_", 1:length(varNames[-1]), "*", varNames[-1], " +"))
 
   last_beta_label <- betas_label[max(length(betas_label))]
   all_remain_betas_label <- setdiff(betas_label, last_beta_label)
 
+  if (length(betas_label) == 1){
+  all_betas_labels <- gsub("\\+| ", "", last_beta_label)
+
+  } else {
   all_betas_labels <- c(all_remain_betas_label,gsub("\\+", "\\1", last_beta_label))
+
+  }
 
   cat("The model is: ","logit","[","p","(",paste0("Y_",PA), " > ",paste0("Y_",PB),")","]", " = ", "beta_0 + ",
       all_betas_labels,"\n\n")
