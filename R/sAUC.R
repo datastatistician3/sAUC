@@ -126,14 +126,14 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
 
   colnames(results) <- c("Coefficients","Std. Error", "2.5%", "97.5%", "Pr(>|z|)")
 
-  varNames <- colnames(Z)
-  rownames(results) <- varNames
+  var_names <- colnames(Z)
+  rownames(results) <- var_names
 
   list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
                      "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z)
   invisible(list_items)
 
-  betas_label <- c(paste0("beta_", 1:length(varNames[-1]), "*", varNames[-1], " +"))
+  betas_label <- c(paste0("beta_", 1:length(var_names[-1]), "*", var_names[-1], " +"))
 
   last_beta_label <- betas_label[max(length(betas_label))]
   all_remain_betas_label <- setdiff(betas_label, last_beta_label)
