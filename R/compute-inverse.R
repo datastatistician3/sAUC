@@ -14,5 +14,5 @@
 #' compute_inverse(0.6)
 
 compute_inverse <- function(x){
-  -log((1/x)-1)
+  -log( (1/x)-1)
 }
