@@ -69,9 +69,9 @@ simulate_one_predictor <- function(iter=500, m=100, p=120){
     ci_betas = ci[,c(1,4,2,5,3,6)]
   }
 
-  meanbeta = apply(m_betas,2,mean) # mean betas
-  meanvar = apply(var_finv_auchat,2,mean)  # mean variances
-  meansd = sqrt(meanvar)
+  meanbeta = round(apply(m_betas,2,mean),4) # mean betas
+  meanvar = round(apply(var_finv_auchat,2,mean),4)  # mean variances
+  meansd = round(sqrt(meanvar),4)
 
   #Calculating 95% CI coverage
   b0 <- ifelse(0.15 >= ci_betas[,1] & 0.15 <= ci_betas[,2],1,0)
@@ -81,14 +81,16 @@ simulate_one_predictor <- function(iter=500, m=100, p=120){
   cov_prob_b0 = (sum(b0)/iter)
   cov_prob_b1 = (sum(b1)/iter)
   cov_prob_b2 = (sum(b2)/iter)
-  all_coverage<-c(cov_prob_b0,cov_prob_b1,cov_prob_b2)
+  all_coverage<- round(c(cov_prob_b0,cov_prob_b1,cov_prob_b2),4)
 
   list_items <- list("Coverage Probability" = all_coverage, "Beta" = meanbeta, "Variance Beta" = meanvar,
                      "Mean SD Beta" = meansd, m_betas = m_betas, var_finv_auchat = var_finv_auchat,
                      ci_betas = ci_betas, iter= iter)
   invisible(list_items)
-  cat("Regression coefficients B0, B1, B2\n")
-  list_items$"Beta"
+  # cat("Regression coefficients B0, B1, B2\n")
+  df <- (as.data.frame(cbind(meanbeta, meanvar, meansd, all_coverage, iter)))
+  names(df) <- c("Beta Estimates", "Variance of Beta", "S.E. of Beta","Coverage Probability", "Iterations")
+  dt <- DT::datatable(df, caption = htmltools::tags$caption('Table 1. Results of the Simulation'),
+                      rownames = FALSE)
+  return(dt)
 }
-
-
