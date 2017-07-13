@@ -15,18 +15,13 @@ shinyServer(function(input, output){
     )
   })
 
-  # output$plot1 <- renderPlot({
-  #   df <- rnorm(input$iteration)
-  #   hist(df, main = "Histogram")
-  # })
-  
   predicted <- reactive({
     hw <- HoltWinters(ldeaths)
-    predict(hw, n.ahead = input$months, 
+    predict(hw, n.ahead = input$months,
             prediction.interval = TRUE,
             level = as.numeric(input$interval))
   })
-  
+
   output$dygraph <- renderDygraph({
     dygraph(predicted(), main = "Predicted Deaths/Month") %>%
       dySeries(c("lwr", "fit", "upr"), label = "Deaths") %>%
@@ -41,7 +36,3 @@ shinyServer(function(input, output){
   # })
 }
 )
-
-
-y <- simulate_one_predictor(100, 50, 25)
-y
