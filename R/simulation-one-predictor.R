@@ -12,7 +12,13 @@
 #'
 #' @param m Number of observations on treatment condition
 #'
-#' @param p number of observations on control condition
+#' @param p Number of observations on control condition
+#'
+#' @param b0 True intercept value
+#'
+#' @param b1 True beta 1 value
+#'
+#' @param b2 True beta 2 value
 #'
 #' @author Som Bohora
 #'

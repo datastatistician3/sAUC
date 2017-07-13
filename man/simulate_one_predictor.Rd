@@ -4,14 +4,21 @@
 \alias{simulate_one_predictor}
 \title{Simulate Semi-parametric AUC regression adjusting for one categorical predictor}
 \usage{
-simulate_one_predictor(iter = 500, m = 100, p = 120)
+simulate_one_predictor(iter = 100, m = 20, p = 30, b0 = 0.15,
+  b1 = 0.5, b2 = 1)
 }
 \arguments{
 \item{iter}{Number of realizations to run}
 
 \item{m}{Number of observations on treatment condition}
 
-\item{p}{number of observations on control condition}
+\item{p}{Number of observations on control condition}
+
+\item{b0}{True intercept value}
+
+\item{b1}{True beta 1 value}
+
+\item{b2}{True beta 2 value}
 }
 \description{
 Ask for number of iterations to run the simulation for Semiparametric AUC regression
