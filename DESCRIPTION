@@ -18,7 +18,9 @@ Imports:
     stats,
     base,
     methods,
-    utils
+    utils,
+    DT,
+    htmltools
 Suggests:
     testthat,
     testit
