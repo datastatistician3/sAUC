@@ -1,9 +1,12 @@
 library(shiny)
 library(shinydashboard)
+path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
+lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = TRUE), function(x) source(paste0(path_files,"/",x)))
 
 header <- dashboardHeader(
-  title = "sAUC Model",
+  title = "Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates",
   disable = FALSE,
+  titleWidth = "1650px",
   dropdownMenu(type = "messages",
                messageItem(from = "Sales Dept",
                            message = "Sales are steady this month."),
@@ -42,6 +45,7 @@ dashboardPage(
     uiOutput("auc"),
     disable = FALSE,
     sidebarMenu(
+      id = "sidebar_menu",
       menuItem("AUC Regression",
                tabName = "auc_reg",
                icon = icon("bar-chart")),
@@ -51,11 +55,7 @@ dashboardPage(
                badgeLabel = "Perform",
                badgeColor = "green"),
       sidebarMenuOutput("menu"),
-      sidebarSearchForm(
-        textId = "searchText",
-        buttonId = "searchButton",
-        label = "Search..."
-      ),
+
       menuItem("Obtain Codes",
                tabName = "get_code",
                icon = icon("code")),
@@ -68,29 +68,43 @@ dashboardPage(
       tags$hr(),
       menuItem(
         text = "",
-        href = "https://mytinyshinys.shinyapps.io/dashboard",
-        badgeLabel = "All Dashboards"
+        href = "https://github.com/sbohora/sAUC",
+        badgeLabel = "Github Repo for sAUC package",
+        icon = icon("github")
+      ),
+      menuItem(
+        text = "",
+        href = "https://github.com/sbohora/sAUC",
+        badgeLabel = "Web site for sAUC package",
+        icon = icon("tv")
       ),
       tags$hr(),
-
+     menuItem("Contact Me",
+               tabName = "contact",
+               icon = icon("volume-control-phone")),
       tags$body(
         a(
-          class = "addpad",
+          class = "addtwitter",
           href = "https://twitter.com/SomBohora",
           target = "_blank",
-          img(src = "./inst/shiny/www/twitter-logo.png")
+          img(src = "twitter-logo.png", height="30", width="30")
         ),
         a(
-          class = "addpad2",
+          class = "addemail",
           href = "mailto:energeticsom@gmail.com",
-          img(src = "./inst/shiny/www/email-logo.png")
+          img(src = "email-logo.png", height="30", width="30")
         ),
         a(
-          class = "addpad2",
+          class = "addgithub",
           href = "https://github.com/sbohora",
           target = "_blank",
-          img(src = "./inst/shiny/www/github-logo.png")
+          img(src = "github-logo.png", height="30", width="30")
         )
+      ),
+     sidebarSearchForm(
+        textId = "searchText",
+        buttonId = "searchButton",
+        label = "Search..."
       )
     )
 
@@ -98,7 +112,35 @@ dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(
-        "auc_reg"
+        "auc_reg",
+        fluidRow(
+          box("Please enter following parameter for simulation", br(), br(),
+              width = 3L,
+              height = 3L,
+              numericInput(
+                inputId = "months",
+                label = "Number of Realizations",
+                value = 100),
+              sliderInput(
+                inputId = "number_treatment", 
+                label = "Number of Observations in Treatment Group: ", 1, 1000, 50),
+              sliderInput(
+                inputId = "number_control", 
+                label = "Number of Observations in Control Group: ", 1, 1000, 50),
+              selectInput("interval", label = "Prediction Interval",
+                  choices = c("0.80", "0.90", "0.95", "0.99"),
+                  selected = "0.95")
+              # textInput("text", "Text input:"),
+              ),
+          box("Plot 1",dygraphOutput("dygraph")),
+          box("Results", DT::dataTableOutput("result1"))
+          # box("Res", dygraphOutput("dygraph"))
+          # box(title = "dfsdfd", width = 4, height = 375, solidHeader = TRUE, status = "success"),
+          # plotOutput("seasonHist")
+        ),
+        fluidRow(
+          box("Here the plots")
+        )
       )
     )
 
