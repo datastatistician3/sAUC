@@ -15,24 +15,23 @@ shinyServer(function(input, output){
     )
   })
 
-  predicted <- reactive({
-    hw <- HoltWinters(ldeaths)
-    predict(hw, n.ahead = input$months,
-            prediction.interval = TRUE,
-            level = as.numeric(input$interval))
+  output$result1 <- DT::renderDataTable({
+    iter <- input$realization
+    m <- input$number_treatment
+    p <- input$number_control
+    result_simulate <- simulate_one_predictor(iter = iter, m = m, p = p)
+
+    df <- (as.data.frame(cbind(result_simulate$meanbeta, result_simulate$meanvar, result_simulate$meansd, result_simulate$ci_betass, result_simulate$all_coverage, result_simulate$iter)))
+    names(df) <- c("Beta Estimates", "Variance of Beta", "S.E. of Beta","Confidence Interval on Beta", "Coverage Probability", "Iterations")
+    dt <- DT::datatable(
+      df,
+      caption = htmltools::tags$caption(
+        style = "font-size:110%",
+        'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
+      rownames = FALSE)
   })
+  }
+  )
 
-  output$dygraph <- renderDygraph({
-    dygraph(predicted(), main = "Predicted Deaths/Month") %>%
-      dySeries(c("lwr", "fit", "upr"), label = "Deaths") %>%
-      dyOptions(drawGrid = input$showgrid)
-  })
 
-  # output$auc <- renderUI({
-  #   if (input$sidebar_menu == "auc_reg"){
-  #     inputPanel(selectInput("teamA", label = NULL))
-  #   }
 
-  # })
-}
-)

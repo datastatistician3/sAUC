@@ -19,7 +19,7 @@
 #' @examples
 #' simulate_one_predictor(iter = 200, m = 100, p = 120)
 
-simulate_one_predictor <- function(iter=500, m=100, p=120){
+simulate_one_predictor <- function(iter=100, m=20, p=30, b0 = 0.15, b1 = 0.50, b2 = 1.00){
   iter = iter
   finvhat=rep(NA,3)
   AUChat=rep(NA,3)
@@ -37,8 +37,8 @@ simulate_one_predictor <- function(iter=500, m=100, p=120){
 
   for (z in 1:iter){
     d1<-c(0,0,0)
-    d2<-c(0,0.50, 1.00)
-    d0<-0.15
+    d2<-c(0,b1, b2)
+    d0<- b0
     y = c(1:3)
     for (k in y){
       u1 <- stats::rexp(p,1); u2 <- stats::rexp(m,1)
@@ -74,23 +74,26 @@ simulate_one_predictor <- function(iter=500, m=100, p=120){
   meansd = round(sqrt(meanvar),4)
 
   #Calculating 95% CI coverage
-  b0 <- ifelse(0.15 >= ci_betas[,1] & 0.15 <= ci_betas[,2],1,0)
-  b1 <- ifelse(0.50 >= ci_betas[,3] & 0.50 <= ci_betas[,4],1,0)
-  b2 <- ifelse(1.00 >= ci_betas[,5] & 1.00 <= ci_betas[,6],1,0)
+  b0 <- ifelse(b0 >= ci_betas[,1] & b0 <= ci_betas[,2],1,0)
+  b1 <- ifelse(b1 >= ci_betas[,3] & b1 <= ci_betas[,4],1,0)
+  b2 <- ifelse(b2 >= ci_betas[,5] & b2 <= ci_betas[,6],1,0)
 
   cov_prob_b0 = (sum(b0)/iter)
   cov_prob_b1 = (sum(b1)/iter)
   cov_prob_b2 = (sum(b2)/iter)
   all_coverage<- round(c(cov_prob_b0,cov_prob_b1,cov_prob_b2),4)
+  ci_b0 <- paste0("(",paste(round(apply(ci_betas[,1:2], 2, function(x) mean(x)),4), collapse = ", "), ")")
+  ci_b1 <- paste0("(",paste(round(apply(ci_betas[,3:4], 2, function(x) mean(x)),4), collapse = ", "), ")")
+  ci_b2 <- paste0("(",paste(round(apply(ci_betas[,5:6], 2, function(x) mean(x)),4), collapse = ", "), ")")
 
-  list_items <- list("Coverage Probability" = all_coverage, "Beta" = meanbeta, "Variance Beta" = meanvar,
-                     "Mean SD Beta" = meansd, m_betas = m_betas, var_finv_auchat = var_finv_auchat,
-                     ci_betas = ci_betas, iter= iter)
+  ci_betass <- c(ci_b0, ci_b1, ci_b2)
+
+  list_items <- list(all_coverage = all_coverage, meanbeta = meanbeta, meanvar = meanvar,
+                     meansd = meansd, m_betas = m_betas, var_finv_auchat = var_finv_auchat,
+                     ci_betas = ci_betas, iter= iter, ci_betass = ci_betass)
   invisible(list_items)
   # cat("Regression coefficients B0, B1, B2\n")
-  df <- (as.data.frame(cbind(meanbeta, meanvar, meansd, all_coverage, iter)))
-  names(df) <- c("Beta Estimates", "Variance of Beta", "S.E. of Beta","Coverage Probability", "Iterations")
-  dt <- DT::datatable(df, caption = htmltools::tags$caption('Table 1. Results of the Simulation'),
-                      rownames = FALSE)
-  return(dt)
+
+  return(list_items)
 }
+

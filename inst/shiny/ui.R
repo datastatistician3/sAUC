@@ -4,7 +4,7 @@ path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
 lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = TRUE), function(x) source(paste0(path_files,"/",x)))
 
 header <- dashboardHeader(
-  title = "Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates",
+  title = "Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora",
   disable = FALSE,
   titleWidth = "1650px",
   dropdownMenu(
@@ -134,46 +134,50 @@ dashboardPage(
       tabItem(
         tabName = "auc_reg",
         fluidRow(
-          box(
-            title = "Please enter following parameters for simulation", status = "warning", br(),
-            width = 3L,
-            height = 3L,
+          column(
+            width = 5,
+            box(
+            title = "Please enter following parameters for simulation", status = "warning",
+            width = 8L,
+            height = 8L,
             numericInput(
-              inputId = "months",
+              inputId = "realization",
               label = "Number of Realizations",
               value = 100),
             sliderInput(
               inputId = "number_treatment",
-              label = "Number of Observations in Treatment Group: ", 1, 1000, 50),
+              label = "Number of Observations in Treatment Group: ", 1, 1000, 20),
             sliderInput(
               inputId = "number_control",
-              label = "Number of Observations in Control Group: ", 1, 1000, 50),
-            selectInput(
-              inputId = "interval",
-              label = "Prediction Interval",
-              choices = c("0.80", "0.90", "0.95", "0.99"),
-              selected = "0.95")
-              # textInput("text", "Text input:"),
-            ),
-          box(
-            title = "Plot 1",
-            dygraphOutput("dygraph"),
-            collapsible = TRUE),
-          box(
-            title = "Results",
-            DT::dataTableOutput("result1"))
-          # box("Res", dygraphOutput("dygraph"))
-          # box(title = "dfsdfd", width = 4, height = 375, solidHeader = TRUE, status = "success"),
-          # plotOutput("seasonHist")
-        ),
-        fluidRow(
-          box("Here the plots"),
-          box(
-            title = "Title 5", width = 4, background = "light-blue",
-            "A box with a solid light-blue background"
+              label = "Number of Observations in Control Group: ", 1, 1000, 30),
+
+            br(),
+            p("Below are the true parameter values for the current simulation. Please change if you'd like"),
+            numericInput(
+              inputId = "b0",
+              label = "True value of Beta 0: ",
+              value = 0.15),
+            numericInput(
+              inputId = "b1",
+              label = "True value of Beta 1: ",
+              value = 0.50),
+            numericInput(
+              inputId = "b2",
+              label = "True value of Beta 2: ",
+              value = 1.00)
             )
+            ),
+          column(
+            width = 7,
+            box(
+            title = "Result of Simulation",
+            width = NULL,
+            status = "primary",
+            div(style = 'overflow-x: scroll', DT::dataTableOutput('result1')),
+            collapsible = TRUE)
         )
       )
+    )
     )
 
   ) #End the dashboardBody
