@@ -1,0 +1,6 @@
+.skin-blue .main-sidebar {
+background-color: darkred;
+}
+.skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li:hover>a {
+background-color: blue;
+}

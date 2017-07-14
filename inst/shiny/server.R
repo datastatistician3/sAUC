@@ -1,6 +1,8 @@
 library(shiny)
 library(dplyr)
 library(magrittr)
+library(tidyr)
+library(ggplot2)
 # library(dygraphs)
 # library(datasets)
 # path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
@@ -44,7 +46,7 @@ shinyServer(function(input, output){
     dddd <- as.data.frame(simulated_betas$m_betas)
 
     data_long <- gather(dddd, Parameter, values, factor_key=TRUE)
-    data_long$Parameter <- with(data_long, ifelse(Parameter == "V1","0", 
+    data_long$Parameter <- with(data_long, ifelse(Parameter == "V1","0",
                                                   ifelse(Parameter =="V2","1", "2")))
     mu <- data_long %>%
       dplyr::group_by(Parameter) %>%
@@ -52,15 +54,15 @@ shinyServer(function(input, output){
 
     # Change colors by groups
     ggplot(data_long, aes(x=values, color=Parameter, fill=Parameter)) +
-      geom_histogram(aes(y=..density..), position="identity", alpha=0.5) +
-      geom_density(alpha=0.6) + 
+      geom_histogram(aes(y=..density..), position="identity", alpha=0.7, bins = 50) +
+      geom_density(alpha=0.6) +
       facet_grid(.~Parameter, labeller = label_bquote(cols = beta[.(Parameter)])) +
       geom_vline(data=mu, aes(xintercept=mean_beta, color=Parameter),linetype="dashed") +
-      scale_color_manual(values=c("red", "green", "purple")) +
+      scale_color_manual(values=c("blue", "red", "maroon")) +
       # scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
       labs(x="Estimates", y = "Density") +
-      theme_classic() + 
-      theme(text = element_text(size=20)) + 
+      theme_classic() +
+      theme(text = element_text(size=20)) +
       theme(legend.position="none")
   })
 })

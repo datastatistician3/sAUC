@@ -4,7 +4,7 @@ path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
 lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = TRUE), function(x) source(paste0(path_files,"/",x)))
 
 header <- dashboardHeader(
-  title = "Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora",
+  title = tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")),
   disable = FALSE,
   titleWidth = "1400px",
   dropdownMenu(
@@ -48,6 +48,7 @@ header <- dashboardHeader(
 dashboardPage(
   skin = "green",
   header = header,
+  title = "sAUC",
   dashboardSidebar(
     disable = FALSE,
     sidebarMenu(
@@ -137,7 +138,7 @@ dashboardPage(
           column(
             width = 3,
             box(
-            title = "Please enter following parameters for simulation", status = "primary",
+            title = tags$p(strong(style ="font-size: 18px;","Please enter following parameters for simulation")), status = "primary",
             width = 12L,
             height = 8L,
             background = NULL,
@@ -158,13 +159,12 @@ dashboardPage(
           column(
             width = 3,
             box(
-              title = "True regression parameters",
+              title = tags$p(strong(style ="font-size: 18px;","True regression parameters")),
               width = NULL,
               status = "primary",
               collapsible = TRUE,
               background = NULL,
-
-              p("Below are the true parameter values for the current simulation. Please change if you'd like"),
+              p("Below are the true parameter values for the current simulation. You can change 'em if you want."),
               numericInput(
                 inputId = "b0",
                 label = "True value of Beta 0: ",
@@ -182,7 +182,7 @@ dashboardPage(
           column(
             width = 6,
             box(
-            title = "Result of Simulation",
+            title = tags$p(strong(style ="font-size: 18px;","Result of Simulation")),
             width = 15,
             status = "primary",
             div(style = 'overflow-x: scroll', DT::dataTableOutput('result1')),
@@ -198,7 +198,7 @@ dashboardPage(
               width = 15,
               status = "primary",
               div(style = 'overflow-x: scroll', plotOutput('result_plot_beta')),
-              collapsible = TRUE, background = "maroon")
+              collapsible = TRUE, background = "red")
           )
 
         )
