@@ -44,7 +44,6 @@ shinyServer(function(input, output){
   output$result_plot_beta <- renderPlot({
     simulated_betas <- result_of_simulate()
     dddd <- as.data.frame(simulated_betas$m_betas)
-
     data_long <- gather(dddd, Parameter, values, factor_key=TRUE)
     data_long$Parameter <- with(data_long, ifelse(Parameter == "V1","0",
                                                   ifelse(Parameter =="V2","1", "2")))
@@ -52,10 +51,19 @@ shinyServer(function(input, output){
       dplyr::group_by(Parameter) %>%
       dplyr::summarize(mean_beta = mean(values)) %>% as.data.frame()
 
+
+    # Create normal curve to overlay to plot
+    # calculate mean and sd by group
+    stats <- aggregate(values~Parameter, data_long, function(x) c(mean=mean(x), sd=sd(x)))
+    stats <- data.frame(Parameter=stats[,1],stats[,2])
+    x <- with(data_long, seq(min(values), max(values), len=100))
+    dfn <- do.call(rbind,lapply(1:nrow(stats),
+                                function(i) with(stats[i,],data.frame(Parameter, x, y=dnorm(x,mean=mean,sd=sd)))))
+
     # Change colors by groups
     ggplot(data_long, aes(x=values, color=Parameter, fill=Parameter)) +
       geom_histogram(aes(y=..density..), position="identity", alpha=0.7, bins = 50) +
-      geom_density(alpha=0.6) +
+      geom_density(alpha=0.6, size = 0.9, adjust = 0.6) +
       facet_grid(.~Parameter, labeller = label_bquote(cols = beta[.(Parameter)])) +
       geom_vline(data=mu, aes(xintercept=mean_beta, color=Parameter),linetype="dashed") +
       scale_color_manual(values=c("blue", "red", "maroon")) +
@@ -63,6 +71,7 @@ shinyServer(function(input, output){
       labs(x="Estimates", y = "Density") +
       theme_classic() +
       theme(text = element_text(size=20)) +
-      theme(legend.position="none")
+      theme(legend.position="none") +
+      geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
 })
