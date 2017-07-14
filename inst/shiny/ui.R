@@ -6,7 +6,7 @@ lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = T
 header <- dashboardHeader(
   title = "Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora",
   disable = FALSE,
-  titleWidth = "1650px",
+  titleWidth = "1400px",
   dropdownMenu(
     type = "messages",
     messageItem(
@@ -135,11 +135,12 @@ dashboardPage(
         tabName = "auc_reg",
         fluidRow(
           column(
-            width = 5,
+            width = 3,
             box(
-            title = "Please enter following parameters for simulation", status = "warning",
-            width = 8L,
+            title = "Please enter following parameters for simulation", status = "primary",
+            width = 12L,
             height = 8L,
+            background = NULL,
             numericInput(
               inputId = "realization",
               label = "Number of Realizations",
@@ -149,38 +150,62 @@ dashboardPage(
               label = "Number of Observations in Treatment Group: ", 1, 1000, 20),
             sliderInput(
               inputId = "number_control",
-              label = "Number of Observations in Control Group: ", 1, 1000, 30),
+              label = "Number of Observations in Control Group: ", 1, 1000, 30)
 
-            br(),
-            p("Below are the true parameter values for the current simulation. Please change if you'd like"),
-            numericInput(
-              inputId = "b0",
-              label = "True value of Beta 0: ",
-              value = 0.15),
-            numericInput(
-              inputId = "b1",
-              label = "True value of Beta 1: ",
-              value = 0.50),
-            numericInput(
-              inputId = "b2",
-              label = "True value of Beta 2: ",
-              value = 1.00)
             )
+
             ),
           column(
-            width = 7,
+            width = 3,
+            box(
+              title = "True regression parameters",
+              width = NULL,
+              status = "primary",
+              collapsible = TRUE,
+              background = NULL,
+
+              p("Below are the true parameter values for the current simulation. Please change if you'd like"),
+              numericInput(
+                inputId = "b0",
+                label = "True value of Beta 0: ",
+                value = 0.15),
+              numericInput(
+                inputId = "b1",
+                label = "True value of Beta 1: ",
+                value = 0.50),
+              numericInput(
+                inputId = "b2",
+                label = "True value of Beta 2: ",
+                value = 1.00)
+            )
+          ),
+          column(
+            width = 6,
             box(
             title = "Result of Simulation",
-            width = NULL,
+            width = 15,
             status = "primary",
             div(style = 'overflow-x: scroll', DT::dataTableOutput('result1')),
-            collapsible = TRUE)
+            collapsible = TRUE,
+            background = NULL)
+        )
+        ),
+        fluidRow(
+          column(
+            width = 12,
+            box(
+              title = "Distribution of beta estimates from the above simulation",
+              width = 15,
+              status = "primary",
+              div(style = 'overflow-x: scroll', plotOutput('result_plot_beta')),
+              collapsible = TRUE, background = "maroon")
+          )
+
         )
       )
-    )
     )
 
   ) #End the dashboardBody
 
-) #End the dashboardPage
+) #End the dashboardPage,
 
