@@ -51,7 +51,6 @@ shinyServer(function(input, output){
       dplyr::group_by(Parameter) %>%
       dplyr::summarize(mean_beta = mean(values)) %>% as.data.frame()
 
-
     # Create normal curve to overlay to plot
     # calculate mean and sd by group
     stats <- aggregate(values~Parameter, data_long, function(x) c(mean=mean(x), sd=sd(x)))
