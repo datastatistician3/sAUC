@@ -1,5 +1,6 @@
 fasd <- read.csv("inst/extdata/fasd.csv")
-fasd[, c("x1", "x2", "group")] <- lapply(fasd[, c("x1", "x2", "group")], function(x) factor(x))
+vars <- c("x1", "x2", "group")
+fasd[, vars] <- lapply(fasd[, vars], function(x) factor(x))
 
 sAUC::sAUC(x = y ~ x1, treatment_group = "group", data = fasd)
 

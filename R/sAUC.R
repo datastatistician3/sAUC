@@ -129,10 +129,6 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   var_names <- colnames(Z)
   rownames(results) <- var_names
 
-  list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
-                     "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z)
-  invisible(list_items)
-
   betas_label <- c(paste0("beta_", 1:length(var_names[-1]), "*", var_names[-1], " +"))
 
   last_beta_label <- betas_label[max(length(betas_label))]
@@ -149,5 +145,14 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
   cat("The model is: ","logit","[","p","(",paste0("Y_",PA), " > ",paste0("Y_",PB),")","]", " = ", "beta_0 + ",
       all_betas_labels,"\n\n")
   cat("Model Summary\n\n")
-  list_items$"Model summary"
+
+  model_formula <- paste("logit","[","p","(",paste0("Y_",PA), " > ",paste0("Y_",PB),")","]", " = ", "beta_0 + ",
+      all_betas_labels,"\n\n")
+
+    list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
+                     "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z,
+                     model_formula = model_formula)
+  invisible(list_items)
+
+  return(list_items)
 }

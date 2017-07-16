@@ -6,7 +6,7 @@ lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = T
 header <- dashboardHeader(
   title = tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")),
   disable = FALSE,
-  titleWidth = "1400px",
+  titleWidth = "1500px",
   dropdownMenu(
     type = "messages",
     messageItem(
@@ -133,7 +133,7 @@ dashboardPage(
   dashboardBody(
     tabItems(
       tabItem(
-        tabName = "auc_reg",
+        tabName = "auc_simulate",
         fluidRow(
           column(
             width = 3,
@@ -202,10 +202,75 @@ dashboardPage(
           )
 
         )
+      ),
+      tabItem(
+        tabName = "auc_reg",
+         fluidRow(
+          column(
+            width = 3,
+        box(#title="Input file",
+            width = 12,
+            status = "success",
+            fileInput("file", "Upload the file to be analyzed"),
+            helpText("Default maximum file size is 5MB"),
+            tags$hr(),
+            h5(helpText("Select the read.table parameters below")),
+            checkboxInput(
+              inputId = 'header', label = "Header TRUE?", value = FALSE),
+            checkboxInput(
+              inputId = 'string_factors', label = "String as Factors?", value = FALSE),
+            radioButtons(
+              inputId = 'sep',
+              label = 'Separator',
+              choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
+          )),
+        column(
+          width = 9,
+        box(
+          width = 20,
+          uiOutput("describe_file")
+        )
+        )
+         ),
+        fluidRow(
+          column(
+            width = 3,
+        box(
+          title = tags$p(strong(style ="font-size: 18px;color: green","Data analysis")),
+          width = 12,
+          uiOutput("choose_response"),
+          uiOutput("choose_group"),
+          uiOutput("independent"),
+          textOutput("input_oupt")
+          # textOutput("choose_group"),
+          # textOutput("choose_covariates")
+        #   selectizeInput(
+        #     inputId = "response",
+        #     label = "Choose response variable",
+        #     choices = colnames(data()),
+        #     options    = list(
+        #       placeholder = 'Please select an option below',
+        #       onInitialize = I(sprintf('function() { this.setValue("%s"); }', colnames(data())[3])))
+        # )
+          )
+
+        ),
+        column(
+            width = 6,
+        box(
+          title = tags$p(strong(style ="font-size: 18px;color: green","Results")),
+          width = 20,
+          dataTableOutput("model_result")
+          )
+        )
       )
+      )
+             # ggvisOutput("managerPPGbyTeam"),
+
     )
 
   ) #End the dashboardBody
 
 ) #End the dashboardPage,
+
 

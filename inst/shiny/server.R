@@ -3,6 +3,7 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 library(ggplot2)
+library(DT)
 # library(dygraphs)
 # library(datasets)
 # path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
@@ -12,11 +13,145 @@ library(ggplot2)
 # source("C:/Users/sbohora/Documents/GitHub/sAUC/R/compute-inverse.R")
 # source("C:/Users/sbohora/Documents/GitHub/sAUC/R/simulation-one-predictor.R")
 
-shinyServer(function(input, output){
+shinyServer(function(input, output, session){
   output$menu <- renderMenu({
     sidebarMenu(
       menuItem("Menu Item", icon =icon("calendar"))
     )
+  })
+
+  # Create reactive to read data
+  data <- reactive({
+    input_file <- input$file
+    if(is.null(input_file)){return()}
+    read.table(
+      file = input_file$datapath,
+      sep = input$sep,
+      header = input$header,
+      stringsAsFactors = input$string_factors
+    )
+  })
+
+  #The following set of functions populate the column selectors
+  output$choose_response <- renderUI({
+    df <- data()
+    if (is.null(df)) return(NULL)
+
+    items=names(df)
+    names(items)=items
+    selectInput(
+      inputId = "response",
+      label = "Choose response:",
+      choices = items)
+  })
+
+  output$choose_group <- renderUI({
+    df <- data()
+    if (is.null(df)) return(NULL)
+
+    items=names(df)
+    names(items)=items
+    selectInput(
+      inputId = "group_var",
+      label = "Choose group:",
+      choices  = names(data())[!names(data()) %in% input$response],
+      selected = names(data())[!names(data()) %in% input$response][1])
+  })
+
+  output$independent <- renderUI({
+  checkboxGroupInput(inputId = "independent",
+                     label =  "Independent Variables:",
+                     choices = names(data())[!names(data()) %in% input$response],
+                     selected = names(data())[!names(data()) %in% input$response][2])
+  })
+
+  # runRegression <- reactive({
+  #   sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
+  #              treatment_group = input$group_var ,data = data())
+  #   # lm(as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),data=data())
+  # })
+
+  # values <- reactiveValues()
+  # values$show <- TRUE
+
+  # observe({
+  #   input$response
+  #   input$group_var
+  #   input$show <- TRUE
+  # })
+
+  # output$show <- reactive({
+  #   return(values$show)
+  #   })
+
+  output$model_result <- renderDataTable({
+    if (is.null(data())) return(NULL)
+    ds <- data()
+    cov_variables <- c(input$independent,input$group_var)
+    ds[, cov_variables] <- lapply(ds[, cov_variables], function(x) factor(x))
+    res <- sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
+               treatment_group = input$group_var, data = ds)
+
+    DT::datatable(as.data.frame(res$"Model summary"),
+                caption = htmltools::tags$caption(
+                  style = "font-size:105%",
+                  strong(paste('Model results'))))
+  })
+
+  # observeEvent(input$group_var,{
+  #   value$show <- TRUE
+  # })
+
+
+  # Display orginal data
+  output$show_input_file <- renderTable({
+    if(is.null(data())){return()}
+    input$file
+  })
+
+    # Display orginal data
+  output$show_data <- renderDataTable({
+    if(is.null(data())){return()}
+    data()
+  })
+
+  # Display summary of the original data
+  output$summaryy <- renderDataTable({
+    ds <- data()
+    # numeric_columns <- names(ds)[sapply(ds, function(x) is.numeric(x))]
+    if(is.null(ds)){return()}
+    summary_table <- as.data.frame(round(psych::describe(ds)[-1]))
+    names(summary_table) <- Hmisc::capitalize(names(summary_table))
+    datatable(summary_table,
+              caption = htmltools::tags$caption(
+                style = "font-size:200%",
+                htmltools::strong(paste("Table 1: Descriptive summary"))),
+              rownames = TRUE)
+  })
+
+  output$plot_data <- renderPlot({
+    psych::pairs.panels(data())
+  })
+
+  output$describe_file <- renderUI({
+    if (is.null(data())){
+      h3("Data are not read yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
+    } else {
+      tabsetPanel(
+        tabPanel(
+          title = "About file",
+          tableOutput("show_input_file")),
+        tabPanel(
+          title = "Data",
+          dataTableOutput("show_data")),
+        tabPanel(
+          title = "Summary",
+          dataTableOutput("summaryy")),
+        tabPanel(
+          title = "Plots",
+          plotOutput("plot_data"))
+      )
+    }
   })
 
   result_of_simulate <- reactive({
@@ -72,5 +207,9 @@ shinyServer(function(input, output){
       theme(text = element_text(size=20)) +
       theme(legend.position="none") +
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
+  })
+
+  output$hist_gram <- renderPlot({
+    hist(rnorm(10))
   })
 })
