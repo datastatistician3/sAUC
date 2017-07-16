@@ -161,7 +161,7 @@ shinyServer(function(input, output, session){
     b0 <- input$b0
     b1 <- input$b1
     b2 <- input$b2
-    simulate_one_predictor(iter = iter, m = m, p = p, b0 = b0, b1 = b1, b2 = b2)
+    sAUC::simulate_one_predictor(iter = iter, m = m, p = p, b0 = b0, b1 = b1, b2 = b2)
   })
 
   output$result1 <- DT::renderDataTable({
