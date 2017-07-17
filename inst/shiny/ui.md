@@ -1,3 +1,9 @@
+
+
+
+Below is the `ui.R` code
+
+```r
 library(shiny)
 library(shinydashboard)
 path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
@@ -274,18 +280,6 @@ dashboardPage(
         )
       ),
       tabItem(
-        tabName = "ui_code",
-        fluidRow(
-          column(
-            width = 8,
-            box(
-              width = 12,
-              includeMarkdown("ui.md")
-            )
-          )
-        )
-      ),
-      tabItem(
         tabName = "about_me",
         fluidRow(
           column(
@@ -342,5 +336,4 @@ dashboardPage(
   ) #End the dashboardBody
 
 ) #End the dashboardPage,
-
-
+```

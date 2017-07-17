@@ -1,11 +1,3 @@
----
-title: "codes"
-# author: "Som Bohora"
-# date: "July 17, 2017"
-output: 
-  html_document:
-    keep_md: true
----
 
 
 
