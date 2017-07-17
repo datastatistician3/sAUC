@@ -216,7 +216,7 @@ dashboardPage(
             tags$hr(),
             h5(helpText("Select the read.table parameters below")),
             checkboxInput(
-              inputId = 'header', label = "Header TRUE?", value = FALSE),
+              inputId = 'header', label = "Header TRUE?", value = TRUE),
             checkboxInput(
               inputId = 'string_factors', label = "String as Factors?", value = FALSE),
             radioButtons(
@@ -242,31 +242,84 @@ dashboardPage(
           uiOutput("choose_group"),
           uiOutput("independent"),
           textOutput("input_oupt")
-          # textOutput("choose_group"),
-          # textOutput("choose_covariates")
-        #   selectizeInput(
-        #     inputId = "response",
-        #     label = "Choose response variable",
-        #     choices = colnames(data()),
-        #     options    = list(
-        #       placeholder = 'Please select an option below',
-        #       onInitialize = I(sprintf('function() { this.setValue("%s"); }', colnames(data())[3])))
-        # )
           )
-
         ),
         column(
             width = 6,
         box(
-          title = tags$p(strong(style ="font-size: 18px;color: green","Results")),
+          title = tags$p(strong(style ="font-size: 18px;color: green","Model Results")),
           width = 20,
           dataTableOutput("model_result")
           )
         )
       )
+      ),
+      tabItem(
+        tabName = "server_code",
+        fluidRow(
+          column(
+            width = 12,
+            box(
+              # uiOutput("markdown")
+              # includeMarkdown("server.md")
+              # includeHTML("index.html")
+              # HTML(markdown::markdownToHTML(knitr::knit('server.rmd', quiet = TRUE)))
+            )
+          )
+        )
+      ),
+      tabItem(
+        tabName = "about_me",
+        fluidRow(
+          column(
+            width = 4,
+            box(
+              width = 12,
+              status = "primary",
+              collapsible = TRUE,
+              p("This is about me."),
+              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200))
+              , br()
+              , br(),
+              span("I am a Research Biostatistician at ",
+                   span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. "),
+                        style = "color:blue"),
+              "I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
+              in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
+              Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.", style = "font-size:120%")
+            )
+          )
+        )
+      ),
+      tabItem(
+        tabName = "feedback",
+        fluidRow(
+          column(
+            width = 4,
+            box(
+              width = 12,
+              status = "primary",
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              span("I can be contacted at",
+              a("energeticsom@gmail.com", href = "mailto:energeticsom@gmail.com"),
+              br(),
+              br(),
+              p("Please report any bugs about the sAUC", span(tags$a(href = "https://github.com/sbohora/sAUC", "here"))),
+              br(),
+              shiny::hr(),
+              em(
+                span("Created by "),
+                a("Som B. Bohora", href = "mailto:energeticsom@gmail.com"),
+                span(", July 2017"),
+                br(),
+                br()
+                ), style = "font-size:140%")
+            )
+          )
+        )
       )
-             # ggvisOutput("managerPPGbyTeam"),
-
     )
 
   ) #End the dashboardBody
