@@ -184,8 +184,4 @@ shinyServer(function(input, output){
       theme(legend.position="none") +
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
-
-  output$markdown <- renderUI({
-        HTML(markdown::markdownToHTML(knitr::knit('server.rmd', quiet = TRUE)))
-    })
 })

@@ -258,12 +258,15 @@ dashboardPage(
         tabName = "server_code",
         fluidRow(
           column(
-            width = 12,
+            width = 8,
             box(
+              width = 12,
               # uiOutput("markdown")
-              # includeMarkdown("server.md")
-              # includeHTML("index.html")
-              # HTML(markdown::markdownToHTML(knitr::knit('server.rmd', quiet = TRUE)))
+              includeMarkdown("server.md")
+              # includeHTML("server.html")
+              # HTML(markdown::markdownToHTML(knitr::knit('server.Rmd', quiet = FALSE)))
+              # tags$iframe(style="height:400px; width:100%; scrolling=yes",
+              #             src = )
             )
           )
         )
