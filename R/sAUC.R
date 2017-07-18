@@ -146,8 +146,7 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
       all_betas_labels,"\n\n")
   cat("Model Summary\n\n")
 
-  model_formula <- paste("logit","[","p","(",paste0("Y_",PA), " > ",paste0("Y_",PB),")","]", " = ", "beta_0 + ",
-      all_betas_labels,"\n\n")
+  model_formula <- paste("logit","[","p","(",paste0("Y ",PA), " > ",paste0("Y ",PB),")","]","\n\n")
 
     list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
                      "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z,
