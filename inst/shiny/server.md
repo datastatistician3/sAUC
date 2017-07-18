@@ -1,3 +1,11 @@
+---
+# title: "codes"
+# author: "Som Bohora"
+# date: "July 17, 2017"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 
@@ -10,6 +18,14 @@ library(magrittr)
 library(tidyr)
 library(ggplot2)
 library(DT)
+# library(dygraphs)
+# library(datasets)
+# path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
+# lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = TRUE), function(x) source(paste0(path_files,"/",x)))
+
+# source("C:/Users/sbohora/Documents/GitHub/sAUC/R/compute-auc.R")
+# source("C:/Users/sbohora/Documents/GitHub/sAUC/R/compute-inverse.R")
+# source("C:/Users/sbohora/Documents/GitHub/sAUC/R/simulation-one-predictor.R")
 
 shinyServer(function(input, output){
   output$menu <- renderMenu({
@@ -182,9 +198,6 @@ shinyServer(function(input, output){
       theme(legend.position="none") +
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
-
-  output$hist_gram <- renderPlot({
-    hist(rnorm(10))
-  })
 })
+
 ```

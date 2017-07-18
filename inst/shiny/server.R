@@ -14,11 +14,11 @@ library(DT)
 # source("C:/Users/sbohora/Documents/GitHub/sAUC/R/simulation-one-predictor.R")
 
 shinyServer(function(input, output){
-  output$menu <- renderMenu({
-    sidebarMenu(
-      menuItem("Menu Item", icon =icon("calendar"))
-    )
-  })
+  # output$menu <- renderMenu({
+  #   sidebarMenu(
+  #     menuItem("Menu Item", icon =icon("calendar"))
+  #   )
+  # })
 
   # Create reactive to read data
   data <- reactive({
@@ -75,8 +75,8 @@ shinyServer(function(input, output){
 
     DT::datatable(as.data.frame(res$"Model summary"),
                 caption = htmltools::tags$caption(
-                  style = "font-size:105%",
-                  strong(paste('Model results'))))
+                  style = "font-size:120%",
+                  strong('Model results'), '{Note: left-side of model :  ', res$"model_formula","}"))
   })
 
   # Display orginal data

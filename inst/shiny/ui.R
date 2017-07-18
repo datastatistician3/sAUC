@@ -53,10 +53,18 @@ dashboardPage(
     disable = FALSE,
     sidebarMenu(
       id = "sidebar_menu",
+      # menuItem(
+        # text = "Introduction",
+        # tabName = "intro",
+        # icon = icon("book")),
       menuItem(
         text = "AUC Regression",
         tabName = "auc_reg",
         icon = icon("bar-chart")),
+      menuItem(
+        text = "Example",
+        tabName = "example",
+        icon = icon("book")),
       menuItem(
         text = "AUC Simulation",
         tabName = "auc_simulate",
@@ -138,7 +146,10 @@ dashboardPage(
           column(
             width = 3,
             box(
-            title = tags$p(strong(style ="font-size: 18px;","Please enter following parameters for simulation")), status = "primary",
+            collapsible = TRUE,
+            solidHeader = TRUE,
+            status = "info",
+            title = tags$p(strong(style ="font-size: 18px;","Please enter following parameters for simulation")),
             width = 12L,
             height = 8L,
             background = NULL,
@@ -161,9 +172,10 @@ dashboardPage(
             box(
               title = tags$p(strong(style ="font-size: 18px;","True regression parameters")),
               width = NULL,
-              status = "primary",
-              collapsible = TRUE,
               background = NULL,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
               p("Below are the true parameter values for the current simulation. You can change 'em if you want."),
               numericInput(
                 inputId = "b0",
@@ -184,9 +196,10 @@ dashboardPage(
             box(
             title = tags$p(strong(style ="font-size: 18px;","Result of Simulation")),
             width = 15,
-            status = "primary",
             div(style = 'overflow-x: scroll', DT::dataTableOutput('result1')),
             collapsible = TRUE,
+            solidHeader = TRUE,
+            status = "info",
             background = NULL)
         )
         ),
@@ -196,9 +209,11 @@ dashboardPage(
             box(
               title = "Distribution of beta estimates from the above simulation",
               width = 15,
-              status = "primary",
               div(style = 'overflow-x: scroll', plotOutput('result_plot_beta')),
-              collapsible = TRUE, background = "red")
+              background = "red",
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info")
           )
 
         )
@@ -208,26 +223,32 @@ dashboardPage(
          fluidRow(
           column(
             width = 3,
-        box(#title="Input file",
-            width = 12,
-            status = "success",
-            fileInput("file", "Upload the file to be analyzed"),
-            helpText("Default maximum file size is 5MB"),
-            tags$hr(),
-            h5(helpText("Select the read.table parameters below")),
-            checkboxInput(
-              inputId = 'header', label = "Header TRUE?", value = TRUE),
-            checkboxInput(
-              inputId = 'string_factors', label = "String as Factors?", value = FALSE),
-            radioButtons(
-              inputId = 'sep',
-              label = 'Separator',
-              choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
+        box(
+          title="File upload",
+          width = 12,
+          collapsible = TRUE,
+          solidHeader = TRUE,
+          status = "info",
+          fileInput("file", "Upload the file to be analyzed"),
+          helpText("Default maximum file size is 5MB"),
+          tags$hr(),
+          h5(helpText("Select the read.table parameters below")),
+          checkboxInput(
+            inputId = 'header', label = "Header TRUE?", value = TRUE),
+          checkboxInput(
+            inputId = 'string_factors', label = "String as Factors?", value = FALSE),
+          radioButtons(
+            inputId = 'sep',
+            label = 'Separator',
+            choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
           )),
         column(
           width = 9,
         box(
           width = 20,
+          collapsible = TRUE,
+          solidHeader = TRUE,
+          status = "info",
           uiOutput("describe_file")
         )
         )
@@ -238,6 +259,9 @@ dashboardPage(
         box(
           title = tags$p(strong(style ="font-size: 18px;color: green","Data analysis")),
           width = 12,
+          ollapsible = TRUE,
+          solidHeader = TRUE,
+          status = "warning",
           uiOutput("choose_response"),
           uiOutput("choose_group"),
           uiOutput("independent"),
@@ -249,10 +273,36 @@ dashboardPage(
         box(
           title = tags$p(strong(style ="font-size: 18px;color: green","Model Results")),
           width = 20,
+          collapsible = TRUE,
+          solidHeader = TRUE,
+          status = "warning",
           dataTableOutput("model_result")
           )
         )
       )
+      ),
+      tabItem(
+        tabName = "example",
+        fluidRow(
+          column(
+            width = 12,
+            box(
+              width = 20,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              title = "Example using Semiparametric AUC regression method",
+              background = NULL,
+              includeMarkdown("example.md")
+              # includeHTML("server.html")
+              # HTML(markdown::markdownToHTML(knitr::knit('server.Rmd', quiet = FALSE)))
+              # tags$iframe(
+              #   seamless = "seamless",
+              #   style="height:400px; width:100%; scrolling=yes",
+              #   src = "https://websitesetup.org/css3-cheat-sheet/")
+            )
+          )
+        )
       ),
       tabItem(
         tabName = "server_code",
@@ -261,7 +311,10 @@ dashboardPage(
             width = 8,
             box(
               width = 12,
-              # uiOutput("markdown")
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              background = "orange",
               includeMarkdown("server.md")
               # includeHTML("server.html")
               # HTML(markdown::markdownToHTML(knitr::knit('server.Rmd', quiet = FALSE)))
@@ -280,6 +333,10 @@ dashboardPage(
             width = 8,
             box(
               width = 12,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              background = "orange",
               includeMarkdown("ui.md")
             )
           )
@@ -293,7 +350,9 @@ dashboardPage(
             box(
               width = 12,
               status = "primary",
+              background = "navy",
               collapsible = TRUE,
+              solidHeader = TRUE,
               p("This is about me."),
               tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200))
               , br()
@@ -317,6 +376,8 @@ dashboardPage(
             box(
               width = 12,
               status = "primary",
+              background = "orange",
+              # Valid colors are: red, yellow, aqua, blue, light-blue, green, navy, teal, olive, lime, orange, fuchsia, purple, maroon, black.
               collapsible = TRUE,
               solidHeader = TRUE,
               span("I can be contacted at",
@@ -332,7 +393,7 @@ dashboardPage(
                 span(", July 2017"),
                 br(),
                 br()
-                ), style = "font-size:140%")
+                ), style = "font-size:140%; color:white")
             )
           )
         )
