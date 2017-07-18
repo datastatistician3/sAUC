@@ -1,3 +1,19 @@
+---
+# title: "codes"
+# author: "Som Bohora"
+# date: "July 17, 2017"
+output: 
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Below is the `server.R` code
+
+```r
 library(shiny)
 library(dplyr)
 library(magrittr)
@@ -103,7 +119,7 @@ shinyServer(function(input, output){
 
   output$describe_file <- renderUI({
     if (is.null(data())){
-      h3("Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
+      h3("Data are not read yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
     } else {
       tabsetPanel(
         tabPanel(
@@ -177,3 +193,5 @@ shinyServer(function(input, output){
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
 })
+
+```

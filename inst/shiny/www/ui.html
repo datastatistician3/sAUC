@@ -119,190 +119,341 @@ $(document).ready(function () {
 </div>
 
 
-<p>Below is the <code>server.R</code> code</p>
+<div id="below-is-the-ui.r-code" class="section level4">
+<h4>Below is the <code>ui.R</code> code</h4>
 <pre class="r"><code>library(shiny)
-library(dplyr)
-library(magrittr)
-library(tidyr)
-library(ggplot2)
-library(DT)
+library(shinydashboard)
+path_files &lt;- &quot;C:/Users/sbohora/Documents/GitHub/sAUC/R/&quot;
+# lapply(list.files(path = file.path(path_files), pattern = &quot;[.]R$&quot;, recursive = TRUE), function(x) source(paste0(path_files,&quot;/&quot;,x)))
 
-shinyServer(function(input, output){
-  output$menu &lt;- renderMenu({
+header &lt;- dashboardHeader(
+  title = tags$p(strong(style =&quot;font-size: 24px;color: white&quot;,&quot;Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora&quot;)),
+  disable = FALSE,
+  titleWidth = &quot;1500px&quot;,
+  dropdownMenu(
+    type = &quot;messages&quot;,
+    messageItem(
+      from = &quot;Som&quot;,
+      message = &quot;Stay tuned.&quot;),
+    messageItem(
+      from = &quot;New User&quot;,
+      message = &quot;How do I register?&quot;,
+      icon = icon(&quot;question&quot;),
+      time = &quot;13:45&quot;),
+    messageItem(
+      from = &quot;Support&quot;,
+      message = &quot;The new server is ready.&quot;,
+      icon = icon(&quot;life-ring&quot;),
+      time = &quot;2014-12-01&quot;)),
+  dropdownMenu(
+    type = &quot;notifications&quot;,
+    notificationItem(
+      text = &quot;5 new uers today&quot;,
+      icon = icon(&quot;users&quot;)),
+    notificationItem(
+      text = &quot;12 items delivered&quot;,
+      icon(&quot;truck&quot;),
+      status = &quot;success&quot;),
+    notificationItem(
+      text = &quot;Server load at 86%&quot;,
+      icon = icon(&quot;exclamation-triangle&quot;),
+      status = &quot;warning&quot;)),
+  dropdownMenu(
+    type = &quot;task&quot;,
+    badgeStatus = &quot;success&quot;,
+    taskItem(value = 90,
+             color = &quot;green&quot;,&quot;Documention&quot;),
+    taskItem(value = 17, color = &quot;aqua&quot;,&quot;Project X&quot;),
+    taskItem(value = 75, color = &quot;yellow&quot;,&quot;Server deployment&quot;),
+    taskItem(value = 80, color = &quot;red&quot;,&quot;Overall project&quot;)))
+
+# Define the overall UI
+dashboardPage(
+  skin = &quot;green&quot;,
+  header = header,
+  title = &quot;sAUC&quot;,
+  dashboardSidebar(
+    disable = FALSE,
     sidebarMenu(
-      menuItem(&quot;Menu Item&quot;, icon =icon(&quot;calendar&quot;))
-    )
-  })
+      id = &quot;sidebar_menu&quot;,
+      menuItem(
+        text = &quot;AUC Regression&quot;,
+        tabName = &quot;auc_reg&quot;,
+        icon = icon(&quot;bar-chart&quot;)),
+      menuItem(
+        text = &quot;AUC Simulation&quot;,
+        tabName = &quot;auc_simulate&quot;,
+        icon = icon(&quot;line-chart&quot;),
+        badgeLabel = &quot;Perform&quot;,
+        badgeColor = &quot;green&quot;),
 
-  # Create reactive to read data
-  data &lt;- reactive({
-    input_file &lt;- input$file
-    if(is.null(input_file)){return()}
-    read.table(
-      file = input_file$datapath,
-      sep = input$sep,
-      header = input$header,
-      stringsAsFactors = input$string_factors
-    )
-  })
-
-  #The following set of functions populate the column selectors
-  output$choose_response &lt;- renderUI({
-    df &lt;- data()
-    if (is.null(df)) return(NULL)
-
-    items=names(df)
-    names(items)=items
-    selectInput(
-      inputId = &quot;response&quot;,
-      label = &quot;Choose response:&quot;,
-      choices = items)
-  })
-
-  output$choose_group &lt;- renderUI({
-    df &lt;- data()
-    if (is.null(df)) return(NULL)
-
-    items=names(df)
-    names(items)=items
-    selectInput(
-      inputId = &quot;group_var&quot;,
-      label = &quot;Choose group:&quot;,
-      choices  = names(data())[!names(data()) %in% input$response],
-      selected = names(data())[!names(data()) %in% input$response][1])
-  })
-
-  output$independent &lt;- renderUI({
-  checkboxGroupInput(inputId = &quot;independent&quot;,
-                     label =  &quot;Independent Variables:&quot;,
-                     choices = names(data())[!names(data()) %in% input$response],
-                     selected = names(data())[!names(data()) %in% input$response][2])
-  })
-
-  output$model_result &lt;- renderDataTable({
-    if (is.null(data())) return(NULL)
-    ds &lt;- data()
-    cov_variables &lt;- c(input$independent,input$group_var)
-    ds[, cov_variables] &lt;- lapply(ds[, cov_variables], function(x) factor(x))
-    res &lt;- sAUC::sAUC(x = as.formula(paste(input$response,&quot; ~ &quot;,paste(input$independent,collapse=&quot;+&quot;))),
-               treatment_group = input$group_var, data = ds)
-
-    DT::datatable(as.data.frame(res$&quot;Model summary&quot;),
-                caption = htmltools::tags$caption(
-                  style = &quot;font-size:105%&quot;,
-                  strong(paste('Model results'))))
-  })
-
-  # Display orginal data
-  output$show_input_file &lt;- renderTable({
-    if(is.null(data())){return()}
-    input$file
-  })
-
-    # Display orginal data
-  output$show_data &lt;- renderDataTable({
-    if(is.null(data())){return()}
-    data()
-  })
-
-  # Display summary of the original data
-  output$summaryy &lt;- renderDataTable({
-    ds &lt;- data()
-    # numeric_columns &lt;- names(ds)[sapply(ds, function(x) is.numeric(x))]
-    if(is.null(ds)){return()}
-    summary_table &lt;- as.data.frame(round(psych::describe(ds)[-1]))
-    names(summary_table) &lt;- Hmisc::capitalize(names(summary_table))
-    datatable(summary_table,
-              caption = htmltools::tags$caption(
-                style = &quot;font-size:200%&quot;,
-                htmltools::strong(paste(&quot;Table 1: Descriptive summary&quot;))),
-              rownames = TRUE)
-  })
-
-  output$plot_data &lt;- renderPlot({
-    psych::pairs.panels(data())
-  })
-
-  output$describe_file &lt;- renderUI({
-    if (is.null(data())){
-      h3(&quot;Data are not read yet. Please do so now if you'd like to run Semiparametric AUC Regression model.&quot;, style = &quot;color:red&quot;)
-    } else {
-      tabsetPanel(
-        tabPanel(
-          title = &quot;About file&quot;,
-          tableOutput(&quot;show_input_file&quot;)),
-        tabPanel(
-          title = &quot;Data&quot;,
-          dataTableOutput(&quot;show_data&quot;)),
-        tabPanel(
-          title = &quot;Summary&quot;,
-          dataTableOutput(&quot;summaryy&quot;)),
-        tabPanel(
-          title = &quot;Plots&quot;,
-          plotOutput(&quot;plot_data&quot;))
+      menuItem(
+        text = &quot;Source Code&quot;,
+        tabName = &quot;get_code&quot;,
+        # href = &quot;https://github.com/sbohora/sAUC/tree/master/inst/shiny&quot;,
+        icon = icon(&quot;code&quot;),
+        menuSubItem(
+          text = &quot;server.R&quot;,
+          tabName = &quot;server_code&quot;),
+        menuSubItem(
+          text = &quot;ui.R&quot;,
+          tabName = &quot;ui_code&quot;)
+          ),
+      menuItem(
+        text = &quot;About Me&quot;,
+        tabName = &quot;about_me&quot;,
+        icon = icon(&quot;picture-o&quot;)),
+      menuItem(
+        text = &quot;Feedback&quot;,
+        tabName = &quot;feedback&quot;,
+        icon = icon(&quot;comment-o&quot;)),
+      sidebarMenuOutput(&quot;menu&quot;),
+      tags$hr(),
+      menuItem(
+        text = &quot;&quot;,
+        href = &quot;https://github.com/sbohora/sAUC&quot;,
+        badgeLabel = &quot;Github Repo for sAUC package&quot;,
+        icon = icon(&quot;github&quot;)
+      ),
+      menuItem(
+        text = &quot;&quot;,
+        href = &quot;https://github.com/sbohora/sAUC&quot;,
+        badgeLabel = &quot;Web site for sAUC package&quot;,
+        icon = icon(&quot;tv&quot;)
+      ),
+      tags$hr(),
+     menuItem(
+       text = &quot;Contact Me&quot;,
+       tabName = &quot;contact&quot;,
+       icon = icon(&quot;volume-control-phone&quot;)),
+     tags$body(
+       a(
+         class = &quot;addtwitter&quot;,
+         href = &quot;https://twitter.com/SomBohora&quot;,
+         target = &quot;_blank&quot;,
+         img(src = &quot;twitter-logo.png&quot;, height=&quot;30&quot;, width=&quot;30&quot;)
+         ),
+       a(
+         class = &quot;addemail&quot;,
+         href = &quot;mailto:energeticsom@gmail.com&quot;,
+         img(src = &quot;email-logo.png&quot;, height=&quot;30&quot;, width=&quot;30&quot;)
+        ),
+       a(
+         class = &quot;addgithub&quot;,
+         href = &quot;https://github.com/sbohora&quot;,
+         target = &quot;_blank&quot;,
+         img(src = &quot;github-logo.png&quot;, height=&quot;30&quot;, width=&quot;30&quot;)
+        )
+      ),
+     sidebarSearchForm(
+        textId = &quot;searchText&quot;,
+        buttonId = &quot;searchButton&quot;,
+        label = &quot;Search...&quot;
       )
-    }
-  })
+    )
 
-  result_of_simulate &lt;- reactive({
-    iter &lt;- input$realization
-    m &lt;- input$number_treatment
-    p &lt;- input$number_control
-    b0 &lt;- input$b0
-    b1 &lt;- input$b1
-    b2 &lt;- input$b2
-    sAUC::simulate_one_predictor(iter = iter, m = m, p = p, b0 = b0, b1 = b1, b2 = b2)
-  })
+  ),
+  dashboardBody(
+    tabItems(
+      tabItem(
+        tabName = &quot;auc_simulate&quot;,
+        fluidRow(
+          column(
+            width = 3,
+            box(
+            title = tags$p(strong(style =&quot;font-size: 18px;&quot;,&quot;Please enter following parameters for simulation&quot;)), status = &quot;primary&quot;,
+            width = 12L,
+            height = 8L,
+            background = NULL,
+            numericInput(
+              inputId = &quot;realization&quot;,
+              label = &quot;Number of Realizations&quot;,
+              value = 100),
+            sliderInput(
+              inputId = &quot;number_treatment&quot;,
+              label = &quot;Number of Observations in Treatment Group: &quot;, 1, 1000, 20),
+            sliderInput(
+              inputId = &quot;number_control&quot;,
+              label = &quot;Number of Observations in Control Group: &quot;, 1, 1000, 30)
 
-  output$result1 &lt;- DT::renderDataTable({
-    result_simulate &lt;- result_of_simulate()
-    df &lt;- (as.data.frame(cbind(result_simulate$meanbeta, result_simulate$meanvar, result_simulate$meansd, result_simulate$ci_betass, result_simulate$all_coverage, result_simulate$iter)))
-    names(df) &lt;- c(&quot;Beta Estimates&quot;, &quot;Variance of Beta&quot;, &quot;S.E. of Beta&quot;,&quot;Confidence Interval on Beta&quot;, &quot;Coverage Probability&quot;, &quot;Iterations&quot;)
-    dt &lt;- DT::datatable(
-      df,
-      caption = htmltools::tags$caption(
-        style = &quot;font-size:150%&quot;,
-        'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
-      rownames = c(&quot;B0&quot;, &quot;B1&quot;, &quot;B2&quot;))
-  })
+            )
 
-  output$result_plot_beta &lt;- renderPlot({
-    simulated_betas &lt;- result_of_simulate()
-    dddd &lt;- as.data.frame(simulated_betas$m_betas)
-    data_long &lt;- gather(dddd, Parameter, values, factor_key=TRUE)
-    data_long$Parameter &lt;- with(data_long, ifelse(Parameter == &quot;V1&quot;,&quot;0&quot;,
-                                                  ifelse(Parameter ==&quot;V2&quot;,&quot;1&quot;, &quot;2&quot;)))
-    mu &lt;- data_long %&gt;%
-      dplyr::group_by(Parameter) %&gt;%
-      dplyr::summarize(mean_beta = mean(values)) %&gt;% as.data.frame()
+            ),
+          column(
+            width = 3,
+            box(
+              title = tags$p(strong(style =&quot;font-size: 18px;&quot;,&quot;True regression parameters&quot;)),
+              width = NULL,
+              status = &quot;primary&quot;,
+              collapsible = TRUE,
+              background = NULL,
+              p(&quot;Below are the true parameter values for the current simulation. You can change 'em if you want.&quot;),
+              numericInput(
+                inputId = &quot;b0&quot;,
+                label = &quot;True value of Beta 0: &quot;,
+                value = 0.15),
+              numericInput(
+                inputId = &quot;b1&quot;,
+                label = &quot;True value of Beta 1: &quot;,
+                value = 0.50),
+              numericInput(
+                inputId = &quot;b2&quot;,
+                label = &quot;True value of Beta 2: &quot;,
+                value = 1.00)
+            )
+          ),
+          column(
+            width = 6,
+            box(
+            title = tags$p(strong(style =&quot;font-size: 18px;&quot;,&quot;Result of Simulation&quot;)),
+            width = 15,
+            status = &quot;primary&quot;,
+            div(style = 'overflow-x: scroll', DT::dataTableOutput('result1')),
+            collapsible = TRUE,
+            background = NULL)
+        )
+        ),
+        fluidRow(
+          column(
+            width = 12,
+            box(
+              title = &quot;Distribution of beta estimates from the above simulation&quot;,
+              width = 15,
+              status = &quot;primary&quot;,
+              div(style = 'overflow-x: scroll', plotOutput('result_plot_beta')),
+              collapsible = TRUE, background = &quot;red&quot;)
+          )
 
-    # Create normal curve to overlay to plot
-    # calculate mean and sd by group
-    stats &lt;- aggregate(values~Parameter, data_long, function(x) c(mean=mean(x), sd=sd(x)))
-    stats &lt;- data.frame(Parameter=stats[,1],stats[,2])
-    x &lt;- with(data_long, seq(min(values), max(values), len=100))
-    dfn &lt;- do.call(rbind,lapply(1:nrow(stats),
-                                function(i) with(stats[i,],data.frame(Parameter, x, y=dnorm(x,mean=mean,sd=sd)))))
+        )
+      ),
+      tabItem(
+        tabName = &quot;auc_reg&quot;,
+         fluidRow(
+          column(
+            width = 3,
+        box(#title=&quot;Input file&quot;,
+            width = 12,
+            status = &quot;success&quot;,
+            fileInput(&quot;file&quot;, &quot;Upload the file to be analyzed&quot;),
+            helpText(&quot;Default maximum file size is 5MB&quot;),
+            tags$hr(),
+            h5(helpText(&quot;Select the read.table parameters below&quot;)),
+            checkboxInput(
+              inputId = 'header', label = &quot;Header TRUE?&quot;, value = TRUE),
+            checkboxInput(
+              inputId = 'string_factors', label = &quot;String as Factors?&quot;, value = FALSE),
+            radioButtons(
+              inputId = 'sep',
+              label = 'Separator',
+              choices = c(Comma = &quot;,&quot;, Semicolon = ';', Tab = '\t', Space=''), selected = ',')
+          )),
+        column(
+          width = 9,
+        box(
+          width = 20,
+          uiOutput(&quot;describe_file&quot;)
+        )
+        )
+         ),
+        fluidRow(
+          column(
+            width = 3,
+        box(
+          title = tags$p(strong(style =&quot;font-size: 18px;color: green&quot;,&quot;Data analysis&quot;)),
+          width = 12,
+          uiOutput(&quot;choose_response&quot;),
+          uiOutput(&quot;choose_group&quot;),
+          uiOutput(&quot;independent&quot;),
+          textOutput(&quot;input_oupt&quot;)
+          )
+        ),
+        column(
+            width = 6,
+        box(
+          title = tags$p(strong(style =&quot;font-size: 18px;color: green&quot;,&quot;Model Results&quot;)),
+          width = 20,
+          dataTableOutput(&quot;model_result&quot;)
+          )
+        )
+      )
+      ),
+      tabItem(
+        tabName = &quot;server_code&quot;,
+        fluidRow(
+          column(
+            width = 8,
+            box(
+              width = 12,
+              # uiOutput(&quot;markdown&quot;)
+              includeMarkdown(&quot;server.md&quot;)
+              # includeHTML(&quot;server.html&quot;)
+              # HTML(markdown::markdownToHTML(knitr::knit('server.Rmd', quiet = FALSE)))
+              # tags$iframe(
+              #   seamless = &quot;seamless&quot;,
+              #   style=&quot;height:400px; width:100%; scrolling=yes&quot;,
+              #   src = &quot;https://websitesetup.org/css3-cheat-sheet/&quot;)
+            )
+          )
+        )
+      ),
+      tabItem(
+        tabName = &quot;about_me&quot;,
+        fluidRow(
+          column(
+            width = 4,
+            box(
+              width = 12,
+              status = &quot;primary&quot;,
+              collapsible = TRUE,
+              p(&quot;This is about me.&quot;),
+              tags$a(href = &quot;http://ouhsc.edu/bbmc/team/&quot;, img(src = &quot;som.jpg&quot;, height = 200, width = 200))
+              , br()
+              , br(),
+              span(&quot;I am a Research Biostatistician at &quot;,
+                   span(tags$a(href = &quot;http://ouhsc.edu/bbmc/team/&quot;, &quot;The Department of Pediatrics, The University of Oklahoma Health Sciences Center. &quot;),
+                        style = &quot;color:blue&quot;),
+              &quot;I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
+              in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
+              Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.&quot;, style = &quot;font-size:120%&quot;)
+            )
+          )
+        )
+      ),
+      tabItem(
+        tabName = &quot;feedback&quot;,
+        fluidRow(
+          column(
+            width = 4,
+            box(
+              width = 12,
+              status = &quot;primary&quot;,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              span(&quot;I can be contacted at&quot;,
+              a(&quot;energeticsom@gmail.com&quot;, href = &quot;mailto:energeticsom@gmail.com&quot;),
+              br(),
+              br(),
+              p(&quot;Please report any bugs about the sAUC&quot;, span(tags$a(href = &quot;https://github.com/sbohora/sAUC&quot;, &quot;here&quot;))),
+              br(),
+              shiny::hr(),
+              em(
+                span(&quot;Created by &quot;),
+                a(&quot;Som B. Bohora&quot;, href = &quot;mailto:energeticsom@gmail.com&quot;),
+                span(&quot;, July 2017&quot;),
+                br(),
+                br()
+                ), style = &quot;font-size:140%&quot;)
+            )
+          )
+        )
+      )
+    )
 
-    # Change colors by groups
-    ggplot(data_long, aes(x=values, color=Parameter, fill=Parameter)) +
-      geom_histogram(aes(y=..density..), position=&quot;identity&quot;, alpha=0.7, bins = 50) +
-      geom_density(alpha=0.6, size = 0.9, adjust = 0.6) +
-      facet_grid(.~Parameter, labeller = label_bquote(cols = beta[.(Parameter)])) +
-      geom_vline(data=mu, aes(xintercept=mean_beta, color=Parameter),linetype=&quot;dashed&quot;) +
-      scale_color_manual(values=c(&quot;blue&quot;, &quot;red&quot;, &quot;maroon&quot;)) +
-      # scale_fill_manual(values=c(&quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;))+
-      labs(x=&quot;Estimates&quot;, y = &quot;Density&quot;) +
-      theme_classic() +
-      theme(text = element_text(size=20)) +
-      theme(legend.position=&quot;none&quot;) +
-      geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = &quot;black&quot;)
-  })
+  ) #End the dashboardBody
 
-  output$hist_gram &lt;- renderPlot({
-    hist(rnorm(10))
-  })
-})</code></pre>
+) #End the dashboardPage,</code></pre>
+</div>
 
 
 

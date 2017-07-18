@@ -1,17 +1,7 @@
----
-# title: "codes"
-# author: "Som Bohora"
-# date: "July 17, 2017"
-output: 
-  html_document:
-    keep_md: true
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-Below is the `server.R` code
+
+#### Below is the `server.R` code
 
 ```r
 library(shiny)
@@ -22,11 +12,11 @@ library(ggplot2)
 library(DT)
 
 shinyServer(function(input, output){
-  output$menu <- renderMenu({
-    sidebarMenu(
-      menuItem("Menu Item", icon =icon("calendar"))
-    )
-  })
+  # output$menu <- renderMenu({
+  #   sidebarMenu(
+  #     menuItem("Menu Item", icon =icon("calendar"))
+  #   )
+  # })
 
   # Create reactive to read data
   data <- reactive({
@@ -83,8 +73,8 @@ shinyServer(function(input, output){
 
     DT::datatable(as.data.frame(res$"Model summary"),
                 caption = htmltools::tags$caption(
-                  style = "font-size:105%",
-                  strong(paste('Model results'))))
+                  style = "font-size:120%",
+                  strong('Model results'), '{Note: left-side of model is:', res$"model_formula","}"))
   })
 
   # Display orginal data
@@ -192,9 +182,6 @@ shinyServer(function(input, output){
       theme(legend.position="none") +
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
-
-  output$hist_gram <- renderPlot({
-    hist(rnorm(10))
-  })
 })
+
 ```

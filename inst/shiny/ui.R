@@ -229,7 +229,7 @@ dashboardPage(
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
-          fileInput("file", "Upload the file to be analyzed"),
+          fileInput("file", "Upload a data file to be analyzed"),
           helpText("Default maximum file size is 5MB"),
           tags$hr(),
           h5(helpText("Select the read.table parameters below")),
@@ -261,6 +261,7 @@ dashboardPage(
           width = 12,
           ollapsible = TRUE,
           solidHeader = TRUE,
+          collapsible = TRUE,
           status = "warning",
           uiOutput("choose_response"),
           uiOutput("choose_group"),
@@ -285,7 +286,7 @@ dashboardPage(
         tabName = "example",
         fluidRow(
           column(
-            width = 12,
+            width = 9,
             box(
               width = 20,
               collapsible = TRUE,
@@ -293,13 +294,13 @@ dashboardPage(
               status = "info",
               title = "Example using Semiparametric AUC regression method",
               background = NULL,
-              includeMarkdown("example.md")
+              # includeMarkdown("example.md")
               # includeHTML("server.html")
               # HTML(markdown::markdownToHTML(knitr::knit('server.Rmd', quiet = FALSE)))
-              # tags$iframe(
-              #   seamless = "seamless",
-              #   style="height:400px; width:100%; scrolling=yes",
-              #   src = "https://websitesetup.org/css3-cheat-sheet/")
+              # includeHTML("example.html")
+              tags$iframe(src = 'example.html', # put .html to /www
+              width = '100%', height = '1000px',
+              frameborder = 0, scrolling = 'auto')
             )
           )
         )
@@ -315,8 +316,11 @@ dashboardPage(
               solidHeader = TRUE,
               status = "info",
               background = "orange",
-              includeMarkdown("server.md")
-              # includeHTML("server.html")
+              # includeMarkdown("server.md")
+              tags$iframe(src = 'server.html', # put .html to /www
+              width = '100%', height = '1000px',
+              frameborder = 0, scrolling = 'auto')
+              # includeHTML("example.html")
               # HTML(markdown::markdownToHTML(knitr::knit('server.Rmd', quiet = FALSE)))
               # tags$iframe(
               #   seamless = "seamless",
@@ -337,7 +341,11 @@ dashboardPage(
               solidHeader = TRUE,
               status = "info",
               background = "orange",
-              includeMarkdown("ui.md")
+              # includeMarkdown("ui.md")
+              tags$iframe(src = 'ui.html', # put .html to /www
+              width = '100%', height = '1000px',
+              frameborder = 0, scrolling = 'auto')
+              # includeHTML("example.html")
             )
           )
         )
@@ -353,7 +361,7 @@ dashboardPage(
               background = "navy",
               collapsible = TRUE,
               solidHeader = TRUE,
-              p("This is about me."),
+              p("This is about me.", style = "font-size:120%"),
               tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200))
               , br()
               , br(),
@@ -376,7 +384,7 @@ dashboardPage(
             box(
               width = 12,
               status = "primary",
-              background = "orange",
+              background = NULL,
               # Valid colors are: red, yellow, aqua, blue, light-blue, green, navy, teal, olive, lime, orange, fuchsia, purple, maroon, black.
               collapsible = TRUE,
               solidHeader = TRUE,
@@ -393,7 +401,7 @@ dashboardPage(
                 span(", July 2017"),
                 br(),
                 br()
-                ), style = "font-size:140%; color:white")
+                ), style = "font-size:140%; color:green")
             )
           )
         )
