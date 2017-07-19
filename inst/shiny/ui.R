@@ -244,6 +244,7 @@ dashboardPage(
           width = 9,
         box(
           width = 20,
+          height = 20,
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
@@ -251,6 +252,8 @@ dashboardPage(
         )
         )
          ),
+        br(),
+        br(),
         fluidRow(
           column(
             width = 3,

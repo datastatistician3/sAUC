@@ -81,7 +81,9 @@ shinyServer(function(input, output){
     # Display orginal data
   output$show_data <- renderDataTable({
     if(is.null(data())){return()}
-    data()
+    datatable(data(), filter = 'top', options = list(
+      pageLength = 8, autoWidth = TRUE
+    ))
   })
 
   # Display summary of the original data
@@ -99,7 +101,33 @@ shinyServer(function(input, output){
   })
 
   output$plot_data <- renderPlot({
-    psych::pairs.panels(data())
+    ds_plot_response <- data()
+    ggplot(data=ds_plot_response, aes_string(input$response)) +
+    geom_histogram(bins = 10, fill = "blue") +
+    labs(title = paste0("Histogram for ", input$response)) +
+    labs(x=input$response, y="Count") +
+    theme(plot.title = element_text(hjust = 0.5))
+  })
+
+  output$hist_plot <- renderPlot({
+    ds_read_cat <- data()
+    cat_vars <- c(input$independent,input$group_var)
+    ds_plot_cat <- ds_read_cat[,cat_vars]
+    ds_plot_cat[, cat_vars] <- lapply(ds_plot_cat[, cat_vars], function(x) factor(x))
+
+    ds_cat <- ds_plot_cat %>% tidyr::gather(cat_variables, value)
+    re_from <- "\\b([[:lower:]])([[:lower:]]+)"
+    ds_cat$cat_variables <- gsub(re_from, "\\U\\1\\L\\2" ,ds_cat$cat_variables, perl=TRUE)
+
+    cat_plot <- ggplot(ds_cat,aes(x = value)) +
+      facet_wrap(~ cat_variables, scales = "free_x") +
+      geom_bar(stat ="count", fill = "#990033")  +
+      ggtitle("Barplots for discrete variables") +
+      theme(plot.title = element_text(hjust = 0.5)) +
+      xlab("Covariates") + geom_text(stat='count', aes(label = ..count..), vjust = -1)
+      ylab("Frequency")
+
+      cat_plot
   })
 
   output$describe_file <- renderUI({
@@ -118,7 +146,14 @@ shinyServer(function(input, output){
           dataTableOutput("summaryy")),
         tabPanel(
           title = "Plots",
-          plotOutput("plot_data"))
+          column(
+            width = 4,
+            plotOutput("plot_data")),
+          column(
+            width = 8,
+            plotOutput("hist_plot")
+          )
+          )
       )
     }
   })
