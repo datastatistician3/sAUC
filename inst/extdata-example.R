@@ -1,4 +1,4 @@
-fasd <- read.csv("../extdata/fasd.csv")
+fasd <- read.csv("./inst/extdata/fasd.csv")
 vars <- c("x1", "x2", "group")
 fasd[, vars] <- lapply(fasd[, vars], function(x) factor(x))
 
@@ -19,4 +19,3 @@ sAUC::sAUC(x = y ~ smoke + vitamin, treatment_group = "group", data = fasd_label
 # Run simulation
 
 simulate_one_predictor(iter = 300, m = 100, p = 200)
-

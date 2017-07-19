@@ -68,13 +68,14 @@ shinyServer(function(input, output){
     ds <- data()
     cov_variables <- c(input$independent,input$group_var)
     ds[, cov_variables] <- lapply(ds[, cov_variables], function(x) factor(x))
-    res <- sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
+    mod_result <- sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
                treatment_group = input$group_var, data = ds)
 
-    DT::datatable(as.data.frame(res$"Model summary"),
+    DT::datatable(as.data.frame(mod_result$"Model summary"),
                 caption = htmltools::tags$caption(
                   style = "font-size:120%",
-                  strong('Model results'), '{Note: left-side of model is:', res$"model_formula","}"))
+                  strong('Model results'), '{Note: left-side of model is:', mod_result$"model_formula","}"),
+                  options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
   })
 
   # Display orginal data
@@ -100,7 +101,7 @@ shinyServer(function(input, output){
               caption = htmltools::tags$caption(
                 style = "font-size:200%",
                 htmltools::strong(paste("Table 1: Descriptive summary"))),
-              rownames = TRUE)
+              options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
   })
 
   output$plot_data <- renderPlot({
@@ -109,7 +110,7 @@ shinyServer(function(input, output){
 
   output$describe_file <- renderUI({
     if (is.null(data())){
-      h3("Data are not read yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
+      h3("Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
     } else {
       tabsetPanel(
         tabPanel(
@@ -147,7 +148,7 @@ shinyServer(function(input, output){
       caption = htmltools::tags$caption(
         style = "font-size:150%",
         'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
-      rownames = c("B0", "B1", "B2"))
+      options = list(pageLength = 6, dom = 'tip'), rownames = c("B0", "B1", "B2"))
   })
 
   output$result_plot_beta <- renderPlot({

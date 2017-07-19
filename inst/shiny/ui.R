@@ -1,7 +1,5 @@
 library(shiny)
 library(shinydashboard)
-path_files <- "C:/Users/sbohora/Documents/GitHub/sAUC/R/"
-# lapply(list.files(path = file.path(path_files), pattern = "[.]R$", recursive = TRUE), function(x) source(paste0(path_files,"/",x)))
 
 header <- dashboardHeader(
   title = tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")),
