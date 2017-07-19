@@ -82,7 +82,7 @@ shinyServer(function(input, output){
   output$show_data <- renderDataTable({
     if(is.null(data())){return()}
     datatable(data(), filter = 'top', options = list(
-      pageLength = 8, autoWidth = TRUE
+      pageLength = 8
     ))
   })
 
@@ -105,6 +105,7 @@ shinyServer(function(input, output){
     ggplot(data=ds_plot_response, aes_string(input$response)) +
     geom_histogram(bins = 10, fill = "blue") +
     labs(title = paste0("Histogram for ", input$response)) +
+    theme(plot.title = element_text(hjust = 0.5), text=element_text(size=17)) +
     labs(x=input$response, y="Count") +
     theme(plot.title = element_text(hjust = 0.5))
   })
@@ -123,10 +124,9 @@ shinyServer(function(input, output){
       facet_wrap(~ cat_variables, scales = "free_x") +
       geom_bar(stat ="count", fill = "#990033")  +
       ggtitle("Barplots for discrete variables") +
-      theme(plot.title = element_text(hjust = 0.5)) +
+      theme(plot.title = element_text(hjust = 0.5), text=element_text(size=17)) +
       xlab("Covariates") + geom_text(stat='count', aes(label = ..count..), vjust = -1)
       ylab("Frequency")
-
       cat_plot
   })
 
