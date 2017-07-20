@@ -212,4 +212,10 @@ shinyServer(function(input, output){
       theme(legend.position="none") +
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
+
+  output$download_cv <- downloadHandler(
+    filename = "som-bohora-cv.pdf",
+    content = function(file) {
+      file.copy("www/cv.pdf", file)
+    })
 })

@@ -375,7 +375,8 @@ dashboardPage(
               data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.", style = "font-size:120%")
             )
           )
-        )
+        ),
+        downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
       ),
       tabItem(
         tabName = "feedback",
