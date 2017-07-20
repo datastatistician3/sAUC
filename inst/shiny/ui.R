@@ -198,7 +198,8 @@ dashboardPage(
             collapsible = TRUE,
             solidHeader = TRUE,
             status = "info",
-            background = NULL)
+            background = NULL),
+            p(class = 'text-center', downloadButton('download_simu_result', 'Download Simulation Results'))
         )
         ),
         fluidRow(
@@ -211,9 +212,9 @@ dashboardPage(
               background = "red",
               collapsible = TRUE,
               solidHeader = TRUE,
-              status = "info")
+              status = "info"),
+              p(class = 'text-center', downloadButton('download_simu_plot', 'Download Simulation Plot'))
           )
-
         )
       ),
       tabItem(
@@ -281,9 +282,10 @@ dashboardPage(
           solidHeader = TRUE,
           status = "warning",
           dataTableOutput("model_result")
-          )
+          ),
+        p(class = 'text-center', downloadButton('download_model_result', 'Download Model Results'))
         )
-      )
+        )
       ),
       tabItem(
         tabName = "example",

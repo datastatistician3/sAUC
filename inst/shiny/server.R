@@ -57,19 +57,29 @@ shinyServer(function(input, output){
                      selected = names(data())[!names(data()) %in% input$response][2])
   })
 
-  output$model_result <- renderDataTable({
+  run_sAUC <- reactive({
     if (is.null(data())) return(NULL)
     ds <- data()
     cov_variables <- c(input$independent,input$group_var)
     ds[, cov_variables] <- lapply(ds[, cov_variables], function(x) factor(x))
-    mod_result <- sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
+    sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
                treatment_group = input$group_var, data = ds)
 
+  })
+
+  output$model_result <- renderDataTable({
+    mod_result <- run_sAUC()
     DT::datatable(as.data.frame(mod_result$"Model summary"),
                 caption = htmltools::tags$caption(
                   style = "font-size:120%",
                   strong('Model results'), '{Note: left-side of model is:', mod_result$"model_formula","}"),
                   options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
+  })
+
+  output$download_model_result = downloadHandler('sAUC-model-results.csv', content = function(file) {
+    mod_result <- run_sAUC()
+    dt_model_results <- as.data.frame(mod_result$"Model summary")
+    write.csv(dt_model_results[, , drop = FALSE], file, row.names = TRUE)
   })
 
   # Display orginal data
@@ -100,7 +110,7 @@ shinyServer(function(input, output){
               options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
   })
 
-  output$plot_data <- renderPlot({
+  output_hist_plot <- reactive({
     ds_plot_response <- data()
     ggplot(data=ds_plot_response, aes_string(input$response)) +
     geom_histogram(bins = 10, fill = "blue") +
@@ -111,6 +121,17 @@ shinyServer(function(input, output){
   })
 
   output$hist_plot <- renderPlot({
+    print(output_hist_plot())
+  })
+
+  output$download_hist_plot <- downloadHandler(
+    filename = function() { paste("sAUC-histogram", '.png', sep='') },
+    content = function(file) {
+        device <- function(..., width, height) grDevices::png(..., width = width, height = height, res = 300, units = "in")
+        ggsave(file, plot = output_hist_plot(), device = device)
+  })
+
+  output_bar_plot <- reactive({
     ds_read_cat <- data()
     cat_vars <- c(input$independent,input$group_var)
     ds_plot_cat <- ds_read_cat[,cat_vars]
@@ -128,6 +149,17 @@ shinyServer(function(input, output){
       xlab("Covariates") + geom_text(stat='count', aes(label = ..count..), vjust = -1)
       ylab("Frequency")
       cat_plot
+  })
+
+  output$bar_plot <- renderPlot({
+    print(output_bar_plot())
+  })
+
+  output$download_bar_plot <- downloadHandler(
+    filename = function() { paste("sAUC-bar-plot", '.png', sep='') },
+    content = function(file) {
+        device <- function(..., width, height) grDevices::png(..., width = width, height = height, res = 300, units = "in")
+        ggsave(file, plot = output_bar_plot(), device = device)
   })
 
   output$describe_file <- renderUI({
@@ -148,10 +180,13 @@ shinyServer(function(input, output){
           title = "Plots",
           column(
             width = 4,
-            plotOutput("plot_data")),
+            plotOutput("hist_plot"),
+            p(class = 'text-center', downloadButton('download_hist_plot', 'Download Histogram'))
+            ),
           column(
             width = 8,
-            plotOutput("hist_plot")
+            plotOutput("bar_plot"),
+            p(class = 'text-center', downloadButton('download_bar_plot', 'Download Bar Plot'))
           )
           )
       )
@@ -168,19 +203,30 @@ shinyServer(function(input, output){
     sAUC::simulate_one_predictor(iter = iter, m = m, p = p, b0 = b0, b1 = b1, b2 = b2)
   })
 
-  output$result1 <- DT::renderDataTable({
+  simulation_results <- reactive({
     result_simulate <- result_of_simulate()
-    df <- (as.data.frame(cbind(result_simulate$meanbeta, result_simulate$meanvar, result_simulate$meansd, result_simulate$ci_betass, result_simulate$all_coverage, result_simulate$iter)))
+    df <- (as.data.frame(cbind(result_simulate$meanbeta, result_simulate$meanvar, result_simulate$meansd,
+                               result_simulate$ci_betass, result_simulate$all_coverage, result_simulate$iter)))
     names(df) <- c("Beta Estimates", "Variance of Beta", "S.E. of Beta","Confidence Interval on Beta", "Coverage Probability", "Iterations")
+    df
+  })
+
+  output$result1 <- DT::renderDataTable({
+    df_results <- simulation_results()
     dt <- DT::datatable(
-      df,
+      df_results,
       caption = htmltools::tags$caption(
         style = "font-size:150%",
         'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
       options = list(pageLength = 6, dom = 'tip'), rownames = c("B0", "B1", "B2"))
   })
 
-  output$result_plot_beta <- renderPlot({
+  output$download_simu_result = downloadHandler('sAUC-simulation-results.csv', content = function(file) {
+    simu_result <- simulation_results()
+    write.csv(simu_result[, , drop = FALSE], file, row.names = c("B0", "B1", "B2"))
+  })
+
+  output_plot_beta <- reactive({
     simulated_betas <- result_of_simulate()
     dddd <- as.data.frame(simulated_betas$m_betas)
     data_long <- gather(dddd, Parameter, values, factor_key=TRUE)
@@ -213,10 +259,21 @@ shinyServer(function(input, output){
       geom_line(data=dfn, aes(x, y), alpha = 0.3, size= 1.2, colour = "black")
   })
 
+  output$result_plot_beta <- renderPlot({
+    print(output_plot_beta())
+  })
+
+  output$download_simu_plot <- downloadHandler(
+    filename = function() { paste("sAUC-simulation-plot", '.png', sep='') },
+    content = function(file) {
+        device <- function(..., width, height) grDevices::png(..., width = width, height = height, res = 600, units = "in")
+        ggsave(file, plot = output_plot_beta(), device = device)
+  })
+
   output$download_cv <- downloadHandler(
     filename = "som-bohora-cv.pdf",
     content = function(file) {
-      file.copy("cv.pdf", file)
+      file.copy("www/bohora-cv.pdf", file)
     })
 
    output$download_data <- downloadHandler(
