@@ -239,7 +239,9 @@ dashboardPage(
             inputId = 'sep',
             label = 'Separator',
             choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
-          )),
+          ),
+          downloadButton('download_data', 'Download Data')
+        ),
         column(
           width = 9,
         box(

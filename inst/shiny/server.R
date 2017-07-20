@@ -216,6 +216,13 @@ shinyServer(function(input, output){
   output$download_cv <- downloadHandler(
     filename = "som-bohora-cv.pdf",
     content = function(file) {
-      file.copy("www/cv.pdf", file)
+      file.copy("cv.pdf", file)
     })
+
+   output$download_data <- downloadHandler(
+    filename = function() { paste('fasd', '.csv', sep='') },
+    content = function(file) {
+      write.csv(data(), file)
+    }
+  )
 })
