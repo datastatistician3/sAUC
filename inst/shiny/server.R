@@ -223,6 +223,5 @@ shinyServer(function(input, output){
     filename = function() { paste('fasd', '.csv', sep='') },
     content = function(file) {
       write.csv(data(), file)
-    }
-  )
+    })
 })
