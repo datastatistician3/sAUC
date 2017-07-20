@@ -134,7 +134,6 @@ dashboardPage(
         label = "Search..."
       )
     )
-
   ),
   dashboardBody(
     tabItems(
@@ -161,9 +160,7 @@ dashboardPage(
             sliderInput(
               inputId = "number_control",
               label = "Number of Observations in Control Group: ", 1, 1000, 30)
-
             )
-
             ),
           column(
             width = 3,

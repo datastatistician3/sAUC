@@ -99,9 +99,9 @@ shinyServer(function(input, output){
   # Display summary of the original data
   output$summaryy <- renderDataTable({
     ds <- data()
-    # numeric_columns <- names(ds)[sapply(ds, function(x) is.numeric(x))]
+    numeric_columns <- names(ds)[sapply(ds, function(x) is.numeric(x))]
     if(is.null(ds)){return()}
-    summary_table <- as.data.frame(round(psych::describe(ds)[-1]))
+    summary_table <- as.data.frame(round(psych::describe(ds[numeric_columns])))
     names(summary_table) <- Hmisc::capitalize(names(summary_table))
     datatable(summary_table,
               caption = htmltools::tags$caption(
@@ -188,7 +188,7 @@ shinyServer(function(input, output){
             plotOutput("bar_plot"),
             p(class = 'text-center', downloadButton('download_bar_plot', 'Download Bar Plot'))
           )
-          )
+        )
       )
     }
   })
