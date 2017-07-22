@@ -136,6 +136,10 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    tags$style(type="text/css",
+  ".shiny-output-error { visibility: hidden; }",
+  ".shiny-output-error:before { visibility: hidden; }"
+  ),
     tabItems(
       tabItem(
         tabName = "auc_simulate",
@@ -271,16 +275,29 @@ dashboardPage(
           )
         ),
         column(
-            width = 6,
+            width = 5,
         box(
           title = tags$p(strong(style ="font-size: 18px;color: green","Model Results")),
-          width = 20,
+          width = 14,
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "warning",
           dataTableOutput("model_result")
           ),
-        p(class = 'text-center', downloadButton('download_model_result', 'Download Model Results'))
+        p(class = 'text-center', downloadButton('download_model_result', 'Download Model Results')),
+        p(class = 'text-right', downloadButton('download_roc_plot', 'Download ROC curve plot'))
+        ),
+        column(
+          width = 4,
+        box(
+          # title = tags$p(strong(style ="font-size: 18px;color: green","ROC curve")),
+          width = 14,
+          height = 5,
+          # collapsible = TRUE,
+          # solidHeader = TRUE,
+          # status = "warning",
+          plotOutput("roc_plot", height = 350, width = 500)
+        )
         )
         )
       ),

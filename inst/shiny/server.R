@@ -4,6 +4,7 @@ library(magrittr)
 library(tidyr)
 library(ggplot2)
 library(DT)
+library(plotROC)
 
 shinyServer(function(input, output){
   # output$menu <- renderMenu({
@@ -53,8 +54,8 @@ shinyServer(function(input, output){
   output$independent <- renderUI({
   checkboxGroupInput(inputId = "independent",
                      label =  "Independent Variables:",
-                     choices = names(data())[!names(data()) %in% input$response],
-                     selected = names(data())[!names(data()) %in% input$response][2])
+                     choices = names(data())[!names(data()) %in% c(input$response, input$group_var)],
+                     selected = names(data())[!names(data()) %in% c(input$response, input$group_var)][1])
   })
 
   run_sAUC <- reactive({
@@ -81,6 +82,50 @@ shinyServer(function(input, output){
     dt_model_results <- as.data.frame(mod_result$"Model summary")
     write.csv(dt_model_results[, , drop = FALSE], file, row.names = TRUE)
   })
+
+  #ROC curve
+  output_roc_plot <- reactive({
+    ds_roc <- data()
+    auc_variables <- c(input$independent,input$group_var)
+    ds_roc[, auc_variables] <- lapply(ds_roc[, auc_variables], function(x) factor(x))
+
+    if (sum(length(input$independent)) == 1){
+    rocplot1 <- ggplot(ds_roc, aes_string(d = input$group_var, m = input$response, color = input$independent)) +
+      geom_roc(show.legend = FALSE) +
+      geom_rocci()
+
+    direct_label(rocplot1,  labels = unique(levels(factor(ds_roc[[input$independent]])))) + style_roc() +
+      scale_x_continuous("1 - Specificity") +
+      scale_y_continuous("Sensitivity") +
+      ggtitle(paste("ROC curve for", input$independent)) +
+      theme(plot.title = element_text(hjust = 0.5), text=element_text(size=17)) +
+      annotate("text", x = 0.50, y = .1,
+             label = paste("AUCs are: ", paste(round(calc_auc(rocplot1)$AUC, 2), collapse = " and ")))
+    } else {
+      rocplot2 <- ggplot(ds_roc, aes_string(d = input$group_var, m = input$response)) +
+      geom_roc(show.legend = FALSE) +
+      geom_rocci()
+
+   direct_label(rocplot2,  labels = unique(levels(factor(ds_roc[[input$group_var]])))) + style_roc() +
+      scale_x_continuous("1 - Specificity") +
+      scale_y_continuous("Sensitivity") +
+      ggtitle(paste("ROC curve for", input$group_var)) +
+      theme(plot.title = element_text(hjust = 0.5), text=element_text(size=17)) +
+      annotate("text", x = 0.50, y = .1,
+             label = paste("AUC = ", paste(round(calc_auc(rocplot2)$AUC, 2))))
+    }
+  })
+
+  output$roc_plot <- renderPlot({
+    print(output_roc_plot())
+  })
+
+  output$download_roc_plot <- downloadHandler(
+    filename = function() { paste("sAUC-ROC-curve", '.png', sep='') }, content = function(file) {
+      device <- function(..., width, height) grDevices::png(..., width = width, height = height, res = 300, units = "in")
+      ggsave(file, plot = output_roc_plot(), device = device)
+})
+
 
   # Display orginal data
   output$show_input_file <- renderTable({
