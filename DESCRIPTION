@@ -2,7 +2,7 @@ Package: sAUC
 Title: Semi-parametric Area Under the Curve (AUC) regression
 Description: Perform AUC analyses with discrete covariates and a semi-parametric
     estimation.
-Version: 0.0.1.9000
+Version: 0.0.1.9
 Date: 2017-03-06
 Authors@R: person("Som", "Bohora", email="energeticsom@gmail.com", role=c("aut", "cre"))
 Author: Som Bohora [aut, cre]

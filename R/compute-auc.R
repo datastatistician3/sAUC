@@ -1,4 +1,4 @@
-#' @name compute_inverse
+#' @name compute_auc
 #'
 #' @export
 #'

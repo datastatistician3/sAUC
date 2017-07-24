@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculate-auc.R
 \name{calculate_auc}
 \alias{calculate_auc}
-\title{Ihis function calculates different estimates related to AUC}
+\title{This function calculates different estimates related to AUC}
 \usage{
 calculate_auc(x, y = NULL, data = NULL)
 }

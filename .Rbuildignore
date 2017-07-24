@@ -16,3 +16,5 @@
 ^unshared/
 ^utility/
 ^sandbox/
+^docs/
+^_pkgdown\.yml$

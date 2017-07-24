@@ -2,7 +2,7 @@
 #'
 #' @export
 #'
-#' @title Ihis function calculates different estimates related to AUC
+#' @title This function calculates different estimates related to AUC
 #'
 #' @description This function calculates variance of predicted AUC, logit of predicted AUC,
 #' and variance of logit of predicted AUC responses passed

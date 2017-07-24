@@ -1,0 +1,40 @@
+template:
+  params:
+    bootswatch: united
+
+home:
+  strip_header: true
+
+reference:
+- title: sAUC Regression
+  contents:
+  - calculate_auc
+  - compute_inverse
+  - sAUC
+  - compute_auc
+
+- title: sAUC Simulation
+  contents:
+  - simulate_one_predictor
+
+- title: Data
+  contents:
+  - fasd
+
+navbar:
+  type: default
+  left:
+  - icon: fa-home
+    href: articles/sAUC.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: sAUC Example
+      href: articles/sAUC.html
+
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/sbohora/sAUC
