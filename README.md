@@ -19,5 +19,5 @@ $$
 where $i=1,...,k; j=1,...,n_i-1; x=1,...,n_i$.   We model the association between AUC $\pi_(x_1 x_2...x_k )$ and covariates using a logistic model.  Such a model specifies that the logit of $\pi_(x_1 x_2...x_k)$ is a linear combination of terms that are products of the dummy variables defined above.  Specifically,
 $$logit(\pi_{x_1 x_2...x_k } )=Z_{(x_1 x_2...x_k )} \boldsymbol{\beta}$$, 
 where $Z_{(x_1 x_2...x_k)}$ is a row vector whose elements are zeroes or ones and are products of $X_1^{(1)} (x_1 ),...,X_1^{(n_i-1) } (x_1),...,X_k^{(1)} (x_k),...,X_k^{(n_k-1)} (x_k)$, and $\boldsymbol{\beta}$ is a column vector of nonrandom unknown parameters.  Now, define a column vector \pi by stacking up $\pi_(x_1 x_2...x_k )$ and define a matrix Z by stacking up $Z_{(x_1 x_2...x_k )}$, as $x_i$ ranges from 1 to $n_i$, $i=1,...,k$, our final model is  
-$$logit(\pi)=Z\beta ...(1)$$
+$$logit(\pi)=Z\boldsymbol{\beta} ...(1)$$
 The reason for us to use a logit transformation of the AUC instead of using the original AUC is for variance stabilization.  We will illustrate the above general model using examples.
