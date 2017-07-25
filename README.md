@@ -24,5 +24,5 @@ where $Z_{(x_1 x_2...x_k)}$ is a row vector whose elements are zeroes or ones an
 $$logit(\pi)=Z\boldsymbol{\beta} ...(1)$$
 The reason for us to use a logit transformation of the AUC instead of using the original AUC is for variance stabilization.  We will illustrate the above general model using examples.
 
-
+![](http://latex.codecogs.com/gif.latex?a%20%3D%20%5Cfrac%7Bb%7D%7Bc%7D)
 ### Estimation
