@@ -1,13 +1,16 @@
+
 [![Build Status](https://travis-ci.com/sbohora/sAUC.svg?token=shyYTzvvbsLRHsRAWXTg)](https://travis-ci.com/sbohora/sAUC)
 
 ## Semi-parametric Area Under the Curve (sAUC) Regression
 Perform AUC analyses with discrete covariates and a semi-parametric estimation
 
+
+
 ### Model
 
-We consider applications that compare a response variable y between two groups (A and B) while adjusting for k categorical covariates ($X_1,X_2,...,X_k$).  The response variable y is a continuous or ordinal variable that is not normally distributed.  Without loss of generality, we assume each covariate is coded such that $X_i=1,...,n_i$,for $i=1,...,k$. For each combination of the levels of the covariates, we define the Area Under the ROC curve (AUC) in the following way:
+We consider applications that compare a response variable y between two groups (A and B) while adjusting for k categorical covariates (![](http://latex.codecogs.com/gif.latex?X_1,X_2,...,X_k).  The response variable y is a continuous or ordinal variable that is not normally distributed.  Without loss of generality, we assume each covariate is coded such that ![](http://latex.codecogs.com/gif.latex?X_i%3D1,...,n_i),for ![](http://latex.codecogs.com/gif.latex?i%3D1,...,k). For each combination of the levels of the covariates, we define the Area Under the ROC curve (AUC) in the following way:
 
-$$\pi_{x_1 x_2...x_k}=P(Y^A>Y^B|X_1=x_1,X_2=x_2,...,X_k=x_k )+\frac{1}{2} P(Y^A=Y^B|X_1=x_1,X_2=x_2,...,X_k=x_k )$$,
+![](http://latex.codecogs.com/gif.latex?pi_%7Bx_1%20x_2...x_k%7D%3DP(Y%5EA%3EY%5EB%7CX_1%3Dx_1,X_2%3Dx_2,...,X_k%3Dx_k%20)+%0Crac%7B1%7D%7B2%7D%20P(Y%5EA%3DY%5EB%7CX_1%3Dx_1,X_2%3Dx_2,...,X_k%3Dx_k%20)),
 where $x_1=1,...,n_1,...,x_k=1,...,n_k$, and $Y^A$ and $Y^B$ are two randomly chosen observations from Group A and B, respectively.  The second term in the above equation is for the purpose of accounting ties.
 
 For each covariate $X_i$, without loss of generality, we use the last category as the reference category and define ($n_i-1$) dummy variables $X_i^{(1)},X_i^{(2)},...,X_i^{(n_i-1)}$  such that 
