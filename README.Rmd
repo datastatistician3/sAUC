@@ -24,18 +24,102 @@ latexImg = function(latex){
 
 We consider applications that compare a response variable y between two groups (A and B) while adjusting for k categorical covariates `r latexImg('X_1,X_2,...,X_k')`.  The response variable y is a continuous or ordinal variable that is not normally distributed.  Without loss of generality, we assume each covariate is coded such that `r latexImg('X_i=1,...,n_i')`,for `r latexImg('i=1,...,k')`. For each combination of the levels of the covariates, we define the Area Under the ROC curve (AUC) in the following way:
 
-`r latexImg('\\pi_{x_1 x_2...x_k}=P(Y^A>Y^B|X_1=x_1,X_2=x_2,...,X_k=x_k )+\\frac{1}{2} P(Y^A=Y^B|X_1=x_1,X_2=x_2,...,X_k=x_k )') `,
+`r latexImg('\\pi_{x_1 x_2...x_k}=P(Y^A>Y^B|X_1=x_1,X_2=x_2,...,X_k=x_k )+\\frac{1}{2} P(Y^A=Y^B|X_1=x_1,X_2=x_2,...,X_k=x_k ),')`
+
 where `r latexImg('x_1=1,...,n_1,...,x_k=1,...,n_k')`, and `r latexImg('Y^A')` and `r latexImg('Y^B')` are two randomly chosen observations from Group A and B, respectively.  The second term in the above equation is for the purpose of accounting ties.
 
 For each covariate `r latexImg('X_i')`, without loss of generality, we use the last category as the reference category and define (`r latexImg('n_i-1')`) dummy variables `r latexImg('X_i^{(1)},X_i^{(2)},...,X_i^{(n_i-1)}')` such that 
 
-`r latexImg('X_i^{(j)} (x)= \\left\\{\\begin{array}{rrr} 1, j = x \\ 0, j \\ne x,\\end{array}\\right.')`
+`r latexImg('X_i^{(j)} (x)= 1, if j = x')` and `r latexImg('0, if j \\ne x.')`
 
-where $i=1,...,k; j=1,...,n_i-1; x=1,...,n_i$.   We model the association between AUC $\pi_(x_1 x_2...x_k )$ and covariates using a logistic model.  Such a model specifies that the logit of $\pi_(x_1 x_2...x_k)$ is a linear combination of terms that are products of the dummy variables defined above.  Specifically,
-$$logit(\pi_{x_1 x_2...x_k } )=Z_{(x_1 x_2...x_k )} \boldsymbol{\beta},$$ 
-where $Z_{(x_1 x_2...x_k)}$ is a row vector whose elements are zeroes or ones and are products of $X_1^{(1)} (x_1 ),...,X_1^{(n_i-1) } (x_1),...,X_k^{(1)} (x_k),...,X_k^{(n_k-1)} (x_k)$, and $\boldsymbol{\beta}$ is a column vector of nonrandom unknown parameters.  Now, define a column vector \pi by stacking up $\pi_(x_1 x_2...x_k )$ and define a matrix Z by stacking up $Z_{(x_1 x_2...x_k )}$, as $x_i$ ranges from 1 to $n_i$, $i=1,...,k$, our final model is  
-$$logit(\pi)=Z\boldsymbol{\beta} ...(1)$$
+where `r latexImg('i=1,...,k; j=1,...,n_i-1; x=1,...,n_i')`.   We model the association between AUC `r latexImg('\\pi_(x_1 x_2...x_k)')` and covariates using a logistic model.  Such a model specifies that the logit of `r latexImg('\\pi_(x_1 x_2...x_k)')` is a linear combination of terms that are products of the dummy variables defined above.  Specifically,
+
+`r latexImg('logit(\\pi_{x_1 x_2...x_k } )=Z_{(x_1 x_2...x_k )} \\boldsymbol{\\beta},')` 
+
+where `r latexImg('Z_{(x_1 x_2...x_k)}')` is a row vector whose elements are zeroes or ones and are products of `r latexImg('X_1^{(1)} (x_1 ),...,X_1^{(n_i-1) } (x_1),...,X_k^{(1)} (x_k),...,X_k^{(n_k-1)} (x_k)')`, and `r latexImg('\\boldsymbol{\\beta}')` is a column vector of nonrandom unknown parameters.  Now, define a column vector `r latexImg('\\pi')` by stacking up `r latexImg('\\pi_(x_1 x_2...x_k )')` and define a matrix Z by stacking up `r latexImg('Z_{(x_1 x_2...x_k )}')`, as `r latexImg('x_i')` ranges from 1 to `r latexImg('n_i, i=1,...,k')`, our final model is  
+
+`r latexImg('logit(\\pi)=Z\\boldsymbol{\\beta} ...(1)')`
+
 The reason for us to use a logit transformation of the AUC instead of using the original AUC is for variance stabilization.  We will illustrate the above general model using examples.
 
 
 ### Estimation
+
+First, we denote the number of observations with covariates `r latexImg('X_1=i_1,...,X_k=i_k')` in groups A and B by `r latexImg('N_(i_1...i_k)^A')` and `r latexImg('N_(i_1...i_k)^B')`, respectively.  We assume both `r latexImg('N_(i_1...i_k)^A')` and `r latexImg('N_(i_1...i_k)^B')` are greater than zero in the following development.  An unbiased estimator of `r latexImg('\\pi_(i_1...i_k)')` proposed by Mann and Whitney (1947) is
+
+`r latexImg('\\hat{\\pi}_(i_1...i_k)=\\frac{\\sum_{l=1}^{N_{i_1...i_k}^A} \\sum_{j=1}^{N_{i_1...i_k}^B} I_{lj}}{N_{i_1...i_k}^A N_{i_1...i_k}^B},')`
+
+where 
+
+`r latexImg('I_(i_1...i_k); lj = 1 if Y_{i_1...i_k;l}^A > Y_{i_1...i_k;j}^B')`
+
+and
+
+`r latexImg('I_(i_1...i_k); lj = \\frac{1}{2} if Y_{i_1...i_k;l}^A = Y_{i_1...i_k;j}^B')`
+
+and
+
+`r latexImg('I_(i_1...i_k); lj = 0 if Y_{i_1...i_k;l}^A < Y_{i_1...i_k;j}^B')`
+
+
+and `r latexImg('Y_(i_1...i_k; l)^A')` and `r latexImg('Y_(i_1...i_k; j)^B')` are observations with `r latexImg('X_1=i_1,...,X_k=i_k')` in groups A and B, respectively.  Delong, Delong and Clarke-Pearson (1988) have shown that 
+
+`r latexImg('\\hat{\\pi}_{i_1...i_k} \\approx N(\\pi_{i_1...i_k},\\sigma_{i_1...i_k}^2)')`.	
+
+In order to obtain an estimator for `r latexImg('\\sigma_{i_1...i_k}^2')`, they first computed
+
+`r latexImg('V_{i_1...i_k; l}^A=\\frac{1}{N_{i_1...i_k}^B } \\sum_{j=1}^{N_{i_1...i_k}^B} I_{lj},  	l=1,...,N_{i_1...i_k}^A')`
+
+and
+
+`r latexImg('V_{i_1...i_k;j}^B=\\frac{1}{N_{i_1...i_k}^A } \\sum_{l=1}^{N_{i_1...i_k}^A} I_{lj},  	j=1,...,N_{i_1...i_k}^B')`.
+
+Then, an estimate of the variance of the nonparametric AUC was
+
+`r latexImg('\\hat{\\sigma}_{i_1...i_k}^2=\\frac{(s_{i_1...i_k}^A )^2}{N_{i_1...i_k}^A} + \\frac{(s_{i_1...i_k}^B )^2}{N_{i_1...i_k}^B}')`,
+
+where 
+
+`r latexImg('(s_{i_1...i_k}^A )^2')` and `r latexImg('(s_{i_1...i_k}^B )^2')` were the sample variances of 
+
+`r latexImg('V_{i_1...i_k; l}^A; l=1,...,N_{i_1...i_k}^A')` and `r latexImg('V_{i_1...i_k; j}^B; j=1,...,N_{i_1...i_k}^B,')` respectively.  Clearly, we need both `r latexImg('N_{i_1...i_k}^A')` and `r latexImg('N_{i_1...i_k}^B')` are greater than two in order to compute `r latexImg('\\hat{\\sigma}_{i_1...i_k}^2')`.
+
+Now, in order to estimate parameters in Model (1), we first derive the asymptotic variance of `r latexImg('\\hat{\\gamma}_{i_1...i_k}')` using the delta method, which results in
+
+`r latexImg('\\hat{\\gamma}_{i_1...i_k}=logit(\\hat{\\pi}_{i_1...i_k}) \\approx N(logit(\\pi_{i_1...i_k}),\\tau_{i_1...i_k}^2),')`
+
+where `r latexImg('\\hat{\\tau}_{i_1...i_k}^2=\\frac{\\hat{\\gamma}_{i_1...i_k}^2}{\\hat{\\pi}_{i_1...i_k}^2  (1-\\hat{\\pi}_{i_1...i_k})^2}')` 
+
+Rewriting the above model, we obtain
+
+`r latexImg('\\hat{\\gamma}_{i_1...i_k}=logit(\\pi_{i_1...i_k }) =Z_{i_1...i_k} \\boldsymbol{\\beta} + \\epsilon_{i_1...i_k}')`
+         
+where, 
+
+`r latexImg('\\epsilon_{i_1,...,i_k} \\approx N(0,\\tau_{i_1,...,i_k}^2)')`.  Then, by stacking up the `r latexImg('\\hat{\\gamma}_{1_i,...,i_k}')` to be 
+`r latexImg('\\hat{\\gamma}, Z_{i_1...i_k}')` to be `r latexImg('\\boldsymbol{Z}')`, and `r latexImg('\\epsilon_{i_1,...,i_k}')` to be 
+`r latexImg('\\boldsymbol{\\epsilon}')`, we have
+
+`r latexImg('\\boldsymbol{\\hat{\\gamma}} =logit \\boldsymbol{\\hat{\\pi}} = \\boldsymbol{Z\\beta + \\epsilon}')`, 
+
+where, `r latexImg('E(\\epsilon)=0')` and `r latexImg('\\hat{T}=Var(\\epsilon)=diag(\\hat{\\tau}_{i_1... i_k}^2)')` which is a diagonal matrix.  Finally, by using the generalized least squares method, we estimate the parameters β  and its variance-covariance matrix as follows;
+
+`r latexImg('\\boldsymbol{\\hat{\\beta} ={(\\hat{Z}^T  \\hat{T}^{-1}  Z)}^{-1} Z^T  \\hat{T}^{-1} \\hat{\\gamma}}')`		
+
+and
+`r latexImg('\\hat{V}(\\boldsymbol{\\hat{\\beta}}) = \\boldsymbol{{(\\hat{Z}^T  \\hat{T}^{-1}  Z)}^{-1}}')`
+
+The above equations can be used to construct a 100(1-α)% Wald confidence intervals for `r latexImg('\\boldsymbol{\\beta_i}')` using formula
+
+`r latexImg('\\hat{\\beta}_i \\pm Z_{1-\\frac{\\alpha}{2}} \\sqrt{\\hat{V}(\\hat{\\beta}_i)}')`,
+
+where `r latexImg('Z_{1-\\frac{\\alpha}{2}}')` is the `r latexImg('(1-\\frac{\\alpha}{2})^{th}')` quantile of the standard normal distribution.  Equivalently, we reject 
+
+`r latexImg('H_0:\\beta_i = 0')`  if `r latexImg('|\\hat{\\beta}_i| > Z_{1-\\frac{\\alpha}{2}} \\sqrt{\\hat{V}(\\hat{\\beta}_i)}.')`,
+
+The p-value for testing `r latexImg('H_0')` is `r latexImg('2 * P(Z > |\\hat{\\beta}_i|/\\sqrt{\\hat{V}(\\hat{\\beta}_i)}),')`
+
+
+, where Z is a random variable with the standard normal distribution.
+	Now, the total number of cells (combinations of covariates `r latexImg('X_1,...,X_k)')` is `r latexImg('n_1 n_2⋯n_k')`. As mentioned earlier, for a cell to be usable in the estimation, the cell needs to have at least two observations from Group A and two observations from Group B.  As long as the total number of usable cells is larger than the dimension of `r latexImg('\\boldsymbol{\\beta}')`, then the matrix `r latexImg('{\\boldsymbol{\\hat{Z}^T  \\hat{T}^{-1}  Z}}')` is invertible and consequently,`r latexImg('\\boldsymbol{\\hat{\\beta}}')` is computable and model (1) is identifiable.
+
