@@ -178,15 +178,15 @@ dashboardPage(
               p("Below are the true parameter values for the current simulation. You can change 'em if you want."),
               numericInput(
                 inputId = "b0",
-                label = "True value of Beta 0: ",
+                label = HTML("True value of &beta;<sub>0</sub>:"),
                 value = 0.15),
               numericInput(
                 inputId = "b1",
-                label = "True value of Beta 1: ",
+                label = HTML("True value of &beta;<sub>1</sub>:"),
                 value = 0.50),
               numericInput(
                 inputId = "b2",
-                label = "True value of Beta 2: ",
+                label = HTML("True value of &beta;<sub>2</sub>:"),
                 value = 1.00)
             )
           ),

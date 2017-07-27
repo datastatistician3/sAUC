@@ -263,7 +263,7 @@ shinyServer(function(input, output){
       caption = htmltools::tags$caption(
         style = "font-size:150%",
         'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
-      options = list(pageLength = 6, dom = 'tip'), rownames = c("B0", "B1", "B2"))
+      options = list(pageLength = 6, dom = 'tip'), rownames = c("\u03b20", "\u03b21", "\u03b22"))
   })
 
   output$download_simu_result = downloadHandler('sAUC-simulation-results.csv', content = function(file) {
