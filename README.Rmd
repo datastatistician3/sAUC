@@ -49,7 +49,7 @@ $$
 
 and $Y_{i_1...i_k; l}^A$ and $Y_{i_1...i_k; j}^B$ are observations with $X_1=i_1,...,X_k=i_k$ in groups A and B, respectively.  Delong, Delong and Clarke-Pearson (1988) have shown that 
 
-$$\hat{\pi}_{i_1...i_k} \approx N(\pi_{i_1...i_k},\sigma_{i_1...i_k}^2)$$.	
+$$\hat{\pi}_{i_1...i_k} \approx N(\pi_{i_1...i_k},\sigma_{i_1...i_k}^2).$$	
 
 In order to obtain an estimator for $\sigma_{i_1...i_k}^2$, they first computed
 
@@ -57,11 +57,11 @@ $$V_{i_1...i_k; l}^A=\frac{1}{N_{i_1...i_k}^B } \sum_{j=1}^{N_{i_1...i_k}^B} I_{
 
 and
 
-$$V_{i_1...i_k;j}^B=\frac{1}{N_{i_1...i_k}^A } \sum_{l=1}^{N_{i_1...i_k}^A} I_{lj},  	j=1,...,N_{i_1...i_k}^B$$.
+$$V_{i_1...i_k;j}^B=\frac{1}{N_{i_1...i_k}^A } \sum_{l=1}^{N_{i_1...i_k}^A} I_{lj},  	j=1,...,N_{i_1...i_k}^B$$
 
 Then, an estimate of the variance of the nonparametric AUC was
 
-$$\hat{\sigma}_{i_1...i_k}^2=\frac{(s_{i_1...i_k}^A )^2}{N_{i_1...i_k}^A} + \frac{(s_{i_1...i_k}^B )^2}{N_{i_1...i_k}^B}$$,
+$$\hat{\sigma}_{i_1...i_k}^2=\frac{(s_{i_1...i_k}^A )^2}{N_{i_1...i_k}^A} + \frac{(s_{i_1...i_k}^B )^2}{N_{i_1...i_k}^B},$$
 
 where 
 
@@ -96,15 +96,16 @@ $$\hat{V}(\boldsymbol{\hat{\beta}}) = \boldsymbol{{(\hat{Z}^T  \hat{T}^{-1}  Z)}
 
 The above equations can be used to construct a 100(1-α)% Wald confidence intervals for $\boldsymbol{\beta_i}$ using formula
 
-$$\hat{\beta}_i \pm Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)}$$,
+$$\hat{\beta}_i \pm Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)},$$
 
 where $Z_{1-\frac{\alpha}{2}}$ is the $(1-\frac{\alpha}{2})^{th}$ quantile of the standard normal distribution.  Equivalently, we reject 
 
-$H_0:\beta_i = 0$  if $|\hat{\beta}_i| > Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)}$,
+$H_0:\beta_i = 0$  if $|\hat{\beta}_i| > Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)},$
 
 The p-value for testing $H_0$ is $2 * P(Z > |\hat{\beta}_i|/\sqrt{\hat{V}\hat{\beta}_i}),$
 
 
-, where Z is a random variable with the standard normal distribution.
-	Now, the total number of cells (combinations of covariates $X_1,...,X_k$ is $n_1 n_2...n_k$. As mentioned earlier, for a cell to be usable in the estimation, the cell needs to have at least two observations from Group A and two observations from Group B.  As long as the total number of usable cells is larger than the dimension of $\boldsymbol{\beta}$, then the matrix ${\boldsymbol{\hat{Z}^T  \hat{T}^{-1}  Z}}$ is invertible and consequently,$\boldsymbol{\hat{\beta}}$ is computable and model (1) is identifiable.
+where Z is a random variable with the standard normal distribution.
+
+Now, the total number of cells (combinations of covariates $X_1,...,X_k$ is $n_1 n_2...n_k$. As mentioned earlier, for a cell to be usable in the estimation, the cell needs to have at least two observations from Group A and two observations from Group B.  As long as the total number of usable cells is larger than the dimension of $\boldsymbol{\beta}$, then the matrix ${\boldsymbol{\hat{Z}^T  \hat{T}^{-1}  Z}}$ is invertible and consequently,$\boldsymbol{\hat{\beta}}$ is computable and model (1) is identifiable.
 
