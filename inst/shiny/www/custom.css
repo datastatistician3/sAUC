@@ -1,6 +1,44 @@
+/* logo, first hearder tab */
+
+.skin-blue .main-header .logo {
+  background-color: #9C2542;
+}
+
+/* logo when hovered */
+.skin-blue .main-header .logo:hover {
+  background-color: #FF8833;
+}
+
+
+/* navbar (rest of the header) */
+.skin-blue .main-header .navbar {
+                      background-color: #00CC99;
+		      }        
+
+/* main sidebar */
 .skin-blue .main-sidebar {
-background-color: darkred;
-}
-.skin-blue .sidebar-menu>li.active>a, .skin-blue .sidebar-menu>li:hover>a {
-background-color: blue;
-}
+                      background-color: #253529;
+                      }
+
+/* active selected tab in the sidebarmenu */
+.skin-blue .main-sidebar .sidebar .sidebar-menu .active a{
+                      background-color: #5DADEC;
+                      }
+
+/* other links in the sidebarmenu */
+.skin-blue .main-sidebar .sidebar .sidebar-menu a{
+                      background-color: #253529;
+                      color: #FEFEFE;
+                      }
+
+/* other links in the sidebarmenu when hovered */
+ .skin-blue .main-sidebar .sidebar .sidebar-menu a:hover{
+                      background-color: #DA2647;
+                      }
+
+
+/* toggle button when hovered                     
+ .skin-blue .main-header .navbar .sidebar-toggle:hover{
+                      background-color: #ff69b4; 
+                      }
+*/

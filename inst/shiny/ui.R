@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 
 header <- dashboardHeader(
-  title = tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")),
+  title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")), href = "https://github.com/sbohora/sAUC"),
   disable = FALSE,
   titleWidth = "1500px",
   dropdownMenu(
@@ -19,7 +19,7 @@ header <- dashboardHeader(
       from = "Support",
       message = "The new server is ready.",
       icon = icon("life-ring"),
-      time = "2014-12-01")),
+      time = "2017-08-01")),
   dropdownMenu(
     type = "notifications",
     notificationItem(
@@ -37,14 +37,13 @@ header <- dashboardHeader(
     type = "task",
     badgeStatus = "success",
     taskItem(value = 90,
-             color = "green","Documention"),
-    taskItem(value = 17, color = "aqua","Project X"),
-    taskItem(value = 75, color = "yellow","Server deployment"),
-    taskItem(value = 80, color = "red","Overall project")))
+             color = "aqua","Documention"),
+    taskItem(value = 75, color = "yellow","Server deployment")
+    ))
 
 # Define the overall UI
 dashboardPage(
-  skin = "green",
+  # skin = "green",
   header = header,
   title = "sAUC",
   dashboardSidebar(
@@ -136,6 +135,8 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    tags$head(
+      tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")),
     tags$style(type="text/css",
   ".shiny-output-error { visibility: hidden; }",
   ".shiny-output-error:before { visibility: hidden; }"
