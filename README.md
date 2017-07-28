@@ -37,15 +37,15 @@ First, we denote the number of observations with covariates ![](http://latex.cod
 
 where 
 
-![](http://latex.codecogs.com/gif.latex?I_(i_1...i_k);%20lj%20%3D%201%20if%20Y_%7Bi_1...i_k;l%7D%5EA%20%3E%20Y_%7Bi_1...i_k;j%7D%5EB)
+![](http://latex.codecogs.com/gif.latex?I_(i_1...i_k);%20lj%20%3D%201) if ![](http://latex.codecogs.com/gif.latex?Y_%7Bi_1...i_k;l%7D%5EA%20%3E%20Y_%7Bi_1...i_k;j%7D%5EB)
 
 and
 
-![](http://latex.codecogs.com/gif.latex?I_(i_1...i_k);%20lj%20%3D%20%5Cfrac%7B1%7D%7B2%7D%20if%20Y_%7Bi_1...i_k;l%7D%5EA%20%3D%20Y_%7Bi_1...i_k;j%7D%5EB)
+![](http://latex.codecogs.com/gif.latex?I_(i_1...i_k);%20lj%20%3D%20%5Cfrac%7B1%7D%7B2%7D) if ![](http://latex.codecogs.com/gif.latex?Y_%7Bi_1...i_k;l%7D%5EA%20%3D%20Y_%7Bi_1...i_k;j%7D%5EB)
 
 and
 
-![](http://latex.codecogs.com/gif.latex?I_(i_1...i_k);%20lj%20%3D%200%20if%20Y_%7Bi_1...i_k;l%7D%5EA%20%3C%20Y_%7Bi_1...i_k;j%7D%5EB)
+![](http://latex.codecogs.com/gif.latex?I_(i_1...i_k);%20lj%20%3D%200) if ![](http://latex.codecogs.com/gif.latex?Y_%7Bi_1...i_k;l%7D%5EA%20%3C%20Y_%7Bi_1...i_k;j%7D%5EB)
 
 
 and ![](http://latex.codecogs.com/gif.latex?Y_(i_1...i_k;%20l)%5EA) and ![](http://latex.codecogs.com/gif.latex?Y_(i_1...i_k;%20j)%5EB) are observations with ![](http://latex.codecogs.com/gif.latex?X_1%3Di_1,...,X_k%3Di_k) in groups A and B, respectively.  Delong, Delong and Clarke-Pearson (1988) have shown that 
