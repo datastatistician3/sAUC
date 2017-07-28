@@ -85,7 +85,7 @@ $\epsilon_{i_1,...,i_k} \approx N(0,\tau_{i_1,...,i_k}^2)$.  Then, by stacking u
 $\hat{\gamma}, Z_{i_1...i_k}$ to be $\boldsymbol{Z}$, and $\epsilon_{i_1,...,i_k}$ to be 
 $\boldsymbol{\epsilon}$, we have
 
-$$\boldsymbol{\hat{\gamma}} =logit \boldsymbol{\hat{\pi}} = \boldsymbol{Z\beta + \epsilon}$$, 
+$$\boldsymbol{\hat{\gamma}} =logit \boldsymbol{\hat{\pi}} = \boldsymbol{Z\beta + \epsilon},$$ 
 
 where, $E(\epsilon)=0$ and $\hat{T}=Var(\epsilon)=diag(\hat{\tau}_{i_1... i_k}^2)$ which is a diagonal matrix.  Finally, by using the generalized least squares method, we estimate the parameters β  and its variance-covariance matrix as follows;
 

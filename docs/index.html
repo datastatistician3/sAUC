@@ -114,13 +114,13 @@
 \end{array}\right.
 \]</span></p>
 <p>and <span class="math inline">\(Y_{i_1...i_k; l}^A\)</span> and <span class="math inline">\(Y_{i_1...i_k; j}^B\)</span> are observations with <span class="math inline">\(X_1=i_1,...,X_k=i_k\)</span> in groups A and B, respectively. Delong, Delong and Clarke-Pearson (1988) have shown that</p>
-<p><span class="math display">\[\hat{\pi}_{i_1...i_k} \approx N(\pi_{i_1...i_k},\sigma_{i_1...i_k}^2)\]</span>.</p>
+<p><span class="math display">\[\hat{\pi}_{i_1...i_k} \approx N(\pi_{i_1...i_k},\sigma_{i_1...i_k}^2).\]</span></p>
 <p>In order to obtain an estimator for <span class="math inline">\(\sigma_{i_1...i_k}^2\)</span>, they first computed</p>
 <p><span class="math display">\[V_{i_1...i_k; l}^A=\frac{1}{N_{i_1...i_k}^B } \sum_{j=1}^{N_{i_1...i_k}^B} I_{lj},    l=1,...,N_{i_1...i_k}^A\]</span></p>
 <p>and</p>
-<p><span class="math display">\[V_{i_1...i_k;j}^B=\frac{1}{N_{i_1...i_k}^A } \sum_{l=1}^{N_{i_1...i_k}^A} I_{lj},     j=1,...,N_{i_1...i_k}^B\]</span>.</p>
+<p><span class="math display">\[V_{i_1...i_k;j}^B=\frac{1}{N_{i_1...i_k}^A } \sum_{l=1}^{N_{i_1...i_k}^A} I_{lj},     j=1,...,N_{i_1...i_k}^B\]</span></p>
 <p>Then, an estimate of the variance of the nonparametric AUC was</p>
-<p><span class="math display">\[\hat{\sigma}_{i_1...i_k}^2=\frac{(s_{i_1...i_k}^A )^2}{N_{i_1...i_k}^A} + \frac{(s_{i_1...i_k}^B )^2}{N_{i_1...i_k}^B}\]</span>,</p>
+<p><span class="math display">\[\hat{\sigma}_{i_1...i_k}^2=\frac{(s_{i_1...i_k}^A )^2}{N_{i_1...i_k}^A} + \frac{(s_{i_1...i_k}^B )^2}{N_{i_1...i_k}^B},\]</span></p>
 <p>where</p>
 <p><span class="math inline">\((s_{i_1...i_k}^A )^2\)</span> and <span class="math inline">\((s_{i_1...i_k}^B )^2\)</span> were the sample variances of</p>
 <p><span class="math inline">\(V_{i_1...i_k; l}^A; l=1,...,N_{i_1...i_k}^A\)</span> and <span class="math inline">\(V_{i_1...i_k; j}^B; j=1,...,N_{i_1...i_k}^B,\)</span> respectively. Clearly, we need both <span class="math inline">\(N_{i_1...i_k}^A\)</span> and <span class="math inline">\(N_{i_1...i_k}^B\)</span> are greater than two in order to compute <span class="math inline">\(\hat{\sigma}_{i_1...i_k}^2\)</span>.</p>
@@ -131,16 +131,17 @@
 <p><span class="math display">\[\hat{\gamma}_{i_1...i_k}=logit(\pi_{i_1...i_k }) =Z_{i_1...i_k} \boldsymbol{\beta} + \epsilon_{i_1...i_k}\]</span></p>
 <p>where,</p>
 <p><span class="math inline">\(\epsilon_{i_1,...,i_k} \approx N(0,\tau_{i_1,...,i_k}^2)\)</span>. Then, by stacking up the <span class="math inline">\(\hat{\gamma}_{1_i,...,i_k}\)</span> to be <span class="math inline">\(\hat{\gamma}, Z_{i_1...i_k}\)</span> to be <span class="math inline">\(\boldsymbol{Z}\)</span>, and <span class="math inline">\(\epsilon_{i_1,...,i_k}\)</span> to be <span class="math inline">\(\boldsymbol{\epsilon}\)</span>, we have</p>
-<p><span class="math display">\[\boldsymbol{\hat{\gamma}} =logit \boldsymbol{\hat{\pi}} = \boldsymbol{Z\beta + \epsilon}\]</span>,</p>
+<p><span class="math display">\[\boldsymbol{\hat{\gamma}} =logit \boldsymbol{\hat{\pi}} = \boldsymbol{Z\beta + \epsilon},\]</span></p>
 <p>where, <span class="math inline">\(E(\epsilon)=0\)</span> and <span class="math inline">\(\hat{T}=Var(\epsilon)=diag(\hat{\tau}_{i_1... i_k}^2)\)</span> which is a diagonal matrix. Finally, by using the generalized least squares method, we estimate the parameters β and its variance-covariance matrix as follows;</p>
 <p><span class="math display">\[\boldsymbol{\hat{\beta} ={(\hat{Z}^T  \hat{T}^{-1}  Z)}^{-1} Z^T  \hat{T}^{-1} \hat{\gamma}}\]</span></p>
 <p>and <span class="math display">\[\hat{V}(\boldsymbol{\hat{\beta}}) = \boldsymbol{{(\hat{Z}^T  \hat{T}^{-1}  Z)}^{-1}}\]</span></p>
 <p>The above equations can be used to construct a 100(1-α)% Wald confidence intervals for <span class="math inline">\(\boldsymbol{\beta_i}\)</span> using formula</p>
-<p><span class="math display">\[\hat{\beta}_i \pm Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)}\]</span>,</p>
+<p><span class="math display">\[\hat{\beta}_i \pm Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)},\]</span></p>
 <p>where <span class="math inline">\(Z_{1-\frac{\alpha}{2}}\)</span> is the <span class="math inline">\((1-\frac{\alpha}{2})^{th}\)</span> quantile of the standard normal distribution. Equivalently, we reject</p>
-<p><span class="math inline">\(H_0:\beta_i = 0\)</span> if <span class="math inline">\(|\hat{\beta}_i| &gt; Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)}\)</span>,</p>
+<p><span class="math inline">\(H_0:\beta_i = 0\)</span> if <span class="math inline">\(|\hat{\beta}_i| &gt; Z_{1-\frac{\alpha}{2}} \sqrt{\hat{V}(\hat{\beta}_i)},\)</span></p>
 <p>The p-value for testing <span class="math inline">\(H_0\)</span> is <span class="math inline">\(2 * P(Z &gt; |\hat{\beta}_i|/\sqrt{\hat{V}\hat{\beta}_i}),\)</span></p>
-<p>, where Z is a random variable with the standard normal distribution. Now, the total number of cells (combinations of covariates <span class="math inline">\(X_1,...,X_k\)</span> is <span class="math inline">\(n_1 n_2...n_k\)</span>. As mentioned earlier, for a cell to be usable in the estimation, the cell needs to have at least two observations from Group A and two observations from Group B. As long as the total number of usable cells is larger than the dimension of <span class="math inline">\(\boldsymbol{\beta}\)</span>, then the matrix <span class="math inline">\({\boldsymbol{\hat{Z}^T \hat{T}^{-1} Z}}\)</span> is invertible and consequently,<span class="math inline">\(\boldsymbol{\hat{\beta}}\)</span> is computable and model (1) is identifiable.</p>
+<p>where Z is a random variable with the standard normal distribution.</p>
+<p>Now, the total number of cells (combinations of covariates <span class="math inline">\(X_1,...,X_k\)</span> is <span class="math inline">\(n_1 n_2...n_k\)</span>. As mentioned earlier, for a cell to be usable in the estimation, the cell needs to have at least two observations from Group A and two observations from Group B. As long as the total number of usable cells is larger than the dimension of <span class="math inline">\(\boldsymbol{\beta}\)</span>, then the matrix <span class="math inline">\({\boldsymbol{\hat{Z}^T \hat{T}^{-1} Z}}\)</span> is invertible and consequently,<span class="math inline">\(\boldsymbol{\hat{\beta}}\)</span> is computable and model (1) is identifiable.</p>
 </div>
 </div>
 </div>
