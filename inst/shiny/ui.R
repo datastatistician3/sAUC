@@ -382,11 +382,11 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               p("This is about me.", style = "font-size:120%"),
-              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200))
+              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
               , br()
               , br(),
               span("I am a Research Biostatistician at ",
-                   span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. "),
+                   span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. ", target ="_blank"),
                         style = "color:blue"),
               "I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
               in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum

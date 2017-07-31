@@ -7,7 +7,7 @@
 calculate_auc(x, y = NULL, data = NULL)
 }
 \arguments{
-\item{x}{A formula object with two vector responses (For e.g., y1 ~ y2) or a vector of responses.}
+\item{x}{A formula object with two vector responses (For e.g., \code{y1 ~ y2}) or a vector of responses.}
 
 \item{y}{A vector of responses.}
 

@@ -213,9 +213,6 @@ shinyServer(function(input, output){
     } else {
       tabsetPanel(
         tabPanel(
-          title = "About file",
-          tableOutput("show_input_file")),
-        tabPanel(
           title = "Data",
           dataTableOutput("show_data")),
         tabPanel(
@@ -233,8 +230,11 @@ shinyServer(function(input, output){
             plotOutput("bar_plot"),
             p(class = 'text-center', downloadButton('download_bar_plot', 'Download Bar Plot'))
           )
+        ),
+        tabPanel(
+          title = "About file",
+          tableOutput("show_input_file"))
         )
-      )
     }
   })
 

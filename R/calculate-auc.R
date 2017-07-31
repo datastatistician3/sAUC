@@ -7,7 +7,7 @@
 #' @description This function calculates variance of predicted AUC, logit of predicted AUC,
 #' and variance of logit of predicted AUC responses passed
 #'
-#' @param x A formula object with two vector responses (For e.g., y1 ~ y2) or a vector of responses.
+#' @param x A formula object with two vector responses (For e.g., \code{y1 ~ y2}) or a vector of responses.
 #'
 #' @param y A vector of responses.
 #'

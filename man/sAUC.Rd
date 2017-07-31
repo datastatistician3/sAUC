@@ -7,7 +7,7 @@
 sAUC(x = FALSE, treatment_group = FALSE, data = FALSE)
 }
 \arguments{
-\item{x}{A formula with response and covariates such as response ~ x1 + x2}
+\item{x}{A formula with response and covariates such as \code{response ~ x1 + x2}}
 
 \item{treatment_group}{A treatment group for which a comparision is to be made}
 

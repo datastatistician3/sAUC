@@ -8,7 +8,7 @@
 #' Request to define response and treatment group, convert variables other than response
 #' into factors, estimate model parameters, and display results.
 #'
-#' @param x A formula with response and covariates such as response ~ x1 + x2
+#' @param x A formula with response and covariates such as \code{response ~ x1 + x2}
 #'
 #' @param treatment_group A treatment group for which a comparision is to be made
 #'
