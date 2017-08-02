@@ -5,6 +5,8 @@ library(tidyr)
 library(ggplot2)
 library(DT)
 library(plotROC)
+library(psych)
+library(Hmisc)
 
 shinyServer(function(input, output){
   # output$menu <- renderMenu({
