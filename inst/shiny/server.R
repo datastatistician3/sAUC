@@ -297,7 +297,7 @@ shinyServer(function(input, output){
       geom_vline(data=mu, aes(xintercept=mean_beta, color=Parameter),linetype="dashed") +
       scale_color_manual(values=c("blue", "red", "maroon")) +
       # scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
-      labs(x="Estimates", y = "Density") +
+      labs(x="Beta Estimates", y = "Density") +
       theme_classic() +
       theme(text = element_text(size=20)) +
       theme(legend.position="none") +
