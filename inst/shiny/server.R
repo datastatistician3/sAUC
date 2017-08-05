@@ -7,6 +7,7 @@ library(DT)
 library(plotROC)
 library(psych)
 library(Hmisc)
+library(googlesheets)
 
 shinyServer(function(input, output){
   # output$menu <- renderMenu({
@@ -328,4 +329,22 @@ shinyServer(function(input, output){
     content = function(file) {
       write.csv(data(), file)
     })
+
+   ## ======================
+   googleform_embed_link <- "https://docs.google.com/forms/d/e/1FAIpQLSeK0vk4Crgaej5yYG4rjKFzvrN8IIL94SsCMDnHihvqdaqu2g/viewform?usp=sf_link#start=embed"
+   googleform_data_url <- "https://docs.google.com/spreadsheets/d/1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs/pubhtml"
+   ## ======================
+
+   ss <- gs_url(googleform_data_url, lookup = FALSE, visibility = "public")
+
+   output$googleForm <- renderUI({
+     tags$iframe(id = "googleform",
+                 src = googleform_embed_link,
+                 width = 400,
+                 height = 625,
+                 frameborder = 0,
+                 marginheight = 0)
+   })
 })
+
+tags$form()

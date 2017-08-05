@@ -374,7 +374,7 @@ dashboardPage(
         tabName = "about_me",
         fluidRow(
           column(
-            width = 4,
+            width = 5,
             box(
               width = 12,
               status = "primary",
@@ -401,28 +401,42 @@ dashboardPage(
         tabName = "feedback",
         fluidRow(
           column(
+            width = 3,
+            box(
+              width = 20,
+              height = 20,
+              title = "Feedback Form",
+              status = "info",
+              background = NULL,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              htmlOutput("googleForm")
+              )
+          ),
+          column(
             width = 4,
             box(
               width = 12,
-              status = "primary",
+              title = "Contact me",
+              status = "info",
               background = NULL,
               # Valid colors are: red, yellow, aqua, blue, light-blue, green, navy, teal, olive, lime, orange, fuchsia, purple, maroon, black.
               collapsible = TRUE,
               solidHeader = TRUE,
               span("I can be contacted at",
-              a("energeticsom@gmail.com", href = "mailto:energeticsom@gmail.com"),
-              br(),
-              br(),
-              p("Please report any bugs about the sAUC", span(tags$a(href = "https://github.com/sbohora/sAUC", "here"))),
-              br(),
-              shiny::hr(),
-              em(
-                span("Created by "),
-                a("Som B. Bohora", href = "mailto:energeticsom@gmail.com"),
-                span(", July 2017"),
-                br(),
-                br()
-                ), style = "font-size:140%; color:green")
+                   a("energeticsom@gmail.com", href = "mailto:energeticsom@gmail.com"),
+                   br(),
+                   br(),
+                   p("Please report any bugs about the sAUC", span(tags$a(href = "https://github.com/sbohora/sAUC", "here"))),
+                   br(),
+                   shiny::hr(),
+                   em(
+                     span("Created by "),
+                     a("Som B. Bohora", href = "mailto:energeticsom@gmail.com"),
+                     span(", July 2017"),
+                     br(),
+                     br()
+                   ), style = "font-size:140%; color:green")
             )
           )
         )
