@@ -28,6 +28,13 @@ shinyServer(function(input, output){
     )
   })
 
+  observeEvent(input$file, {
+    shinyjs::show("download_data");
+    shinyjs::show("show_model")
+    # shinyjs::show("element");
+    # shinyjs::show("element")
+  })
+
   #The following set of functions populate the column selectors
   output$choose_response <- renderUI({
     df <- data()
@@ -332,19 +339,28 @@ shinyServer(function(input, output){
 
    ## ======================
    googleform_embed_link <- "https://docs.google.com/forms/d/e/1FAIpQLSeK0vk4Crgaej5yYG4rjKFzvrN8IIL94SsCMDnHihvqdaqu2g/viewform?usp=sf_link#start=embed"
-   googleform_data_url <- "https://docs.google.com/spreadsheets/d/1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs/pubhtml"
-   ## ======================
-
-   ss <- gs_url(googleform_data_url, lookup = FALSE, visibility = "public")
+   # googleform_data_url <- "https://docs.google.com/spreadsheets/d/1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs/pubhtml"
+   # ## ======================
+   # 
+   # ss <- gs_url(googleform_data_url, lookup = FALSE, visibility = "public")
 
    output$googleForm <- renderUI({
      tags$iframe(id = "googleform",
                  src = googleform_embed_link,
-                 width = 400,
-                 height = 625,
+                 width = 525,
+                 height = 700,
                  frameborder = 0,
                  marginheight = 0)
    })
+   
+   output$googleFormData <- DT::renderDataTable({
+     input$refresh
+     ss_dat <- gs_read(ss) %>%
+       mutate(Timestamp = Timestamp %>%
+                as.POSIXct(format = "%m/%d/%Y %H:%M:%S", tz = "PST8PDT")) %>%
+       select(-2,-3,-4) %>%
+       arrange(desc(Timestamp))
+     
+     DT::datatable(ss_dat, rownames = F)
+   })
 })
-
-tags$form()

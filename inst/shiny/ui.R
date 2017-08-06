@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(shinyjs)
 
 header <- dashboardHeader(
   title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")), href = "https://github.com/sbohora/sAUC", target ="_blank"),
@@ -135,6 +136,7 @@ dashboardPage(
     )
   ),
   dashboardBody(
+    shinyjs::useShinyjs(),
     tags$head(
       tags$link(rel = "stylesheet", type = "text/css", href = "custom.css")),
     tags$style(type="text/css",
@@ -243,8 +245,10 @@ dashboardPage(
             label = 'Separator',
             choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
           ),
+        shinyjs::hidden(
           downloadButton('download_data', 'Download Data')
-        ),
+        )),
+
         column(
           width = 9,
         box(
@@ -259,7 +263,9 @@ dashboardPage(
          ),
         br(),
         br(),
+        shinyjs::hidden(
         fluidRow(
+          id = "show_model",
           column(
             width = 3,
         box(
@@ -301,7 +307,7 @@ dashboardPage(
         )
         )
         )
-      ),
+      )),
       tabItem(
         tabName = "example",
         fluidRow(
@@ -376,12 +382,13 @@ dashboardPage(
           column(
             width = 5,
             box(
+              title = "This is about me",
               width = 12,
               status = "primary",
               background = "navy",
               collapsible = TRUE,
               solidHeader = TRUE,
-              p("This is about me.", style = "font-size:120%"),
+              # p("This is about me.", style = "font-size:120%"),
               tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
               , br()
               , br(),
@@ -401,7 +408,7 @@ dashboardPage(
         tabName = "feedback",
         fluidRow(
           column(
-            width = 3,
+            width = 4,
             box(
               width = 20,
               height = 20,
@@ -412,6 +419,20 @@ dashboardPage(
               solidHeader = TRUE,
               htmlOutput("googleForm")
               )
+          ),
+          column(
+            width = 4,
+            box(
+              width = 20,
+              height = 20,
+              title = "Selected Comments",
+              status = "info",
+              background = NULL,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              div(style = 'overflow-x: scroll', DT::dataTableOutput('googleFormData'))
+              # dataTableOutput("googleFormData")
+            )
           ),
           column(
             width = 4,
@@ -427,9 +448,23 @@ dashboardPage(
                    a("energeticsom@gmail.com", href = "mailto:energeticsom@gmail.com"),
                    br(),
                    br(),
-                   p("Please report any bugs about the sAUC", span(tags$a(href = "https://github.com/sbohora/sAUC", "here"))),
+                   p("Please report any bugs about the sAUC", span(tags$a(href = "https://github.com/sbohora/sAUC", "here",
+                                                                          target = "_blank"))),
                    br(),
-                   shiny::hr(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
                    em(
                      span("Created by "),
                      a("Som B. Bohora", href = "mailto:energeticsom@gmail.com"),
