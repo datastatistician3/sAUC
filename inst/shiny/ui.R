@@ -430,7 +430,8 @@ dashboardPage(
               background = NULL,
               collapsible = TRUE,
               solidHeader = TRUE,
-              div(style = 'overflow-x: scroll', DT::dataTableOutput('googleFormData'))
+              div(style = 'overflow-x: scroll', DT::dataTableOutput('googleFormData')),
+              actionButton("refresh", "Refresh Sheet")
               # dataTableOutput("googleFormData")
             )
           ),
@@ -448,18 +449,22 @@ dashboardPage(
                    a("energeticsom@gmail.com", href = "mailto:energeticsom@gmail.com"),
                    br(),
                    br(),
-                   p("Please report any bugs about the sAUC", span(tags$a(href = "https://github.com/sbohora/sAUC", "here",
+                   p("Please report any bugs about the sAUC (R package)", span(tags$a(href = "https://github.com/sbohora/sAUC", "here",
                                                                           target = "_blank"))),
                    br(),
                    br(),
                    br(),
                    br(),
                    br(),
+                   p("Please report any bugs about the saucpy (python package)", span(tags$a(href = "https://github.com/sbohora/saucpy/", "here",
+                                                                                      target = "_blank"))),
                    br(),
                    br(),
                    br(),
                    br(),
                    br(),
+                   p("Please report any bugs about the SemiparametricAUC.jl (Julia package)", span(tags$a(href = "https://github.com/sbohora/SemiparametricAUC.jl/", "here",
+                                                                                      target = "_blank"))),
                    br(),
                    br(),
                    br(),

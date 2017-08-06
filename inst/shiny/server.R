@@ -341,18 +341,19 @@ shinyServer(function(input, output){
    googleform_embed_link <- "https://docs.google.com/forms/d/e/1FAIpQLSeK0vk4Crgaej5yYG4rjKFzvrN8IIL94SsCMDnHihvqdaqu2g/viewform?usp=sf_link#start=embed"
    # googleform_data_url <- "https://docs.google.com/spreadsheets/d/1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs/pubhtml"
    # ## ======================
-   # 
+   #
    # ss <- gs_url(googleform_data_url, lookup = FALSE, visibility = "public")
 
    output$googleForm <- renderUI({
-     tags$iframe(id = "googleform",
-                 src = googleform_embed_link,
-                 width = 525,
-                 height = 700,
-                 frameborder = 0,
-                 marginheight = 0)
+     tags$iframe(
+       id = "googleform",
+       src = googleform_embed_link,
+       width = 525,
+       height = 700,
+       frameborder = 0,
+       marginheight = 0)
    })
-   
+
    output$googleFormData <- DT::renderDataTable({
      input$refresh
      ss_dat <- gs_read(ss) %>%
@@ -360,7 +361,7 @@ shinyServer(function(input, output){
                 as.POSIXct(format = "%m/%d/%Y %H:%M:%S", tz = "PST8PDT")) %>%
        select(-2,-3,-4) %>%
        arrange(desc(Timestamp))
-     
+
      DT::datatable(ss_dat, rownames = F)
    })
 })
