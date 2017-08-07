@@ -80,8 +80,19 @@ dashboardPage(
           tabName = "server_code"),
         menuSubItem(
           text = "ui.R",
-          tabName = "ui_code")
+          tabName = "ui_code"),
+        menuSubItem(
+          text = "globals.R",
+          tabName = "global_code")
           ),
+      menuItem(
+        text = "sAUC in Python",
+        tabName = "sauc_python",
+        icon = icon("file-code-o")),
+      menuItem(
+        text = "sAUC in Julia",
+        tabName = "sauc_julia",
+        icon = icon("code-fork")),
       menuItem(
         text = "About Me",
         tabName = "about_me",
@@ -100,7 +111,7 @@ dashboardPage(
       ),
       menuItem(
         text = "",
-        href = "https://github.com/sbohora/sAUC",
+        href = "https://sbohora.github.io/sAUC",
         badgeLabel = "Web site for sAUC package",
         icon = icon("tv")
       ),
@@ -246,7 +257,9 @@ dashboardPage(
             choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
           ),
         shinyjs::hidden(
-          downloadButton('download_data', 'Download Data')
+          downloadButton('download_data', 'Download Data'),
+          actionButton("reset", "Reset Analysis", style = "color: white;
+                     background-color: blue;")
         )),
 
         column(
@@ -341,7 +354,7 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "info",
-              background = "orange",
+              background = NULL,
               # includeMarkdown("server.md")
               tags$iframe(src = 'server.html', # put .html to /www
               width = '100%', height = '1000px',
@@ -366,7 +379,7 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "info",
-              background = "orange",
+              background = NULL,
               # includeMarkdown("ui.md")
               tags$iframe(src = 'ui.html', # put .html to /www
               width = '100%', height = '1000px',
@@ -377,10 +390,84 @@ dashboardPage(
         )
       ),
       tabItem(
+        tabName = "global_code",
+        fluidRow(
+          column(
+            width = 8,
+            box(
+              width = 12,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              background = NULL,
+              # includeMarkdown("ui.md")
+              tags$iframe(src = 'globals.html', # put .html to /www
+                          width = '100%', height = '1000px',
+                          frameborder = 0, scrolling = 'auto')
+              # includeHTML("example.html")
+            )
+          )
+        )
+      ),
+      tabItem(
+        tabName = "sauc_python",
+        fluidRow(
+          column(
+            width = 9,
+            box(
+              width = 12,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              background = NULL,
+              # includeMarkdown("server.md")
+              tags$iframe(src = 'example-python.html', # put .html to /www
+                          width = '100%', height = '1000px',
+                          frameborder = 0, scrolling = 'auto')
+            )
+          )
+        )
+      ),
+      tabItem(
+        tabName = "sauc_julia",
+        fluidRow(
+          column(
+            width = 9,
+            box(
+              width = 12,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              background = NULL,
+              # includeMarkdown("server.md")
+              tags$iframe(src = 'example-julia.html', # put .html to /www
+                          width = '100%', height = '1000px',
+                          frameborder = 0, scrolling = 'auto')
+            )
+          )
+        )
+      ),
+      tabItem(
         tabName = "about_me",
         fluidRow(
           column(
             width = 5,
+            box(
+              # title = "This is about me",
+              width = 12,
+              height = 15,
+              # status = "primary",
+              # background = "navy",
+              # collapsible = TRUE,
+              # solidHeader = TRUE,
+              # p("This is about me.", style = "font-size:120%"),
+              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 750, width = 640), target ="_blank")
+              , br()
+              , br()
+              )
+              ),
+          column(
+            width = 7,
             box(
               title = "This is about me",
               width = 12,
@@ -389,21 +476,29 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               # p("This is about me.", style = "font-size:120%"),
-              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
-              , br()
-              , br(),
+              # tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
+              br(),
+              br(),
               span("I am a Research Biostatistician at ",
                    span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. ", target ="_blank"),
                         style = "color:blue"),
               "I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
               in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
               Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
-              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.", style = "font-size:120%")
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.", style = "font-size:120%"),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
             )
           )
+        )
         ),
-        downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
-      ),
       tabItem(
         tabName = "feedback",
         fluidRow(
@@ -432,7 +527,6 @@ dashboardPage(
               solidHeader = TRUE,
               div(style = 'overflow-x: scroll', DT::dataTableOutput('googleFormData')),
               actionButton("refresh", "Refresh Sheet")
-              # dataTableOutput("googleFormData")
             )
           ),
           column(

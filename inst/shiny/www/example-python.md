@@ -1,17 +1,7 @@
----
-# title: "Example"
-# author: "Som Bohora"
-# date: "July 18, 2017"
-output:
-  html_document:
-    keep_md: true
----
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-### sAUC in R (Example using Semi-parametric Area Under the Curve (sAUC) Regression)
+
+### sAUC in Python (saucpy)
 
 #### Perform AUC analyses with discrete covariates and a semi-parametric estimation
 
@@ -21,48 +11,45 @@ The response variable CHANGE_DRINK was heavily skewed and not normally distribut
 $$\LARGE \pi = p(Y_{CG} > Y_{PG})$$ Note that the value of $\Large \pi$ greater than .5 means that women in the PG had a greater reduction of alcohol drinks than those in the CG. For statistical results, all p-values < .05 were considered statistically significant and 95% CIs were presented.
 
 ### Installation
-```r
-install.packages("sAUC")
-```
+`$ pip install saucpy`
 
-OR
-
-```r
-devtools::install_github("sbohora/sAUC")
-```
+`$ git clone https://github.com/sbohora/saucpy.git`
 
 
 ### Result of sAUC Regression with one discrete covariate
 
-```{r, message=FALSE, warning=FALSE, results='show', comment=""}
-library(sAUC)
-library(DT)
-library(shiny)
+```python
+from pandas import read_csv
+from saucpy import sAUC
 
-fasd_label <- read.csv("../../extdata/fasd-labels.csv")
-fasd_label[, c("smoke", "vitamin", "group")] <- lapply(fasd_label[, c("smoke", "vitamin", "group")], function(x) factor(x))
+# Data analysis
+fasd = read_csv("../saucpy/data/fasd.csv")
+fasd['group'] = fasd['group'].astype('category')
+fasd['x1']    = fasd['x1'].astype('category')
+fasd['x2']    = fasd['x2'].astype('category')
 
-result_one <- sAUC::sAUC(x = y ~ smoke, treatment_group = "group", data = fasd_label)
+sAUC.semiparametricAUC(response = "y", treatment_group = ["group"], input_covariates = ["x1"], data = fasd)
+```
 
-result_two <- sAUC::sAUC(x = y ~ smoke + vitamin, treatment_group = "group", data = fasd_label)
-
-# result_one$`Model summary`
-DT::datatable(as.data.frame(result_one$"Model summary"),
-            caption = htmltools::tags$caption(
-              style = "font-size:120%",
-              strong('Model results'), '{Note: left-side of model :  ', result_one$"model_formula","}"),
-            options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
-
+```
+Model Summary
+Out[13]: 
+           Coefficients  Std. Error      2.5%     97.5%  Pr(>|z|)
+Intercept     -0.909936    0.315218 -1.527751 -0.292121  0.003893
+x1[T.2]        0.766786    0.356420  0.068216  1.465356  0.031448
 ```
 
 ### Result of sAUC Regression with two discrete covariates
 
-```{r, message=FALSE, warning=FALSE, results='show', comment=""}
-DT::datatable(as.data.frame(result_two$"Model summary"),
-            caption = htmltools::tags$caption(
-              style = "font-size:120%",
-              strong('Model results'), '{Note: left-side of model :  ', result_two$"model_formula","}"),
-            options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
-# result_two$`Model summary`
+```python
+sAUC.semiparametricAUC(response = "y", treatment_group = ["group"], input_covariates = ["x1","x2"], data = fasd)
 ```
 
+```
+Model Summary
+Out[14]: 
+           Coefficients  Std. Error      2.5%     97.5%  Pr(>|z|)
+Intercept     -1.125352    0.412748 -1.934324 -0.316380  0.006401
+x1[T.2]        0.781264    0.355340  0.084809  1.477718  0.027904
+x2[T.2]        0.252050    0.328229 -0.391267  0.895368  0.442541
+```

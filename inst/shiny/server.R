@@ -30,9 +30,20 @@ shinyServer(function(input, output){
 
   observeEvent(input$file, {
     shinyjs::show("download_data");
+    shinyjs::show("reset");
     shinyjs::show("show_model")
+    shinyjs::show("describe_file")
     # shinyjs::show("element");
     # shinyjs::show("element")
+  })
+
+  observeEvent(input$reset, {
+    shinyjs::reset("file")
+    shinyjs::hide("download_data")
+    shinyjs::hide("show_model")
+    shinyjs::hide("describe_file")
+    shinyjs::alert("Thank you using sAUC method. Please provide feedback using Feedback Form on the left!")
+    shinyjs::hide("reset")
   })
 
   #The following set of functions populate the column selectors

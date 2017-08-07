@@ -1,7 +1,7 @@
 
 
 
-### Example using Semi-parametric Area Under the Curve (sAUC) Regression
+### sAUC in R (Example using Semi-parametric Area Under the Curve (sAUC) Regression)
 
 #### Perform AUC analyses with discrete covariates and a semi-parametric estimation
 
@@ -9,6 +9,17 @@ To illustrate how to apply the proposed method, we obtained data from a randomiz
 
 The response variable CHANGE_DRINK was heavily skewed and not normally distributed in each group  (Shapiro-Wilk p<0.001). Therefore, we decided to use the AUG regression model to analyze the data.  In the AUG regression model we define
 $$\LARGE \pi = p(Y_{CG} > Y_{PG})$$ Note that the value of $\Large \pi$ greater than .5 means that women in the PG had a greater reduction of alcohol drinks than those in the CG. For statistical results, all p-values < .05 were considered statistically significant and 95% CIs were presented.
+
+### Installation
+```r
+install.packages("sAUC")
+```
+
+OR
+
+```r
+devtools::install_github("sbohora/sAUC")
+```
 
 
 ### Result of sAUC Regression with one discrete covariate
@@ -50,8 +61,8 @@ DT::datatable(as.data.frame(result_one$"Model summary"),
             options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
 ```
 
-<!--html_preserve--><div id="htmlwidget-3b15ce870c4f2e604df9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3b15ce870c4f2e604df9">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y Control  &gt;  Y Treatment ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smokeYes"],[-0.9099,0.7668],[0.3219,0.3629],[-1.5409,0.0555],[-0.2789,1.478],[0.0047,0.0346]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-ddc9b1dc50dc540da7c4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ddc9b1dc50dc540da7c4">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y Control  &gt;  Y Treatment ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smokeYes"],[-0.9099,0.7668],[0.3219,0.3629],[-1.5409,0.0555],[-0.2789,1.478],[0.0047,0.0346]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 ### Result of sAUC Regression with two discrete covariates
 
@@ -64,8 +75,8 @@ DT::datatable(as.data.frame(result_two$"Model summary"),
             options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
 ```
 
-<!--html_preserve--><div id="htmlwidget-e341eafdbd7bce51b441" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e341eafdbd7bce51b441">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y Control  &gt;  Y Treatment ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smokeYes","vitaminYes"],[-1.0657,0.7434,0.2189],[0.4326,0.3685,0.3379],[-1.9136,0.0212,-0.4435],[-0.2177,1.4656,0.8812],[0.0138,0.0436,0.5172]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-2b775a034f54ba2ccdd3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2b775a034f54ba2ccdd3">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y Control  &gt;  Y Treatment ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smokeYes","vitaminYes"],[-1.0657,0.7434,0.2189],[0.4326,0.3685,0.3379],[-1.9136,0.0212,-0.4435],[-0.2177,1.4656,0.8812],[0.0138,0.0436,0.5172]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 ```r
 # result_two$`Model summary`

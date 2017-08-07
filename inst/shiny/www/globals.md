@@ -1,3 +1,10 @@
+
+
+
+#### Below is the `globals.R` code
+
+```r
+library(googlesheets)
 ## prepare the OAuth token and set up the target sheet:
 ##  - do this interactively
 ##  - do this EXACTLY ONCE
@@ -14,4 +21,4 @@
 googlesheets::gs_auth(token = "shiny_app_token.rds")
 sheet_key <- "1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs"
 ss <- googlesheets::gs_key(sheet_key)
-
+```
