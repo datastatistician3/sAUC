@@ -1,3 +1,4 @@
+library(googlesheets)
 ## prepare the OAuth token and set up the target sheet:
 ##  - do this interactively
 ##  - do this EXACTLY ONCE
@@ -14,4 +15,3 @@ googlesheets::gs_auth(token = "./inst/shiny/shiny_app_token.rds")
 sAUC_sheet <- gs_title("sAUC Response")
 sheet_key <- sAUC_sheet$sheet_key
 ss <- googlesheets::gs_key(sheet_key)
-

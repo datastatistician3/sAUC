@@ -22,13 +22,13 @@ library(googlesheets)
 # shiny_token <- gs_auth() # authenticate w/ your desired Google identity here
 # saveRDS(shiny_token, "shiny_app_token.rds")
 # ss$sheet_key
-# sAUC_sheet <- gs_title("sAUC Response")
 
 
 ## if you version control your app, don't forget to ignore the token file!
 ## e.g., put it into .gitignore
 
-googlesheets::gs_auth(token = "shiny_app_token.rds")
-sheet_key <- "1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs"
+googlesheets::gs_auth(token = "./inst/shiny/shiny_app_token.rds")
+sAUC_sheet <- gs_title("sAUC Response")
+sheet_key <- sAUC_sheet$sheet_key
 ss <- googlesheets::gs_key(sheet_key)
 ```

@@ -129,14 +129,14 @@ $(document).ready(function () {
 # shiny_token &lt;- gs_auth() # authenticate w/ your desired Google identity here
 # saveRDS(shiny_token, &quot;shiny_app_token.rds&quot;)
 # ss$sheet_key
-# sAUC_sheet &lt;- gs_title(&quot;sAUC Response&quot;)
 
 
 ## if you version control your app, don't forget to ignore the token file!
 ## e.g., put it into .gitignore
 
-googlesheets::gs_auth(token = &quot;shiny_app_token.rds&quot;)
-sheet_key &lt;- &quot;1QsCeoKtTPUf8FZ_UH3vhMSAhwX4XfyqG5eTasuPn3cs&quot;
+googlesheets::gs_auth(token = &quot;./inst/shiny/shiny_app_token.rds&quot;)
+sAUC_sheet &lt;- gs_title(&quot;sAUC Response&quot;)
+sheet_key &lt;- sAUC_sheet$sheet_key
 ss &lt;- googlesheets::gs_key(sheet_key)</code></pre>
 </div>
 
