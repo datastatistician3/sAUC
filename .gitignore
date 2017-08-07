@@ -4,6 +4,7 @@
 .RData
 .Rproj.user
 .Rproj.user/
+.httr-oauth*
 
 # produced vignettes
 vignettes/*.html
