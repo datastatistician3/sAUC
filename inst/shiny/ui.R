@@ -101,6 +101,10 @@ dashboardPage(
         text = "Feedback",
         tabName = "feedback",
         icon = icon("comment-o")),
+      menuItem(
+        text = "Comments",
+        tabName = "disqus_here",
+        icon = icon("info")),
       sidebarMenuOutput("menu"),
       tags$hr(),
       menuItem(
@@ -574,9 +578,29 @@ dashboardPage(
             )
           )
         )
-      )
-    )
+      ),
+      tabItem(
+        tabName = "disqus_here",
+        strong(h3("This is a discussion board about sAUC", style = "color:blue", align="center")),
+        div(
+          id = "disqus_thread",
+         HTML(
+          "<script>
+              (function() {
+                  var d = document, s = d.createElement('script');
 
+                  s.src = '//sauc.disqus.com/embed.js';
+
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript' rel='nofollow'>comments powered by Disqus.</a></noscript>"
+         )
+        )
+      )
+    ),
+  div(HTML('<script id="dsq-count-scr" src="//sauc.disqus.com/count.js" async></script>'))
   ) #End the dashboardBody
 
 ) #End the dashboardPage,
