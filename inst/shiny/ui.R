@@ -102,7 +102,7 @@ dashboardPage(
         tabName = "feedback",
         icon = icon("comment-o")),
       menuItem(
-        text = "Comments",
+        text = "Discussion Board",
         tabName = "disqus_here",
         icon = icon("info")),
       sidebarMenuOutput("menu"),
