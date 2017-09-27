@@ -92,7 +92,7 @@ dashboardPage(
       menuItem(
         text = "sAUC in Julia",
         tabName = "sauc_julia",
-        icon = icon("code-fork")),
+        icon = icon("code")),
       menuItem(
         text = "About Me",
         tabName = "about_me",
