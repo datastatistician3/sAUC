@@ -24,14 +24,14 @@ reference:
 navbar:
   type: default
   left:
-  - icon: fa-home
+  - text: Example
     href: articles/sAUC.html
   - text: Reference
     href: reference/index.html
   - text: Articles
     menu:
-    - text: sAUC Example
-      href: articles/sAUC.html
+    - text: Paper in the Journal of Data Science
+      href: http://www.jds-online.com/volume-15-number-2-april-2017
 
   - text: News
     href: news/index.html
