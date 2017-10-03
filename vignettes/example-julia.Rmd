@@ -1,0 +1,78 @@
+---
+# title: "Example"
+# author: "Som Bohora"
+# date: "July 18, 2017"
+output:
+  html_document:
+    keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### sAUC in Julia (SemiparametricAUC.jl)
+
+#### Perform AUC analyses with discrete covariates and a semi-parametric estimation
+
+To illustrate how to apply the proposed method, we obtained data from a randomized and controlled clinical trial, which was designed to increase knowledge and awareness to prevent Fetal Alcohol Spectrum Disorders (FASD) in children through the development of printed materials targeting women of childbearing age in Russia. One of the study objectives was to evaluate effects of FASD education brochures with different types of information and visual images on FASD related knowledge, attitudes, and alcohol consumption on childbearing-aged women. The study was conducted in two regions in Russia including St. Petersburg (SPB) and the Nizhny Novgorod Region (NNR) from 2005 to 2008. A total of 458 women were recruited from women's clinics and were randomly assigned to one of three groups (defined by the GROUP variable): (1) a printed FASD prevention brochure with positive images and information stated in a positive way, positive group (PG), (2) a FASD education brochure with negative messages and vivid images, negative group (NG); and (3) a general health material, control group (CG). For the purpose of the analysis in this thesis, only women in the PG and CG were included. Data were obtained from the study principal investigators . The response variable was the change in the number of drinks per day (CHANGE_DRINK=number of drinks after-number of drinks before) on average in the last 30 days from one-month follow-up to baseline. Two covariates considered for the proposed method were "In the last 30 days, have you smoked cigarettes?" (SMOKE) and  "In the last 30 days, did you take any other vitamins?" (OVITAMIN). Both covariates had "Yes" or "No" as the two levels. The question of interest here was to assess the joint predictive effects of SMOKE and OVITAMIN on whether the participants reduced the number of drinks per day from baseline to one month follow-up period. A total of 210 women with no missing data on any of the CHANGE_DRINK, SMOKE, GROUP, and OVITAMIN were included in the analysis.
+
+The response variable CHANGE_DRINK was heavily skewed and not normally distributed in each group  (Shapiro-Wilk p<0.001). Therefore, we decided to use the AUG regression model to analyze the data.  In the AUG regression model we define
+$$\LARGE \pi = p(Y_{CG} > Y_{PG})$$ Note that the value of $\Large \pi$ greater than .5 means that women in the PG had a greater reduction of alcohol drinks than those in the CG. For statistical results, all p-values < .05 were considered statistically significant and 95% CIs were presented.
+
+### Installation
+```r
+Pkg.add("SemiparametricAUC")
+```
+
+OR
+
+```r
+git clone https://github.com/sbohora/SemiparametricAUC.jl.git
+```
+
+### Result of sAUC Regression with one discrete covariate
+
+```r
+using DataFrames
+using SemiparametricAUC
+
+# Data analysis examples
+fasd = DataFrames.readtable(joinpath(Pkg.dir("SemiparametricAUC"), "data/fasd.csv"))
+# fasd = readtable("ds.csv")
+
+# Define factor/categorical variable
+function convert_to_factor(x)
+    return(DataFrames.pool(x))
+end
+
+fasd[:group] = convert_to_factor(fasd[:group])
+fasd[:x1]    = convert_to_factor(fasd[:x1])
+fasd[:x2]    = convert_to_factor(fasd[:x2])
+# fasd[:x3]  = convert_to_factor(fasd[:x3])
+
+one_covariates_results = SemiparametricAUC.semiparametricAUC(model_formula = y ~ x1, treatment_group = :group, data = fasd)
+one_covariates_results
+```
+
+```
+Model Summary
+              Estimate      2.5%      97.5% Std.Error t value  Pr(>|t|)
+(Intercept)   -0.1432 -0.471359   0.185059    0.1675 -0.8548  0.392634
+x1: 1         -0.7668  -1.47803 -0.0555374    0.3629  -2.113 0.0346002
+```
+
+### Result of sAUC Regression with two discrete covariates
+
+```r
+two_covariates_results = SemiparametricAUC.semiparametricAUC(model_formula = y ~ x1 + x2, treatment_group = :group, data = fasd)
+two_covariates_results
+```
+
+```
+Model Summary
+             Estimate      2.5%     97.5% Std.Error t value  Pr(>|t|)
+(Intercept)   -0.1034  -0.49026  0.283465    0.1974 -0.5238  0.600387
+x1: 1         -0.2189 -0.881207   0.44348    0.3379 -0.6476  0.517213
+x2: 1         -0.7434  -1.46562 -0.021217    0.3685 -2.0175 0.0436388
+```

@@ -31,8 +31,13 @@ navbar:
   - text: Articles
     menu:
     - text: Paper in the Journal of Data Science
-      href: http://www.jds-online.com/volume-15-number-2-april-2017
-
+      href: articles/bohora-etal-sauc-paper.pdf
+  - text: Shiny Application
+    href: reference/index.html
+  - text: sAUC in Python
+    href: articles/example-python.html
+  - text: sAUC in Julia
+    href: articles/example-julia.html
   - text: News
     href: news/index.html
   right:
