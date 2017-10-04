@@ -24,15 +24,15 @@ reference:
 navbar:
   type: default
   left:
-  - text: Example
-    href: articles/sAUC.html
-  - text: Reference
-    href: reference/index.html
   - text: Articles
     menu:
-    - text: Paper in the Journal of Data Science
+    - text: Paper published in the Journal of Data Science
       href: articles/bohora-etal-sauc-paper.pdf
-  - text: Shiny Application
+  - text: sAUC in R
+    href: articles/sAUC.html
+  - text: R Reference Functions
+    href: reference/index.html
+  - text: R Shiny Application
     href: reference/index.html
   - text: sAUC in Python
     href: articles/example-python.html

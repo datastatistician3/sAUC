@@ -2,7 +2,7 @@ fasd <- read.csv("./inst/extdata/fasd.csv")
 vars <- c("x1", "x2", "group")
 fasd[, vars] <- lapply(fasd[, vars], function(x) factor(x))
 
-sAUC::sAUC(x = y ~ x1, treatment_group = "group", data = fasd)
+dd <- sAUC::sAUC(x = y ~ x2, treatment_group = "group", data = fasd)
 
 sAUC::sAUC(x = y ~ x1 + x2, treatment_group = "group", data = fasd)
 

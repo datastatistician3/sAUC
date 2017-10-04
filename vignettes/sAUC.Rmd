@@ -1,5 +1,5 @@
 ---
-title: "Example using Semi-parametric Area Under the Curve (sAUC) Regression"
+title: "sAUC in R (sAUC)"
 output: 
   rmarkdown::html_vignette
 vignette: >
@@ -22,6 +22,16 @@ To illustrate how to apply the proposed method, we obtained data from a randomiz
 The response variable CHANGE_DRINK was heavily skewed and not normally distributed in each group  (Shapiro-Wilk p<0.001). Therefore, we decided to use the AUG regression model to analyze the data.  In the AUG regression model we define
 $$\large \pi = p(Y_{CG} > Y_{PG})$$ Note that the value of $\large \pi$ greater than .5 means that women in the PG had a greater reduction of alcohol drinks than those in the CG. For statistical results, all p-values < .05 were considered statistically significant and 95% CIs were presented.
 
+### Installation
+```r
+install.packages("sAUC")
+```
+
+OR
+
+```r
+devtools::install_github("sbohora/sAUC")
+```
 
 ### Result of sAUC Regression with one discrete covariate
 

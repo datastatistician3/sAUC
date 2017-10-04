@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example using Semi-parametric Area Under the Curve (sAUC) Regression • sAUC</title>
+<title>sAUC in R (sAUC) • sAUC</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -28,12 +28,6 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../articles/sAUC.html">Example</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -42,12 +36,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bohora-etal-sauc-paper.pdf">Paper in the Journal of Data Science</a>
+      <a href="../articles/bohora-etal-sauc-paper.pdf">Paper published in the Journal of Data Science</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../reference/index.html">Shiny Application</a>
+  <a href="../articles/sAUC.html">sAUC in R</a>
+</li>
+<li>
+  <a href="../reference/index.html">R Reference Functions</a>
+</li>
+<li>
+  <a href="../reference/index.html">R Shiny Application</a>
 </li>
 <li>
   <a href="../articles/example-python.html">sAUC in Python</a>
@@ -75,12 +75,14 @@
 <!--/.navbar -->
 
       
-      </header><script src="sAUC_files/htmlwidgets-0.9/htmlwidgets.js"></script><script src="sAUC_files/jquery-1.12.4/jquery.min.js"></script><script src="sAUC_files/datatables-binding-0.2/datatables.js"></script><link href="sAUC_files/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
+      </header><script src="sAUC_files/htmlwidgets-0.9/htmlwidgets.js"></script><script src="sAUC_files/jquery-1.12.4/jquery.min.js"></script><link href="sAUC_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="sAUC_files/datatables-binding-0.2.12/datatables.js"></script><link href="sAUC_files/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="sAUC_files/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="sAUC_files/dt-core-1.10.12/js/jquery.dataTables.min.js"></script><div class="row">
+<script src="sAUC_files/dt-core-1.10.12/js/jquery.dataTables.min.js"></script><link href="sAUC_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet">
+<script src="sAUC_files/crosstalk-1.0.0/js/crosstalk.min.js"></script><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Example using Semi-parametric Area Under the Curve (sAUC) Regression</h1>
+      <h1>sAUC in R (sAUC)</h1>
             
           </div>
 
@@ -92,6 +94,13 @@
 <a href="#perform-auc-analyses-with-discrete-covariates-and-a-semi-parametric-estimation" class="anchor"></a>Perform AUC analyses with discrete covariates and a semi-parametric estimation</h3>
 <p>To illustrate how to apply the proposed method, we obtained data from a randomized and controlled clinical trial, which was designed to increase knowledge and awareness to prevent Fetal Alcohol Spectrum Disorders (FASD) in children through the development of printed materials targeting women of childbearing age in Russia. One of the study objectives was to evaluate effects of FASD education brochures with different types of information and visual images on FASD related knowledge, attitudes, and alcohol consumption on childbearing-aged women. The study was conducted in two regions in Russia including St. Petersburg (SPB) and the Nizhny Novgorod Region (NNR) from 2005 to 2008. A total of 458 women were recruited from women’s clinics and were randomly assigned to one of three groups (defined by the GROUP variable): (1) a printed FASD prevention brochure with positive images and information stated in a positive way, positive group (PG), (2) a FASD education brochure with negative messages and vivid images, negative group (NG); and (3) a general health material, control group (CG). For the purpose of the analysis in this thesis, only women in the PG and CG were included. Data were obtained from the study principal investigators . The response variable was the change in the number of drinks per day (CHANGE_DRINK=number of drinks after-number of drinks before) on average in the last 30 days from one-month follow-up to baseline. Two covariates considered for the proposed method were “In the last 30 days, have you smoked cigarettes?” (SMOKE) and “In the last 30 days, did you take any other vitamins?” (OVITAMIN). Both covariates had “Yes” or “No” as the two levels. The question of interest here was to assess the joint predictive effects of SMOKE and OVITAMIN on whether the participants reduced the number of drinks per day from baseline to one month follow-up period. A total of 210 women with no missing data on any of the CHANGE_DRINK, SMOKE, GROUP, and OVITAMIN were included in the analysis.</p>
 <p>The response variable CHANGE_DRINK was heavily skewed and not normally distributed in each group (Shapiro-Wilk p&lt;0.001). Therefore, we decided to use the AUG regression model to analyze the data. In the AUG regression model we define <span class="math display">\[\large \pi = p(Y_{CG} &gt; Y_{PG})\]</span> Note that the value of <span class="math inline">\(\large \pi\)</span> greater than .5 means that women in the PG had a greater reduction of alcohol drinks than those in the CG. For statistical results, all p-values &lt; .05 were considered statistically significant and 95% CIs were presented.</p>
+</div>
+<div id="installation" class="section level3">
+<h3 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"sAUC"</span>)</code></pre></div>
+<p>OR</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"sbohora/sAUC"</span>)</code></pre></div>
 </div>
 <div id="result-of-sauc-regression-with-one-discrete-covariate" class="section level3">
 <h3 class="hasAnchor">
@@ -121,7 +130,7 @@ DT<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.
               <span class="kw">strong</span>(<span class="st">'Model results'</span>), <span class="st">'{Note: left-side of model :  '</span>, result_one<span class="op">$</span><span class="st">"model_formula"</span>,<span class="st">"}"</span>),
             <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">6</span>, <span class="dt">dom =</span> <span class="st">'tip'</span>), <span class="dt">rownames =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div id="htmlwidget-ec897849c5c50a6f7846" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y 1  &gt;  Y 2 ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smoke2"],[-0.9099,0.7668],[0.3219,0.3629],[-1.5409,0.0555],[-0.2789,1.478],[0.0047,0.0346]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ec897849c5c50a6f7846">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y 1  &gt;  Y 2 ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smoke2"],[-0.9099,0.7668],[0.3219,0.3629],[-1.5409,0.0555],[-0.2789,1.478],[0.0047,0.0346]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="result-of-sauc-regression-with-two-discrete-covariates" class="section level3">
 <h3 class="hasAnchor">
@@ -132,7 +141,7 @@ DT<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.
               <span class="kw">strong</span>(<span class="st">'Model results'</span>), <span class="st">'{Note: left-side of model :  '</span>, result_two<span class="op">$</span><span class="st">"model_formula"</span>,<span class="st">"}"</span>),
             <span class="dt">options =</span> <span class="kw">list</span>(<span class="dt">pageLength =</span> <span class="dv">6</span>, <span class="dt">dom =</span> <span class="st">'tip'</span>), <span class="dt">rownames =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div id="htmlwidget-ac00066e7f6365b7f0d3" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ac00066e7f6365b7f0d3">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y 1  &gt;  Y 2 ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smoke2","vitamin2"],[-1.0657,0.7434,0.2189],[0.4326,0.3685,0.3379],[-1.9136,0.0212,-0.4435],[-0.2177,1.4656,0.8812],[0.0138,0.0436,0.5172]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># result_two$`Model summary`</span></code></pre></div>
+<script type="application/json" data-for="htmlwidget-ac00066e7f6365b7f0d3">{"x":{"filter":"none","caption":"<caption style=\"font-size:120%\">\n  <strong>Model results<\/strong>\n  {Note: left-side of model :  \n  logit [ p ( Y 1  &gt;  Y 2 ) ] \n\n\n  }\n<\/caption>","data":[["(Intercept)","smoke2","vitamin2"],[-1.0657,0.7434,0.2189],[0.4326,0.3685,0.3379],[-1.9136,0.0212,-0.4435],[-0.2177,1.4656,0.8812],[0.0138,0.0436,0.5172]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Coefficients<\/th>\n      <th>Std. Error<\/th>\n      <th>2.5%<\/th>\n      <th>97.5%<\/th>\n      <th>Pr(&gt;|z|)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"dom":"tip","crosstalkOptions":{"key":null,"group":null},"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># result_two$`Model summary`</span></code></pre></div>
 </div>
 </div>
   </div>
