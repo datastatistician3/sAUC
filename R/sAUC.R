@@ -2,18 +2,18 @@
 #'
 #' @export
 #'
-#' @title Run semiparametric AUC regression model adjusting for categorical covariates
+#' @title Fitting semiparametric AUC regression model adjusting for categorical covariates
 #'
-#' @description Ask for data frame that contains only required variables in the model,
-#' Request to define response and treatment group, convert variables other than response
-#' into factors, estimate model parameters, and display results.
+#' @description \code{sAUC} is used to fit semiparametric AUC regression model specified by
+#' giving a formula object of response and covariates and a separate argument of treatment
+#' group. It will convert variables other than response into factors, estimate model parameters,
+#' and display results.
 #'
-#' @param x A formula with response and covariates such as \code{response ~ x1 + x2}
+#' @param formula A formula object with response and covariates such as \code{response ~ x1 + x2}
 #'
 #' @param treatment_group A treatment group for which a comparision is to be made
 #'
-#' @param data A dataframe that contains only variables needed for the analysis. At this point,
-#' this dataframe should not contain any extra variables
+#' @param data A dataframe that contains variables needed for the analysis.
 #'
 #' @return A list of model summary, coefficients, AUC details, and session information.
 #'
@@ -35,11 +35,11 @@
 #' ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")],
 #'                                           function(x) factor(x))
 #'
-#' sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
+#' sAUC(formula = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 
-sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
-  if (missing(x)){
-    stop(paste0("Argument x (for e.g. response ~ x1 + x2) is missing."))
+sAUC <- function(formula = FALSE, treatment_group = FALSE, data = FALSE) {
+  if (missing(formula)){
+    stop(paste0("Argument formula (for e.g. response ~ x1 + x2) is missing."))
   } else if (missing(treatment_group)){
     stop(paste0("Argument treatment_group (treatment group) is missing."))
   } else if (missing(data)){
@@ -48,14 +48,14 @@ sAUC <- function(x = FALSE, treatment_group = FALSE, data = FALSE) {
     message(" ")
   }
 
-  if ("formula" %in% methods::is(x)){
-    x_vars <- attr(stats::terms(x), "term.labels")
-    y_var <- as.character(x)[2]
+  if ("formula" %in% methods::is(formula)){
+    x_vars <- attr(stats::terms(formula), "term.labels")
+    y_var <- as.character(formula)[2]
     input_covariates <- x_vars
     input_response <- y_var
   } else {
     testit::assert("Please put response and input as formula. For example, response ~ x1 + x2",
-                   !"formula" %in% methods::is(x))
+                   !"formula" %in% methods::is(formula))
   }
 
   input_treatment <- treatment_group

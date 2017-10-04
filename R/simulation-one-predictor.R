@@ -4,15 +4,16 @@
 #'
 #' @title Simulate Semi-parametric AUC regression adjusting for one categorical predictor
 #'
-#' @description Ask for number of iterations to run the simulation for Semiparametric AUC regression
-#' adjusting for one discrete covariate. In this simulation, true parameters are as follows: beta0 = 0.15,
-#' beta1 = 0.50, beta2 = 1.
+#' @description It asks for number of iterations to be run, number of observations in treatment
+#' and control groups for the simulation of Semiparametric AUC regression adjusting for one discrete
+#' covariate. In this simulation, true model parameters are as follows: \eqn{\beta_0} = 0.15,
+#' \eqn{\beta_1} = 0.50, \eqn{\beta_2} = 1.
 #'
-#' @param iter Number of realizations to run
+#' @param iter Number of realizations to be run
 #'
-#' @param m Number of observations on treatment condition
+#' @param m Number of observations in treatment condition
 #'
-#' @param p Number of observations on control condition
+#' @param p Number of observations in control condition
 #'
 #' @param b0 True intercept value
 #'

@@ -18,3 +18,8 @@
 ^sandbox/
 ^docs/
 ^_pkgdown\.yml$
+^README-.*\.png$
+^README.Rmd$
+^inst/extdata/
+^inst/shiny-examples/
+

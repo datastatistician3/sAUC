@@ -4,7 +4,7 @@
 #'
 #' @title Compute inverse of a function
 #'
-#' @description Ask for a function and compute its inverse
+#' @description It takes a function and compute its inverse
 #'
 #' @param x A value between 0 and 1
 #'

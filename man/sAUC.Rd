@@ -2,25 +2,25 @@
 % Please edit documentation in R/sauc.R
 \name{sAUC}
 \alias{sAUC}
-\title{Run semiparametric AUC regression model adjusting for categorical covariates}
+\title{Fitting semiparametric AUC regression model adjusting for categorical covariates}
 \usage{
-sAUC(x = FALSE, treatment_group = FALSE, data = FALSE)
+sAUC(formula = FALSE, treatment_group = FALSE, data = FALSE)
 }
 \arguments{
-\item{x}{A formula with response and covariates such as \code{response ~ x1 + x2}}
+\item{formula}{A formula object with response and covariates such as \code{response ~ x1 + x2}}
 
 \item{treatment_group}{A treatment group for which a comparision is to be made}
 
-\item{data}{A dataframe that contains only variables needed for the analysis. At this point,
-this dataframe should not contain any extra variables}
+\item{data}{A dataframe that contains variables needed for the analysis.}
 }
 \value{
 A list of model summary, coefficients, AUC details, and session information.
 }
 \description{
-Ask for data frame that contains only required variables in the model,
-Request to define response and treatment group, convert variables other than response
-into factors, estimate model parameters, and display results.
+\code{sAUC} is used to fit semiparametric AUC regression model specified by
+giving a formula object of response and covariates and a separate argument of treatment
+group. It will convert variables other than response into factors, estimate model parameters,
+and display results.
 }
 \examples{
 ds <- NULL
@@ -38,7 +38,7 @@ for (x1 in 0:1){
 ds[,c("x1", "x2", "x3", "group")] <- lapply(ds[,c("x1", "x2", "x3", "group")],
                                           function(x) factor(x))
 
-sAUC(x = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
+sAUC(formula = response ~ x1 + x2 + x3, treatment_group = "group", data = ds)
 }
 \author{
 Som Bohora

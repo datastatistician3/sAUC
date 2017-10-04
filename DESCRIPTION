@@ -1,7 +1,6 @@
 Package: sAUC
 Title: Semi-parametric Area Under the Curve (AUC) regression
-Description: Perform AUC analyses with discrete covariates and a semi-parametric
-    estimation.
+Description: In many applications, comparing two groups while adjusting for multiple covariates is desired for the statistical analysis.  For instance, in clinical trials, adjusting for covariates is a necessary aspect of the statistical analysis in order to improve the precision of the treatment comparison and to assess effect modification. sAUC is a semi-parametric AUC regression model to compare the effect of two treatment groups in the intended non-normal outcome while adjusting for discrete covariates. More detailed reasons on what it is and why it is proposed are outlined in the paper published in the Journal of Data Science which can be accessed via https://github.com/sbohora/sAUC/blob/master/docs/articles/bohora-etal-sauc-paper.pdf. 	A major reason behind the development of this method is that this method is computationally simple and is based on closed-form parameter and standard error estimation.
 Version: 0.0.1.9
 Date: 2017-03-06
 Authors@R: person("Som", "Bohora", email="energeticsom@gmail.com", role=c("aut", "cre"))
@@ -18,10 +17,9 @@ Imports:
     stats,
     base,
     methods,
-    utils,
-    DT,
-    htmltools
+    utils
 Suggests:
     testthat,
-    testit
+    testit,
+	shiny
 RoxygenNote: 6.0.1.9000

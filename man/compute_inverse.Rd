@@ -10,7 +10,7 @@ compute_inverse(x)
 \item{x}{A value between 0 and 1}
 }
 \description{
-Ask for a function and compute its inverse
+It takes a function and compute its inverse
 }
 \examples{
 compute_inverse(0.6)

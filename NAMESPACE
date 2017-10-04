@@ -3,5 +3,6 @@
 export(calculate_auc)
 export(compute_auc)
 export(compute_inverse)
+export(run_sAUC_shiny_app)
 export(sAUC)
 export(simulate_one_predictor)
