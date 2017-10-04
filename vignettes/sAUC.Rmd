@@ -5,7 +5,7 @@ output:
 vignette: >
   %\VignetteIndexEntry{Introduction to sAUC}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\usepackage[utf8]{inputenc}
 ---
 
 ```{r, echo = FALSE, message = FALSE}
