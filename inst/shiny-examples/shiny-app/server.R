@@ -84,18 +84,19 @@ shinyServer(function(input, output){
     ds <- data()
     cov_variables <- c(input$independent,input$group_var)
     ds[, cov_variables] <- lapply(ds[, cov_variables], function(x) factor(x))
-    sAUC::sAUC(x = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
+    sAUC::sAUC(formula = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
                treatment_group = input$group_var, data = ds)
 
   })
 
-  output$model_result <- renderDataTable({
+  output$model_result <- DT::renderDataTable({
     mod_result <- run_sAUC()
-    DT::datatable(as.data.frame(mod_result$"Model summary"),
+    result_model <- DT::datatable(as.data.frame(mod_result$"Model summary"),
                 caption = htmltools::tags$caption(
                   style = "font-size:120%",
                   strong('Model results'), '{Note: left-side of model is:', mod_result$"model_formula","}"),
                   options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
+    return(result_model)
   })
 
   output$download_model_result = downloadHandler('sAUC-model-results.csv', content = function(file) {
@@ -155,7 +156,7 @@ shinyServer(function(input, output){
   })
 
     # Display orginal data
-  output$show_data <- renderDataTable({
+  output$show_data <- DT::renderDataTable({
     if(is.null(data())){return()}
     datatable(data(), filter = 'top', options = list(
       pageLength = 8
@@ -163,7 +164,7 @@ shinyServer(function(input, output){
   })
 
   # Display summary of the original data
-  output$summaryy <- renderDataTable({
+  output$summaryy <- DT::renderDataTable({
     ds <- data()
     numeric_columns <- names(ds)[sapply(ds, function(x) is.numeric(x))]
     if(is.null(ds)){return()}
@@ -285,6 +286,7 @@ shinyServer(function(input, output){
         style = "font-size:150%",
         'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
       options = list(pageLength = 6, dom = 'tip'), rownames = c("\u03b20", "\u03b21", "\u03b22"))
+    return(dt)
   })
 
   output$download_simu_result = downloadHandler('sAUC-simulation-results.csv', content = function(file) {

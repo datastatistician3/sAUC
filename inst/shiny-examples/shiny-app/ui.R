@@ -306,7 +306,7 @@ dashboardPage(
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "warning",
-          dataTableOutput("model_result")
+          DT::dataTableOutput("model_result")
           ),
         p(class = 'text-center', downloadButton('download_model_result', 'Download Model Results')),
         p(class = 'text-right', downloadButton('download_roc_plot', 'Download ROC curve plot'))
