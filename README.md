@@ -4,7 +4,9 @@
 ## Semi-parametric Area Under the Curve (sAUC) Regression
 Perform AUC analyses with discrete covariates and a semi-parametric estimation
 
+### What is sAUC model and why?
 
+In many applications, comparing two groups while adjusting for multiple covariates is desired for the statistical analysis.  For instance, in clinical trials, adjusting for covariates is a necessary aspect of the statistical analysis in order to improve the precision of the treatment comparison and to assess effect modification. sAUC is a semi-parametric AUC regression model to compare the effect of two treatment groups in the intended non-normal outcome while adjusting for discrete covariates. More detailed reasons on what it is and why it is proposed are outlined in [this paper](articles/bohora-etal-sauc-paper.pdf). A major reason behind the development of this method is that this method is computationally simple and is based on closed-form parameter and standard error estimation.
 
 ### Model
 

@@ -150,7 +150,7 @@ sAUC <- function(formula = FALSE, treatment_group = FALSE, data = FALSE) {
 
     list_items <- list("Model summary" = results,"Coefficients" = betas, "AUC details" = auch,
                      "Session information" = utils::sessionInfo(), "Matrix of unique X levels " = matrix_x, "Design matrix" = Z,
-                     model_formula = model_formula)
+                     model_formula = model_formula, input_covariates = input_covariates, input_response = input_response)
   invisible(list_items)
 
   return(list_items)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/run-sAUC-shiny-app.R
 \name{run_sAUC_shiny_app}
 \alias{run_sAUC_shiny_app}
-\title{Run Shiny application built for sAUC package}
+\title{Run Shiny application built for sAUC package (sAUC::run_sAUC_shiny_app())}
 \usage{
 run_sAUC_shiny_app()
 }

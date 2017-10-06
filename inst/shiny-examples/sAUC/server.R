@@ -18,23 +18,43 @@ shinyServer(function(input, output){
 
   # Create reactive to read data
   data <- reactive({
-    input_file <- input$file
-    if(is.null(input_file)){return()}
-    read.table(
-      file = input_file$datapath,
-      sep = input$sep,
-      header = input$header,
-      stringsAsFactors = input$string_factors
-    )
+    if (input$use_inbuilt_data){
+      sAUC::fasd
+    } else {
+      input_file <- input$file
+      if(is.null(input_file)){return()}
+      read.table(
+        file = input_file$datapath,
+        sep = input$sep,
+        header = input$header,
+        stringsAsFactors = input$string_factors
+      )
+    }
+  })
+
+  observe({
+    if(input$use_inbuilt_data ==TRUE){
+    shinyjs::show("download_data")
+    shinyjs::show("reset")
+    shinyjs::show("show_model")
+    shinyjs::show("describe_file")
+    shinyjs::hide("box_inbuilt_data")
+    shinyjs::show("reset_file")
+  } else if (input$use_inbuilt_data ==FALSE){
+    shinyjs::hide("download_data")
+    shinyjs::hide("reset")
+    shinyjs::hide("show_model")
+    shinyjs::hide("describe_file")
+    shinyjs::show("box_inbuilt_data")
+  }
   })
 
   observeEvent(input$file, {
-    shinyjs::show("download_data");
-    shinyjs::show("reset");
+    shinyjs::show("download_data")
     shinyjs::show("show_model")
     shinyjs::show("describe_file")
-    # shinyjs::show("element");
-    # shinyjs::show("element")
+    shinyjs::show("reset")
+    shinyjs::hide("box_inbuilt_data")
   })
 
   observeEvent(input$reset, {
@@ -44,6 +64,9 @@ shinyServer(function(input, output){
     shinyjs::hide("describe_file")
     shinyjs::alert("Thank you using sAUC method. Please provide feedback using Feedback Form on the left!")
     shinyjs::hide("reset")
+    shinyjs::show("box_inbuilt_data")
+    shinyjs::reset("use_inbuilt_data")
+    shinyjs::hide("reset_file")
   })
 
   #The following set of functions populate the column selectors
@@ -55,7 +78,7 @@ shinyServer(function(input, output){
     names(items)=items
     selectInput(
       inputId = "response",
-      label = "Choose response:",
+      label = "Choose response*:",
       choices = items)
   })
 
@@ -67,17 +90,22 @@ shinyServer(function(input, output){
     names(items)=items
     selectInput(
       inputId = "group_var",
-      label = "Choose group:",
+      label = "Choose group*:",
       choices  = names(data())[!names(data()) %in% input$response],
       selected = names(data())[!names(data()) %in% input$response][1])
   })
 
   output$independent <- renderUI({
   checkboxGroupInput(inputId = "independent",
-                     label =  "Independent Variables:",
+                     label =  "Independent Variables*:",
                      choices = names(data())[!names(data()) %in% c(input$response, input$group_var)],
                      selected = names(data())[!names(data()) %in% c(input$response, input$group_var)][1])
   })
+
+  # observe({
+  #   if(length(output$independent))
+  #   shinyjs::alert("You should have at least one discrete covariate in the model.")
+  # })
 
   run_sAUC <- reactive({
     if (is.null(data())) return(NULL)
@@ -88,6 +116,12 @@ shinyServer(function(input, output){
                treatment_group = input$group_var, data = ds)
 
   })
+
+  # observe({
+  #   if (length(independent) == 0){
+  #     shinyjs::alert("You should have at least one discrete covariate in the model.")
+  #   }
+  # })
 
   output$model_result <- DT::renderDataTable({
     mod_result <- run_sAUC()

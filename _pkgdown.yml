@@ -21,6 +21,10 @@ reference:
   contents:
   - fasd
 
+- title: R Shiny Application
+  contents:
+  - run_sAUC_shiny_app
+
 navbar:
   type: default
   left:

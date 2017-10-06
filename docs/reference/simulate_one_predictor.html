@@ -105,9 +105,10 @@
     </div>
 
     
-    <p>Ask for number of iterations to run the simulation for Semiparametric AUC regression
-adjusting for one discrete covariate. In this simulation, true parameters are as follows: beta0 = 0.15,
-beta1 = 0.50, beta2 = 1.</p>
+    <p>It asks for number of iterations to be run, number of observations in treatment
+and control groups for the simulation of Semiparametric AUC regression adjusting for one discrete
+covariate. In this simulation, true model parameters are as follows: \(\beta_0\) = 0.15,
+\(\beta_1\) = 0.50, \(\beta_2\) = 1.</p>
     
 
     <pre class="usage"><span class='fu'>simulate_one_predictor</span>(<span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>p</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>b0</span> <span class='kw'>=</span> <span class='fl'>0.15</span>,
@@ -118,15 +119,15 @@ beta1 = 0.50, beta2 = 1.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>iter</th>
-      <td><p>Number of realizations to run</p></td>
+      <td><p>Number of realizations to be run</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Number of observations on treatment condition</p></td>
+      <td><p>Number of observations in treatment condition</p></td>
     </tr>
     <tr>
       <th>p</th>
-      <td><p>Number of observations on control condition</p></td>
+      <td><p>Number of observations in control condition</p></td>
     </tr>
     <tr>
       <th>b0</th>

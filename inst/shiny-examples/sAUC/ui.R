@@ -247,23 +247,49 @@ dashboardPage(
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
-          fileInput("file", "Upload a data file to be analyzed"),
-          helpText("Default maximum file size is 5MB"),
+          fileInput("file", "Upload a data file (for e.g. CSV) to be analyzed"),
+          shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:110%;background-color: white;")),
+          shinyjs::hidden(actionButton("reset", "Reset Analysis", style = "color: white;
+                     background-color: blue;")),
+          # shinyjs::hidden(h5("Please reset analysis before uploading file.")),
+          helpText("Default maximum file size is 5MB."),
+          helpText("Input data formats can be comma, semicolon, tab or space delimited."),
           tags$hr(),
           h5(helpText("Select the read.table parameters below")),
           checkboxInput(
-            inputId = 'header', label = "Header TRUE?", value = TRUE),
+            inputId = 'header',
+            label = "Header TRUE?",
+            value = TRUE),
           checkboxInput(
-            inputId = 'string_factors', label = "String as Factors?", value = FALSE),
+            inputId = 'string_factors',
+            label = "String as Factors?",
+            value = FALSE),
           radioButtons(
             inputId = 'sep',
             label = 'Separator',
-            choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
+            choices = c(Comma = ",",
+                        Semicolon = ';',
+                        Tab = '\t', Space=''),
+            selected = ',')
           ),
+        div(id = "box_inbuilt_data",
+        box(
+          title="Use a dataset within sAUC package",
+          width = 12,
+          collapsible = TRUE,
+          solidHeader = TRUE,
+          status = "info",
+          checkboxInput(
+            inputId = 'use_inbuilt_data',
+            label = 'Would you like to use FASD dataset from sAUC package for trial?',
+            value = FALSE)
+          # radioButtons(
+          #   inputId = 'use_inbuilt_data',
+          #   label = 'Would you like to use a FASD dataset from sAUC package for trial?',
+          #   choices = list("Yes", "No"), selected = "No")
+          )),
         shinyjs::hidden(
-          downloadButton('download_data', 'Download Data'),
-          actionButton("reset", "Reset Analysis", style = "color: white;
-                     background-color: blue;")
+          downloadButton('download_data', 'Download Data')
         )),
 
         column(
@@ -285,8 +311,8 @@ dashboardPage(
           id = "show_model",
           column(
             width = 3,
-        box(
-          title = tags$p(strong(style ="font-size: 18px;color: green","Data analysis")),
+        box(footer = tags$p(strong(style = "font-size: 12px;color:red", "* = required arguments.")),
+          title = tags$p(strong(style ="font-size: 18px;color:green","Data analysis")),
           width = 12,
           ollapsible = TRUE,
           solidHeader = TRUE,
@@ -294,8 +320,7 @@ dashboardPage(
           status = "warning",
           uiOutput("choose_response"),
           uiOutput("choose_group"),
-          uiOutput("independent"),
-          textOutput("input_oupt")
+          uiOutput("independent")
           )
         ),
         column(

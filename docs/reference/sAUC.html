@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run semiparametric AUC regression model adjusting for categorical covariates — sAUC â€¢ sAUC</title>
+<title>Fitting semiparametric AUC regression model adjusting for categorical covariates — sAUC â€¢ sAUC</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -101,23 +101,24 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run semiparametric AUC regression model adjusting for categorical covariates</h1>
+    <h1>Fitting semiparametric AUC regression model adjusting for categorical covariates</h1>
     </div>
 
     
-    <p>Ask for data frame that contains only required variables in the model,
-Request to define response and treatment group, convert variables other than response
-into factors, estimate model parameters, and display results.</p>
+    <p><code>sAUC</code> is used to fit semiparametric AUC regression model specified by
+giving a formula object of response and covariates and a separate argument of treatment
+group. It will convert variables other than response into factors, estimate model parameters,
+and display results.</p>
     
 
-    <pre class="usage"><span class='fu'>sAUC</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>treatment_group</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>sAUC</span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>treatment_group</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A formula with response and covariates such as <code>response ~ x1 + x2</code></p></td>
+      <th>formula</th>
+      <td><p>A formula object with response and covariates such as <code>response ~ x1 + x2</code></p></td>
     </tr>
     <tr>
       <th>treatment_group</th>
@@ -125,8 +126,7 @@ into factors, estimate model parameters, and display results.</p>
     </tr>
     <tr>
       <th>data</th>
-      <td><p>A dataframe that contains only variables needed for the analysis. At this point,
-this dataframe should not contain any extra variables</p></td>
+      <td><p>A dataframe that contains variables needed for the analysis.</p></td>
     </tr>
     </table>
     
@@ -151,7 +151,7 @@ this dataframe should not contain any extra variables</p></td>
 <span class='no'>ds</span>[,<span class='fu'>c</span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>, <span class='st'>"group"</span>)] <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='no'>ds</span>[,<span class='fu'>c</span>(<span class='st'>"x1"</span>, <span class='st'>"x2"</span>, <span class='st'>"x3"</span>, <span class='st'>"group"</span>)],
                                           <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>factor</span>(<span class='no'>x</span>))
 
-<span class='fu'>sAUC</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>response</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>treatment_group</span> <span class='kw'>=</span> <span class='st'>"group"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ds</span>)</div><div class='output co'>#&gt; <span class='message'> </span></div><div class='output co'>#&gt; <span class='message'>Data are being analyzed. Please, be patient.</span>
+<span class='fu'>sAUC</span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>response</span> ~ <span class='no'>x1</span> + <span class='no'>x2</span> + <span class='no'>x3</span>, <span class='kw'>treatment_group</span> <span class='kw'>=</span> <span class='st'>"group"</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>ds</span>)</div><div class='output co'>#&gt; <span class='message'> </span></div><div class='output co'>#&gt; <span class='message'>Data are being analyzed. Please, be patient.</span>
 #&gt; <span class='message'></span></div><div class='output co'>#&gt; The model is:  logit [ p ( Y_0  &gt;  Y_1 ) ]  =  beta_0 +  beta_1*x11 + beta_2*x21 + beta_3*x22 + beta_4*x31 + beta_5*x32  
 #&gt; 
 #&gt; Model Summary
@@ -216,20 +216,19 @@ this dataframe should not contain any extra variables</p></td>
 #&gt; 
 #&gt; loaded via a namespace (and not attached):
 #&gt;  [1] Rcpp_0.12.13        compiler_3.4.1      tools_3.4.1        
-#&gt;  [4] highlight_0.4.7.1   testthat_1.0.2      digest_0.6.12      
+#&gt;  [4] testthat_1.0.2      highlight_0.4.7.1   digest_0.6.12      
 #&gt;  [7] pkgbuild_0.0.0.9000 pkgload_0.0.0.9000  memoise_1.1.0      
 #&gt; [10] evaluate_0.10.1     tibble_1.3.4        lattice_0.20-35    
 #&gt; [13] rlang_0.1.2         Matrix_1.2-11       rstudioapi_0.7     
 #&gt; [16] commonmark_1.4      curl_2.8.1          yaml_2.1.14        
-#&gt; [19] pkgdown_0.1.0.9000  withr_2.0.0         httr_1.3.1         
-#&gt; [22] stringr_1.2.0       roxygen2_6.0.1      xml2_1.1.1         
-#&gt; [25] knitr_1.17          desc_1.1.1          htmlwidgets_0.9    
-#&gt; [28] rprojroot_1.2       grid_3.4.1          DT_0.2.12          
-#&gt; [31] R6_2.2.2            rematch_1.0.1       rmarkdown_1.6      
-#&gt; [34] purrr_0.2.3         callr_1.0.0         magrittr_1.5       
-#&gt; [37] whisker_0.3-2       backports_1.1.1     htmltools_0.3.6    
-#&gt; [40] MASS_7.3-47         usethis_0.0.0.9000  testit_0.7         
-#&gt; [43] assertthat_0.2.0    stringi_1.1.5       crayon_1.3.4       
+#&gt; [19] pkgdown_0.1.0.9000  withr_2.0.0         stringr_1.2.0      
+#&gt; [22] httr_1.3.1          roxygen2_6.0.1      xml2_1.1.1         
+#&gt; [25] knitr_1.17          desc_1.1.1          rprojroot_1.2      
+#&gt; [28] grid_3.4.1          R6_2.2.2            rmarkdown_1.6      
+#&gt; [31] purrr_0.2.3         callr_1.0.0         magrittr_1.5       
+#&gt; [34] whisker_0.3-2       backports_1.1.1     htmltools_0.3.6    
+#&gt; [37] MASS_7.3-47         usethis_0.0.0.9000  testit_0.7         
+#&gt; [40] assertthat_0.2.0    stringi_1.1.5       crayon_1.3.4       
 #&gt; 
 #&gt; $`Matrix of unique X levels `
 #&gt;    x1 x2 x3
