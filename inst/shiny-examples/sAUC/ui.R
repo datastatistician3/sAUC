@@ -250,7 +250,7 @@ dashboardPage(
           fileInput("file", "Upload a data file (for e.g. CSV) to be analyzed"),
           shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:110%;background-color: white;")),
           shinyjs::hidden(actionButton("reset", "Reset Analysis", style = "color: white;
-                     background-color: blue;")),
+                     background-color: red;")),
           # shinyjs::hidden(h5("Please reset analysis before uploading file.")),
           helpText("Default maximum file size is 5MB."),
           helpText("Input data formats can be comma, semicolon, tab or space delimited."),
