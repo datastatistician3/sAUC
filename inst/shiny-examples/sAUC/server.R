@@ -372,11 +372,11 @@ shinyServer(function(input, output){
         ggsave(file, plot = output_plot_beta(), device = device)
   })
 
-  output$download_cv <- downloadHandler(
-    filename = "som-bohora-cv.pdf",
-    content = function(file) {
-      file.copy("www/bohora-cv.pdf", file)
-    })
+  # output$download_cv <- downloadHandler(
+  #   filename = "som-bohora-cv.pdf",
+  #   content = function(file) {
+  #     file.copy("www/bohora-cv.pdf", file)
+  #   })
 
    output$download_data <- downloadHandler(
     filename = function() { paste('fasd', '.csv', sep='') },
