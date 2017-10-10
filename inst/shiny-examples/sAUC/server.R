@@ -9,7 +9,7 @@ library(psych)
 library(Hmisc)
 library(googlesheets)
 
-source("globals.R")
+# source("globals.R")
 
 shinyServer(function(input, output){
   # output$menu <- renderMenu({
@@ -42,6 +42,7 @@ shinyServer(function(input, output){
     shinyjs::show("describe_file")
     shinyjs::hide("box_inbuilt_data")
     shinyjs::show("reset_file")
+    shinyjs::hide("add_about_sauc")
   } else if (input$use_inbuilt_data ==FALSE){
     shinyjs::hide("download_data")
     shinyjs::hide("reset")
@@ -69,6 +70,13 @@ shinyServer(function(input, output){
     shinyjs::show("box_inbuilt_data")
     shinyjs::reset("use_inbuilt_data")
     shinyjs::hide("reset_file")
+    shinyjs::show("add_about_sauc")
+  })
+
+  output$add_about_sauc <- renderUI({
+    tags$iframe(src = 'README.html', # put .html to /www
+                          width = '100%', height = '800px',
+                          frameborder = 0, scrolling = 'auto')
   })
 
   #The following set of functions populate the column selectors

@@ -9,7 +9,6 @@
 ^cran-comments\.md$
 ^CONDUCT.md$
 ^README.html$
-
 ^documentation-peek.pdf
 ^documentation-for-developers/
 ^playgrounds/
@@ -23,3 +22,4 @@
 ^inst/extdata/
 ^inst/shiny-examples/
 ^.httr-oauth
+^\.httr-oauth$

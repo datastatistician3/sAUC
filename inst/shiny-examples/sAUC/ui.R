@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(shinyjs)
 
-source("globals.R")
+# source("globals.R")
 
 header <- dashboardHeader(
   title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates")), href = "https://github.com/sbohora/sAUC", target ="_blank"),
@@ -10,14 +10,14 @@ header <- dashboardHeader(
   titleWidth = "1500px",
   dropdownMenu(
     type = "messages",
-    messageItem(
-      from = "Som",
-      message = "Stay tuned."),
-    messageItem(
-      from = "New User",
-      message = "How do I register?",
-      icon = icon("question"),
-      time = "13:45"),
+    # messageItem(
+    #   from = "Som",
+    #   message = "Stay tuned."),
+    # messageItem(
+    #   from = "New User",
+    #   message = "How do I register?",
+    #   icon = icon("question"),
+    #   time = "13:45"),
     messageItem(
       from = "Support",
       message = "The new server is ready.",
@@ -28,10 +28,10 @@ header <- dashboardHeader(
     notificationItem(
       text = "5 new uers today",
       icon = icon("users")),
-    notificationItem(
-      text = "12 items delivered",
-      icon("truck"),
-      status = "success"),
+    # notificationItem(
+    #   text = "12 items delivered",
+    #   icon("truck"),
+    #   status = "success"),
     notificationItem(
       text = "Server load at 86%",
       icon = icon("exclamation-triangle"),
@@ -296,13 +296,14 @@ dashboardPage(
         column(
           width = 9,
         box(
-          width = 20,
+          width = 22,
           height = 20,
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
-          uiOutput("describe_file")
-        )
+          uiOutput("describe_file"),
+          htmlOutput("add_about_sauc")
+          )
         )
          ),
         br(),
