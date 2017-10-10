@@ -2,6 +2,8 @@ library(shiny)
 library(shinydashboard)
 library(shinyjs)
 
+source("globals.R")
+
 header <- dashboardHeader(
   title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates")), href = "https://github.com/sbohora/sAUC", target ="_blank"),
   disable = FALSE,

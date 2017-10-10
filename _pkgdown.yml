@@ -37,7 +37,7 @@ navbar:
   - text: R Reference Functions
     href: reference/index.html
   - text: R Shiny Application
-    href: reference/index.html
+    href: https://sombohora.shinyapps.io/sauc/
   - text: sAUC in Python
     href: articles/example-python.html
   - text: sAUC in Julia

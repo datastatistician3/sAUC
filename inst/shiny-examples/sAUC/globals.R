@@ -11,7 +11,7 @@ library(googlesheets)
 ## if you version control your app, don't forget to ignore the token file!
 ## e.g., put it into .gitignore
 
-googlesheets::gs_auth(token = "./inst/shiny-examples/sAUC/shiny_app_token.rds", cache = FALSE)
+googlesheets::gs_auth(token = "www/shiny_app_token.rds", cache = FALSE)
 sAUC_sheet <- gs_title("sAUC Response")
 sheet_key <- sAUC_sheet$sheet_key
 ss <- googlesheets::gs_key(sheet_key)

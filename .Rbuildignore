@@ -22,3 +22,4 @@
 ^README.Rmd$
 ^inst/extdata/
 ^inst/shiny-examples/
+^.httr-oauth

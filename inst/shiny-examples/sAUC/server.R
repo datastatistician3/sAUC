@@ -9,6 +9,8 @@ library(psych)
 library(Hmisc)
 library(googlesheets)
 
+source("globals.R")
+
 shinyServer(function(input, output){
   # output$menu <- renderMenu({
   #   sidebarMenu(
