@@ -39,7 +39,7 @@ library(sAUC)
 library(DT)
 library(shiny)
 
-fasd_label <- read.csv("../../extdata/fasd-labels.csv")
+fasd_label <- read.csv("fasd-labels.csv")
 fasd_label[, c("smoke", "vitamin", "group")] <- lapply(fasd_label[, c("smoke", "vitamin", "group")], function(x) factor(x))
 
 result_one <- sAUC::sAUC(x = y ~ smoke, treatment_group = "group", data = fasd_label)
