@@ -58,6 +58,7 @@ shinyServer(function(input, output){
     shinyjs::show("describe_file")
     shinyjs::show("reset")
     shinyjs::hide("box_inbuilt_data")
+    shinyjs::hide("add_about_sauc")
   })
 
   observeEvent(input$reset, {
@@ -75,7 +76,7 @@ shinyServer(function(input, output){
 
   output$add_about_sauc <- renderUI({
     tags$iframe(src = 'README.html', # put .html to /www
-                          width = '100%', height = '800px',
+                          width = '100%', height = '830px',
                           frameborder = 0, scrolling = 'auto')
   })
 
@@ -275,7 +276,7 @@ shinyServer(function(input, output){
 
   output$describe_file <- renderUI({
     if (is.null(data())){
-      h3("Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
+      # h3("Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
     } else {
       tabsetPanel(
         tabPanel(

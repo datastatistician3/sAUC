@@ -132,6 +132,8 @@ library(psych)
 library(Hmisc)
 library(googlesheets)
 
+# source(&quot;globals.R&quot;)
+
 shinyServer(function(input, output){
   # output$menu &lt;- renderMenu({
   #   sidebarMenu(
@@ -141,23 +143,45 @@ shinyServer(function(input, output){
 
   # Create reactive to read data
   data &lt;- reactive({
-    input_file &lt;- input$file
-    if(is.null(input_file)){return()}
-    read.table(
-      file = input_file$datapath,
-      sep = input$sep,
-      header = input$header,
-      stringsAsFactors = input$string_factors
-    )
+    if (input$use_inbuilt_data){
+      sAUC::fasd
+    } else {
+      input_file &lt;- input$file
+      if(is.null(input_file)){return()}
+      read.table(
+        file = input_file$datapath,
+        sep = input$sep,
+        header = input$header,
+        stringsAsFactors = input$string_factors
+      )
+    }
+  })
+
+  observe({
+    if(input$use_inbuilt_data ==TRUE){
+    shinyjs::show(&quot;download_data&quot;)
+    shinyjs::show(&quot;reset&quot;)
+    shinyjs::show(&quot;show_model&quot;)
+    shinyjs::show(&quot;describe_file&quot;)
+    shinyjs::hide(&quot;box_inbuilt_data&quot;)
+    shinyjs::show(&quot;reset_file&quot;)
+    shinyjs::hide(&quot;add_about_sauc&quot;)
+  } else if (input$use_inbuilt_data ==FALSE){
+    shinyjs::hide(&quot;download_data&quot;)
+    shinyjs::hide(&quot;reset&quot;)
+    shinyjs::hide(&quot;show_model&quot;)
+    shinyjs::hide(&quot;describe_file&quot;)
+    shinyjs::show(&quot;box_inbuilt_data&quot;)
+  }
   })
 
   observeEvent(input$file, {
-    shinyjs::show(&quot;download_data&quot;);
-    shinyjs::show(&quot;reset&quot;);
+    shinyjs::show(&quot;download_data&quot;)
     shinyjs::show(&quot;show_model&quot;)
     shinyjs::show(&quot;describe_file&quot;)
-    # shinyjs::show(&quot;element&quot;);
-    # shinyjs::show(&quot;element&quot;)
+    shinyjs::show(&quot;reset&quot;)
+    shinyjs::hide(&quot;box_inbuilt_data&quot;)
+    shinyjs::hide(&quot;add_about_sauc&quot;)
   })
 
   observeEvent(input$reset, {
@@ -167,6 +191,16 @@ shinyServer(function(input, output){
     shinyjs::hide(&quot;describe_file&quot;)
     shinyjs::alert(&quot;Thank you using sAUC method. Please provide feedback using Feedback Form on the left!&quot;)
     shinyjs::hide(&quot;reset&quot;)
+    shinyjs::show(&quot;box_inbuilt_data&quot;)
+    shinyjs::reset(&quot;use_inbuilt_data&quot;)
+    shinyjs::hide(&quot;reset_file&quot;)
+    shinyjs::show(&quot;add_about_sauc&quot;)
+  })
+
+  output$add_about_sauc &lt;- renderUI({
+    tags$iframe(src = 'README.html', # put .html to /www
+                          width = '100%', height = '830px',
+                          frameborder = 0, scrolling = 'auto')
   })
 
   #The following set of functions populate the column selectors
@@ -178,7 +212,7 @@ shinyServer(function(input, output){
     names(items)=items
     selectInput(
       inputId = &quot;response&quot;,
-      label = &quot;Choose response:&quot;,
+      label = &quot;Choose response*:&quot;,
       choices = items)
   })
 
@@ -190,35 +224,47 @@ shinyServer(function(input, output){
     names(items)=items
     selectInput(
       inputId = &quot;group_var&quot;,
-      label = &quot;Choose group:&quot;,
+      label = &quot;Choose group*:&quot;,
       choices  = names(data())[!names(data()) %in% input$response],
       selected = names(data())[!names(data()) %in% input$response][1])
   })
 
   output$independent &lt;- renderUI({
   checkboxGroupInput(inputId = &quot;independent&quot;,
-                     label =  &quot;Independent Variables:&quot;,
+                     label =  &quot;Independent Variables*:&quot;,
                      choices = names(data())[!names(data()) %in% c(input$response, input$group_var)],
                      selected = names(data())[!names(data()) %in% c(input$response, input$group_var)][1])
   })
+
+  # observe({
+  #   if(length(output$independent))
+  #   shinyjs::alert(&quot;You should have at least one discrete covariate in the model.&quot;)
+  # })
 
   run_sAUC &lt;- reactive({
     if (is.null(data())) return(NULL)
     ds &lt;- data()
     cov_variables &lt;- c(input$independent,input$group_var)
     ds[, cov_variables] &lt;- lapply(ds[, cov_variables], function(x) factor(x))
-    sAUC::sAUC(x = as.formula(paste(input$response,&quot; ~ &quot;,paste(input$independent,collapse=&quot;+&quot;))),
+    sAUC::sAUC(formula = as.formula(paste(input$response,&quot; ~ &quot;,paste(input$independent,collapse=&quot;+&quot;))),
                treatment_group = input$group_var, data = ds)
 
   })
 
-  output$model_result &lt;- renderDataTable({
+  # observe({
+  #   if (length(independent) == 0){
+  #     shinyjs::alert(&quot;You should have at least one discrete covariate in the model.&quot;)
+  #   }
+  # })
+
+  output$model_result &lt;- DT::renderDataTable({
     mod_result &lt;- run_sAUC()
-    DT::datatable(as.data.frame(mod_result$&quot;Model summary&quot;),
+    result_model &lt;- DT::datatable(as.data.frame(mod_result$&quot;Model summary&quot;),
                 caption = htmltools::tags$caption(
                   style = &quot;font-size:120%&quot;,
                   strong('Model results'), '{Note: left-side of model is:', mod_result$&quot;model_formula&quot;,&quot;}&quot;),
                   options = list(pageLength = 6, dom = 'tip'), rownames = TRUE)
+    return(result_model)
   })
 
   output$download_model_result = downloadHandler('sAUC-model-results.csv', content = function(file) {
@@ -278,7 +324,7 @@ shinyServer(function(input, output){
   })
 
     # Display orginal data
-  output$show_data &lt;- renderDataTable({
+  output$show_data &lt;- DT::renderDataTable({
     if(is.null(data())){return()}
     datatable(data(), filter = 'top', options = list(
       pageLength = 8
@@ -286,7 +332,7 @@ shinyServer(function(input, output){
   })
 
   # Display summary of the original data
-  output$summaryy &lt;- renderDataTable({
+  output$summaryy &lt;- DT::renderDataTable({
     ds &lt;- data()
     numeric_columns &lt;- names(ds)[sapply(ds, function(x) is.numeric(x))]
     if(is.null(ds)){return()}
@@ -353,7 +399,7 @@ shinyServer(function(input, output){
 
   output$describe_file &lt;- renderUI({
     if (is.null(data())){
-      h3(&quot;Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.&quot;, style = &quot;color:red&quot;)
+      # h3(&quot;Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.&quot;, style = &quot;color:red&quot;)
     } else {
       tabsetPanel(
         tabPanel(
@@ -408,6 +454,7 @@ shinyServer(function(input, output){
         style = &quot;font-size:150%&quot;,
         'Table 1. Results of the Simulation on sAUC with one discrete covariate'),
       options = list(pageLength = 6, dom = 'tip'), rownames = c(&quot;\u03b20&quot;, &quot;\u03b21&quot;, &quot;\u03b22&quot;))
+    return(dt)
   })
 
   output$download_simu_result = downloadHandler('sAUC-simulation-results.csv', content = function(file) {
@@ -459,11 +506,11 @@ shinyServer(function(input, output){
         ggsave(file, plot = output_plot_beta(), device = device)
   })
 
-  output$download_cv &lt;- downloadHandler(
-    filename = &quot;som-bohora-cv.pdf&quot;,
-    content = function(file) {
-      file.copy(&quot;www/bohora-cv.pdf&quot;, file)
-    })
+  # output$download_cv &lt;- downloadHandler(
+  #   filename = &quot;som-bohora-cv.pdf&quot;,
+  #   content = function(file) {
+  #     file.copy(&quot;www/bohora-cv.pdf&quot;, file)
+  #   })
 
    output$download_data &lt;- downloadHandler(
     filename = function() { paste('fasd', '.csv', sep='') },
@@ -498,7 +545,8 @@ shinyServer(function(input, output){
 
      DT::datatable(ss_dat, rownames = F)
    })
-})</code></pre>
+})
+</code></pre>
 </div>
 
 

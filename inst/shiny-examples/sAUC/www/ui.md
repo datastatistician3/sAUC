@@ -8,20 +8,22 @@ library(shiny)
 library(shinydashboard)
 library(shinyjs)
 
+# source("globals.R")
+
 header <- dashboardHeader(
-  title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates by Som Bohora")), href = "https://github.com/sbohora/sAUC", target ="_blank"),
+  title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates")), href = "https://github.com/sbohora/sAUC", target ="_blank"),
   disable = FALSE,
   titleWidth = "1500px",
   dropdownMenu(
     type = "messages",
-    messageItem(
-      from = "Som",
-      message = "Stay tuned."),
-    messageItem(
-      from = "New User",
-      message = "How do I register?",
-      icon = icon("question"),
-      time = "13:45"),
+    # messageItem(
+    #   from = "Som",
+    #   message = "Stay tuned."),
+    # messageItem(
+    #   from = "New User",
+    #   message = "How do I register?",
+    #   icon = icon("question"),
+    #   time = "13:45"),
     messageItem(
       from = "Support",
       message = "The new server is ready.",
@@ -32,10 +34,10 @@ header <- dashboardHeader(
     notificationItem(
       text = "5 new uers today",
       icon = icon("users")),
-    notificationItem(
-      text = "12 items delivered",
-      icon("truck"),
-      status = "success"),
+    # notificationItem(
+    #   text = "12 items delivered",
+    #   icon("truck"),
+    #   status = "success"),
     notificationItem(
       text = "Server load at 86%",
       icon = icon("exclamation-triangle"),
@@ -62,22 +64,24 @@ dashboardPage(
         # tabName = "intro",
         # icon = icon("book")),
       menuItem(
-        text = "AUC Regression",
+        text = "AUC Regression in R",
         tabName = "auc_reg",
+        badgeLabel = "Perform",
         icon = icon("bar-chart")),
       menuItem(
-        text = "Example",
+        text = "sAUC in R",
         tabName = "example",
+        badgeLabel = "Example",
         icon = icon("book")),
       menuItem(
-        text = "AUC Simulation",
+        text = "AUC Simulation in R",
         tabName = "auc_simulate",
         icon = icon("line-chart"),
         badgeLabel = "Perform",
         badgeColor = "green"),
 
       menuItem(
-        text = "Source Code",
+        text = "Source Code in R",
         tabName = "get_code",
         # href = "https://github.com/sbohora/sAUC/tree/master/inst/shiny",
         icon = icon("code"),
@@ -86,16 +90,21 @@ dashboardPage(
           tabName = "server_code"),
         menuSubItem(
           text = "ui.R",
-          tabName = "ui_code")
+          tabName = "ui_code"),
+        menuSubItem(
+          text = "globals.R",
+          tabName = "global_code")
           ),
       menuItem(
         text = "sAUC in Python",
         tabName = "sauc_python",
+        badgeLabel = "Example",
         icon = icon("file-code-o")),
       menuItem(
         text = "sAUC in Julia",
         tabName = "sauc_julia",
-        icon = icon("code-fork")),
+        badgeLabel = "Example",
+        icon = icon("code")),
       menuItem(
         text = "About Me",
         tabName = "about_me",
@@ -104,6 +113,10 @@ dashboardPage(
         text = "Feedback",
         tabName = "feedback",
         icon = icon("comment-o")),
+      menuItem(
+        text = "Discussion Board",
+        tabName = "disqus_here",
+        icon = icon("info")),
       sidebarMenuOutput("menu"),
       tags$hr(),
       menuItem(
@@ -114,7 +127,7 @@ dashboardPage(
       ),
       menuItem(
         text = "",
-        href = "https://github.com/sbohora/sAUC",
+        href = "https://sbohora.github.io/sAUC",
         badgeLabel = "Web site for sAUC package",
         icon = icon("tv")
       ),
@@ -216,8 +229,8 @@ dashboardPage(
             collapsible = TRUE,
             solidHeader = TRUE,
             status = "info",
-            background = NULL),
-            p(class = 'text-center', downloadButton('download_simu_result', 'Download Simulation Results'))
+            background = NULL)
+            # p(class = 'text-center', downloadButton('download_simu_result', 'Download Simulation Results'))
         )
         ),
         fluidRow(
@@ -231,7 +244,9 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "info"),
-              p(class = 'text-center', downloadButton('download_simu_plot', 'Download Simulation Plot'))
+            div(style= 'display:inline-block',  downloadButton('download_simu_plot', 'Download Simulation Plot'), style="float:right",
+                style= 'display:inline-block',  downloadButton('download_simu_result', 'Download Simulation Results'), style="float:right")
+              # p(class = 'text-center', downloadButton('download_simu_plot', 'Download Simulation Plot'))
           )
         )
       ),
@@ -246,35 +261,59 @@ dashboardPage(
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
-          fileInput("file", "Upload a data file to be analyzed"),
-          helpText("Default maximum file size is 5MB"),
-          tags$hr(),
+          fileInput("file", "Upload a data file (for e.g. CSV) to be analyzed"),
+          shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:110%;background-color: white;")),
+          shinyjs::hidden(actionButton("reset", "Reset Analysis", style = "color: white;
+                     background-color: red;")),
+          helpText("Default maximum file size is 5MB."),
+          helpText("Input data formats can be comma, semicolon, tab or space delimited."),
           h5(helpText("Select the read.table parameters below")),
           checkboxInput(
-            inputId = 'header', label = "Header TRUE?", value = TRUE),
+            inputId = 'header',
+            label = "Header TRUE?",
+            value = TRUE),
           checkboxInput(
-            inputId = 'string_factors', label = "String as Factors?", value = FALSE),
+            inputId = 'string_factors',
+            label = "String as Factors?",
+            value = FALSE),
           radioButtons(
             inputId = 'sep',
             label = 'Separator',
-            choices = c(Comma = ",", Semicolon = ';', Tab = '\t', Space=''), selected = ',')
+            choices = c(Comma = ",",
+                        Semicolon = ';',
+                        Tab = '\t', Space=''),
+            selected = ',',
+            inline = TRUE)
           ),
-        shinyjs::hidden(
-          downloadButton('download_data', 'Download Data'),
-          actionButton("reset", "Reset Analysis", style = "color: white;
-                     background-color: blue;")
-        )),
+        div(id = "box_inbuilt_data",
+        box(
+          title="Use a dataset within sAUC package",
+          width = 12,
+          collapsible = TRUE,
+          solidHeader = TRUE,
+          status = "info",
+          checkboxInput(
+            inputId = 'use_inbuilt_data',
+            label = 'Would you like to use FASD dataset from sAUC package for trial?',
+            value = FALSE)
+          # radioButtons(
+          #   inputId = 'use_inbuilt_data',
+          #   label = 'Would you like to use a FASD dataset from sAUC package for trial?',
+          #   choices = list("Yes", "No"), selected = "No")
+          ))
+        ),
 
         column(
           width = 9,
         box(
-          width = 20,
+          width = 22,
           height = 20,
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
-          uiOutput("describe_file")
-        )
+          uiOutput("describe_file"),
+          htmlOutput("add_about_sauc")
+          )
         )
          ),
         br(),
@@ -284,8 +323,8 @@ dashboardPage(
           id = "show_model",
           column(
             width = 3,
-        box(
-          title = tags$p(strong(style ="font-size: 18px;color: green","Data analysis")),
+        box(footer = tags$p(strong(style = "font-size: 12px;color:red", "* = required arguments.")),
+          title = tags$p(strong(style ="font-size: 18px;color:green","Data analysis")),
           width = 12,
           ollapsible = TRUE,
           solidHeader = TRUE,
@@ -293,8 +332,7 @@ dashboardPage(
           status = "warning",
           uiOutput("choose_response"),
           uiOutput("choose_group"),
-          uiOutput("independent"),
-          textOutput("input_oupt")
+          uiOutput("independent")
           )
         ),
         column(
@@ -305,10 +343,11 @@ dashboardPage(
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "warning",
-          dataTableOutput("model_result")
+          DT::dataTableOutput("model_result")
           ),
-        p(class = 'text-center', downloadButton('download_model_result', 'Download Model Results')),
-        p(class = 'text-right', downloadButton('download_roc_plot', 'Download ROC curve plot'))
+        div(style= 'display:inline-block',  downloadButton('download_data', 'Download Data'), style="float:right",
+        style= 'display:inline-block',  downloadButton('download_model_result', 'Download Model Results'), style="float:right",
+        style= 'display:inline-block',  downloadButton('download_roc_plot', 'Download ROC curve plot'), style="float:right")
         ),
         column(
           width = 4,
@@ -393,6 +432,26 @@ dashboardPage(
         )
       ),
       tabItem(
+        tabName = "global_code",
+        fluidRow(
+          column(
+            width = 8,
+            box(
+              width = 12,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              status = "info",
+              background = NULL,
+              # includeMarkdown("ui.md")
+              tags$iframe(src = 'globals.html', # put .html to /www
+                          width = '100%', height = '1000px',
+                          frameborder = 0, scrolling = 'auto')
+              # includeHTML("example.html")
+            )
+          )
+        )
+      ),
+      tabItem(
         tabName = "sauc_python",
         fluidRow(
           column(
@@ -434,23 +493,7 @@ dashboardPage(
         tabName = "about_me",
         fluidRow(
           column(
-            width = 5,
-            box(
-              # title = "This is about me",
-              width = 12,
-              height = 15,
-              # status = "primary",
-              # background = "navy",
-              # collapsible = TRUE,
-              # solidHeader = TRUE,
-              # p("This is about me.", style = "font-size:120%"),
-              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 750, width = 640), target ="_blank")
-              , br()
-              , br()
-              )
-              ),
-          column(
-            width = 7,
+            width = 6,
             box(
               title = "This is about me",
               width = 12,
@@ -462,13 +505,13 @@ dashboardPage(
               # tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
               br(),
               br(),
-              span("I am a Research Biostatistician at ",
+              span("I am a Biostatistician at ",
                    span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. ", target ="_blank"),
                         style = "color:blue"),
               "I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
               in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
               Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
-              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.", style = "font-size:120%"),
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, Python, and Julia programming languages.", style = "font-size:120%"),
               br(),
               br(),
               br(),
@@ -476,10 +519,26 @@ dashboardPage(
               br(),
               br(),
               br(),
-              br(),
-              downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
+              br()
+              # downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
             )
           )
+          # column(
+          #   width = 5,
+          #   box(
+          #     # title = "This is about me",
+          #     width = 12,
+          #     height = 15,
+          #     # status = "primary",
+          #     # background = "navy",
+          #     # collapsible = TRUE,
+          #     # solidHeader = TRUE,
+          #     # p("This is about me.", style = "font-size:120%"),
+          #     tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 750, width = 640), target ="_blank")
+          #     , br()
+          #     , br()
+          #     )
+          #     )
         )
         ),
       tabItem(
@@ -557,14 +616,32 @@ dashboardPage(
             )
           )
         )
-      )
-    )
+      ),
+      tabItem(
+        tabName = "disqus_here",
+        strong(h3("This is a discussion board about sAUC", style = "color:blue", align="center")),
+        div(
+          id = "disqus_thread",
+         HTML(
+          "<script>
+              (function() {
+                  var d = document, s = d.createElement('script');
 
+                  s.src = '//sauc.disqus.com/embed.js';
+
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href='https://disqus.com/?ref_noscript' rel='nofollow'>comments powered by Disqus.</a></noscript>"
+         )
+        )
+      )
+    ),
+  div(HTML('<script id="dsq-count-scr" src="//sauc.disqus.com/count.js" async></script>'))
   ) #End the dashboardBody
 
 ) #End the dashboardPage,
-
-
 
 
 ```

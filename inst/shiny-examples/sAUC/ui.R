@@ -58,22 +58,24 @@ dashboardPage(
         # tabName = "intro",
         # icon = icon("book")),
       menuItem(
-        text = "AUC Regression",
+        text = "AUC Regression in R",
         tabName = "auc_reg",
+        badgeLabel = "Perform",
         icon = icon("bar-chart")),
       menuItem(
-        text = "Example",
+        text = "sAUC in R",
         tabName = "example",
+        badgeLabel = "Example",
         icon = icon("book")),
       menuItem(
-        text = "AUC Simulation",
+        text = "AUC Simulation in R",
         tabName = "auc_simulate",
         icon = icon("line-chart"),
         badgeLabel = "Perform",
         badgeColor = "green"),
 
       menuItem(
-        text = "Source Code",
+        text = "Source Code (Shiny R)",
         tabName = "get_code",
         # href = "https://github.com/sbohora/sAUC/tree/master/inst/shiny",
         icon = icon("code"),
@@ -90,10 +92,12 @@ dashboardPage(
       menuItem(
         text = "sAUC in Python",
         tabName = "sauc_python",
+        badgeLabel = "Example",
         icon = icon("file-code-o")),
       menuItem(
         text = "sAUC in Julia",
         tabName = "sauc_julia",
+        badgeLabel = "Example",
         icon = icon("code")),
       menuItem(
         text = "About Me",
@@ -219,8 +223,8 @@ dashboardPage(
             collapsible = TRUE,
             solidHeader = TRUE,
             status = "info",
-            background = NULL),
-            p(class = 'text-center', downloadButton('download_simu_result', 'Download Simulation Results'))
+            background = NULL)
+            # p(class = 'text-center', downloadButton('download_simu_result', 'Download Simulation Results'))
         )
         ),
         fluidRow(
@@ -234,7 +238,9 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               status = "info"),
-              p(class = 'text-center', downloadButton('download_simu_plot', 'Download Simulation Plot'))
+            div(style= 'display:inline-block',  downloadButton('download_simu_plot', 'Download Simulation Plot'), style="float:right",
+                style= 'display:inline-block',  downloadButton('download_simu_result', 'Download Simulation Results'), style="float:right")
+              # p(class = 'text-center', downloadButton('download_simu_plot', 'Download Simulation Plot'))
           )
         )
       ),
@@ -288,10 +294,8 @@ dashboardPage(
           #   inputId = 'use_inbuilt_data',
           #   label = 'Would you like to use a FASD dataset from sAUC package for trial?',
           #   choices = list("Yes", "No"), selected = "No")
-          )),
-        shinyjs::hidden(
-          downloadButton('download_data', 'Download Data')
-        )),
+          ))
+        ),
 
         column(
           width = 9,
@@ -335,8 +339,9 @@ dashboardPage(
           status = "warning",
           DT::dataTableOutput("model_result")
           ),
-        p(class = 'text-center', downloadButton('download_model_result', 'Download Model Results')),
-        p(class = 'text-right', downloadButton('download_roc_plot', 'Download ROC curve plot'))
+        div(style= 'display:inline-block',  downloadButton('download_data', 'Download Data'), style="float:right",
+        style= 'display:inline-block',  downloadButton('download_model_result', 'Download Model Results'), style="float:right",
+        style= 'display:inline-block',  downloadButton('download_roc_plot', 'Download ROC curve plot'), style="float:right")
         ),
         column(
           width = 4,
@@ -482,23 +487,7 @@ dashboardPage(
         tabName = "about_me",
         fluidRow(
           column(
-            width = 5,
-            box(
-              # title = "This is about me",
-              width = 12,
-              height = 15,
-              # status = "primary",
-              # background = "navy",
-              # collapsible = TRUE,
-              # solidHeader = TRUE,
-              # p("This is about me.", style = "font-size:120%"),
-              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 750, width = 640), target ="_blank")
-              , br()
-              , br()
-              )
-              ),
-          column(
-            width = 7,
+            width = 6,
             box(
               title = "This is about me",
               width = 12,
@@ -510,13 +499,13 @@ dashboardPage(
               # tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
               br(),
               br(),
-              span("I am a Research Biostatistician at ",
+              span("I am a Biostatistician at ",
                    span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. ", target ="_blank"),
                         style = "color:blue"),
               "I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
               in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
               Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
-              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, python, and Julia programming languages.", style = "font-size:120%"),
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, Python, and Julia programming languages.", style = "font-size:120%"),
               br(),
               br(),
               br(),
@@ -528,6 +517,22 @@ dashboardPage(
               # downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
             )
           )
+          # column(
+          #   width = 5,
+          #   box(
+          #     # title = "This is about me",
+          #     width = 12,
+          #     height = 15,
+          #     # status = "primary",
+          #     # background = "navy",
+          #     # collapsible = TRUE,
+          #     # solidHeader = TRUE,
+          #     # p("This is about me.", style = "font-size:120%"),
+          #     tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 750, width = 640), target ="_blank")
+          #     , br()
+          #     , br()
+          #     )
+          #     )
         )
         ),
       tabItem(

@@ -134,7 +134,7 @@ $(document).ready(function () {
 ## if you version control your app, don't forget to ignore the token file!
 ## e.g., put it into .gitignore
 
-googlesheets::gs_auth(token = &quot;./inst/shiny/shiny_app_token.rds&quot;)
+googlesheets::gs_auth(token = &quot;./inst/shiny-examples/sAUC/shiny_app_token.rds&quot;, cache = FALSE)
 sAUC_sheet &lt;- gs_title(&quot;sAUC Response&quot;)
 sheet_key &lt;- sAUC_sheet$sheet_key
 ss &lt;- googlesheets::gs_key(sheet_key)</code></pre>
