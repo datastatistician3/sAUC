@@ -404,24 +404,22 @@ shinyServer(function(input, output){
     } else {
       tabsetPanel(
         tabPanel(
+          title = &quot;Plots&quot;,
+          column(
+            width = 4,
+            plotOutput(&quot;hist_plot&quot;)
+            ),
+          column(
+            width = 8,
+            plotOutput(&quot;bar_plot&quot;)
+          )
+        ),
+        tabPanel(
           title = &quot;Data&quot;,
           dataTableOutput(&quot;show_data&quot;)),
         tabPanel(
           title = &quot;Summary&quot;,
           dataTableOutput(&quot;summaryy&quot;)),
-        tabPanel(
-          title = &quot;Plots&quot;,
-          column(
-            width = 4,
-            plotOutput(&quot;hist_plot&quot;),
-            p(class = 'text-center', downloadButton('download_hist_plot', 'Download Histogram'))
-            ),
-          column(
-            width = 8,
-            plotOutput(&quot;bar_plot&quot;),
-            p(class = 'text-center', downloadButton('download_bar_plot', 'Download Bar Plot'))
-          )
-        ),
         tabPanel(
           title = &quot;About file&quot;,
           tableOutput(&quot;show_input_file&quot;))

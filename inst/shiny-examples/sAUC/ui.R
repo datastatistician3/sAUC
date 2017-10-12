@@ -312,7 +312,6 @@ dashboardPage(
         )
          ),
         br(),
-        br(),
         shinyjs::hidden(
         fluidRow(
           id = "show_model",
@@ -342,7 +341,9 @@ dashboardPage(
           ),
         div(style= 'display:inline-block',  downloadButton('download_data', 'Download Data'), style="float:right",
         style= 'display:inline-block',  downloadButton('download_model_result', 'Download Model Results'), style="float:right",
-        style= 'display:inline-block',  downloadButton('download_roc_plot', 'Download ROC curve plot'), style="float:right")
+        style= 'display:inline-block',  downloadButton('download_roc_plot', 'Download ROC curve plot'), style="float:right",
+        style= 'display:inline-block', downloadButton('download_hist_plot', 'Download Histogram'), style="float:right",
+        style= 'display:inline-block', downloadButton('download_bar_plot', 'Download Bar Plot'), style="float:right")
         ),
         column(
           width = 4,

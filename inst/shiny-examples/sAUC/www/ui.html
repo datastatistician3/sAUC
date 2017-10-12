@@ -297,7 +297,8 @@ dashboardPage(
             collapsible = TRUE,
             solidHeader = TRUE,
             status = &quot;info&quot;,
-            title = tags$p(strong(style =&quot;font-size: 18px;&quot;,&quot;Please enter following parameters for simulation&quot;)),
+            title = tags$p(strong(style =&quot;font-size: 18px;&quot;,
+                                  &quot;Enter parameters for simulating a model with one covariate with 3 levels&quot;)),
             width = 12L,
             height = 8L,
             background = NULL,
@@ -434,7 +435,6 @@ dashboardPage(
         )
          ),
         br(),
-        br(),
         shinyjs::hidden(
         fluidRow(
           id = &quot;show_model&quot;,
@@ -464,7 +464,9 @@ dashboardPage(
           ),
         div(style= 'display:inline-block',  downloadButton('download_data', 'Download Data'), style=&quot;float:right&quot;,
         style= 'display:inline-block',  downloadButton('download_model_result', 'Download Model Results'), style=&quot;float:right&quot;,
-        style= 'display:inline-block',  downloadButton('download_roc_plot', 'Download ROC curve plot'), style=&quot;float:right&quot;)
+        style= 'display:inline-block',  downloadButton('download_roc_plot', 'Download ROC curve plot'), style=&quot;float:right&quot;,
+        style= 'display:inline-block', downloadButton('download_hist_plot', 'Download Histogram'), style=&quot;float:right&quot;,
+        style= 'display:inline-block', downloadButton('download_bar_plot', 'Download Bar Plot'), style=&quot;float:right&quot;)
         ),
         column(
           width = 4,
