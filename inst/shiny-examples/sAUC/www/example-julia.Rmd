@@ -11,6 +11,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<span style="color:red; font-size:150%">Warning: This package is still under development.</span>
+
 ### sAUC in Julia (SemiparametricAUC.jl)
 
 #### Perform AUC analyses with discrete covariates and a semi-parametric estimation

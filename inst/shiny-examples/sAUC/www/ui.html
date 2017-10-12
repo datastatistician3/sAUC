@@ -125,7 +125,7 @@ $(document).ready(function () {
 library(shinydashboard)
 library(shinyjs)
 
-# source(&quot;globals.R&quot;)
+source(&quot;globals.R&quot;)
 
 header &lt;- dashboardHeader(
   title = tags$a(tags$p(strong(style =&quot;font-size: 24px;color: white&quot;,&quot;Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates&quot;)), href = &quot;https://github.com/sbohora/sAUC&quot;, target =&quot;_blank&quot;),
@@ -198,7 +198,7 @@ dashboardPage(
         badgeColor = &quot;green&quot;),
 
       menuItem(
-        text = &quot;Source Code in R&quot;,
+        text = &quot;Source Code (Shiny R)&quot;,
         tabName = &quot;get_code&quot;,
         # href = &quot;https://github.com/sbohora/sAUC/tree/master/inst/shiny&quot;,
         icon = icon(&quot;code&quot;),
@@ -610,7 +610,7 @@ dashboardPage(
         tabName = &quot;about_me&quot;,
         fluidRow(
           column(
-            width = 6,
+            width = 4,
             box(
               title = &quot;This is about me&quot;,
               width = 12,
@@ -622,13 +622,23 @@ dashboardPage(
               # tags$a(href = &quot;http://ouhsc.edu/bbmc/team/&quot;, img(src = &quot;som.jpg&quot;, height = 200, width = 200), target =&quot;_blank&quot;)
               br(),
               br(),
-              span(&quot;I am a Biostatistician at &quot;,
+              span(&quot;I am Som and am a Biostatistician at &quot;,
                    span(tags$a(href = &quot;http://ouhsc.edu/bbmc/team/&quot;, &quot;The Department of Pediatrics, The University of Oklahoma Health Sciences Center. &quot;, target =&quot;_blank&quot;),
                         style = &quot;color:blue&quot;),
               &quot;I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
               in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
               Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
-              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, Python, and Julia programming languages.&quot;, style = &quot;font-size:120%&quot;),
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, Python, and Julia programming languages.&quot;, style = &quot;font-size:130%&quot;),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
               br(),
               br(),
               br(),
@@ -639,23 +649,21 @@ dashboardPage(
               br()
               # downloadLink(&quot;download_cv&quot;, p(&quot;Download my CV&quot;, style = &quot;font-size:130%&quot;))
             )
-          )
-          # column(
-          #   width = 5,
-          #   box(
-          #     # title = &quot;This is about me&quot;,
-          #     width = 12,
-          #     height = 15,
-          #     # status = &quot;primary&quot;,
-          #     # background = &quot;navy&quot;,
-          #     # collapsible = TRUE,
-          #     # solidHeader = TRUE,
-          #     # p(&quot;This is about me.&quot;, style = &quot;font-size:120%&quot;),
-          #     tags$a(href = &quot;http://ouhsc.edu/bbmc/team/&quot;, img(src = &quot;som.jpg&quot;, height = 750, width = 640), target =&quot;_blank&quot;)
-          #     , br()
-          #     , br()
-          #     )
-          #     )
+          ),
+          column(
+            width = 8,
+            box(
+              title = &quot;I like mornings&quot;,
+              width = 12,
+              height = 15,
+              status = &quot;primary&quot;,
+              background = &quot;navy&quot;,
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              # p(&quot;This is about me.&quot;, style = &quot;font-size:100%&quot;),
+              tags$a(href = &quot;http://ouhsc.edu/bbmc/team/&quot;, img(src = &quot;nature.jpg&quot;, height = 700, width = 1055), target =&quot;_blank&quot;)
+              )
+              )
         )
         ),
       tabItem(
@@ -758,8 +766,7 @@ dashboardPage(
   div(HTML('&lt;script id=&quot;dsq-count-scr&quot; src=&quot;//sauc.disqus.com/count.js&quot; async&gt;&lt;/script&gt;'))
   ) #End the dashboardBody
 
-) #End the dashboardPage,
-
+) #End the dashboardPage
 </code></pre>
 </div>
 

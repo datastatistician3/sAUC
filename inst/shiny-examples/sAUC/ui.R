@@ -2,7 +2,7 @@ library(shiny)
 library(shinydashboard)
 library(shinyjs)
 
-# source("globals.R")
+source("globals.R")
 
 header <- dashboardHeader(
   title = tags$a(tags$p(strong(style ="font-size: 24px;color: white","Semiparametric Area Under the Curve (sAUC) Regression Model with Discrete Covariates")), href = "https://github.com/sbohora/sAUC", target ="_blank"),
@@ -174,7 +174,8 @@ dashboardPage(
             collapsible = TRUE,
             solidHeader = TRUE,
             status = "info",
-            title = tags$p(strong(style ="font-size: 18px;","Please enter following parameters for simulation")),
+            title = tags$p(strong(style ="font-size: 18px;",
+                                  "Enter parameters for simulating a model with one covariate with 3 levels")),
             width = 12L,
             height = 8L,
             background = NULL,
@@ -487,7 +488,7 @@ dashboardPage(
         tabName = "about_me",
         fluidRow(
           column(
-            width = 6,
+            width = 4,
             box(
               title = "This is about me",
               width = 12,
@@ -499,13 +500,23 @@ dashboardPage(
               # tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 200, width = 200), target ="_blank")
               br(),
               br(),
-              span("I am a Biostatistician at ",
+              span("I am Som and am a Biostatistician at ",
                    span(tags$a(href = "http://ouhsc.edu/bbmc/team/", "The Department of Pediatrics, The University of Oklahoma Health Sciences Center. ", target ="_blank"),
                         style = "color:blue"),
               "I received my MApStat and MS in Biostatistics from LSU and OUHSC, respectively. In addition to BBMC, I work as a statistician and data programmer
               in a number of pediatric research projects. I was trained in biostatistics and epidemiology, and has research experience in Fetal Alcohol Spectrum
               Disorders (FASD), HIV/AIDS clinical trials and child maltreatment prevention. I am interested in the applications of statistical computing and simulation,
-              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, Python, and Julia programming languages.", style = "font-size:120%"),
+              data analytics, dynamic reporting, and real-time data decision making. I use mainly R, Python, and Julia programming languages.", style = "font-size:130%"),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
+              br(),
               br(),
               br(),
               br(),
@@ -516,23 +527,21 @@ dashboardPage(
               br()
               # downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
             )
-          )
-          # column(
-          #   width = 5,
-          #   box(
-          #     # title = "This is about me",
-          #     width = 12,
-          #     height = 15,
-          #     # status = "primary",
-          #     # background = "navy",
-          #     # collapsible = TRUE,
-          #     # solidHeader = TRUE,
-          #     # p("This is about me.", style = "font-size:120%"),
-          #     tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "som.jpg", height = 750, width = 640), target ="_blank")
-          #     , br()
-          #     , br()
-          #     )
-          #     )
+          ),
+          column(
+            width = 8,
+            box(
+              title = "I like mornings",
+              width = 12,
+              height = 15,
+              status = "primary",
+              background = "navy",
+              collapsible = TRUE,
+              solidHeader = TRUE,
+              # p("This is about me.", style = "font-size:100%"),
+              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "nature.jpg", height = 700, width = 1055), target ="_blank")
+              )
+              )
         )
         ),
       tabItem(
@@ -635,6 +644,6 @@ dashboardPage(
   div(HTML('<script id="dsq-count-scr" src="//sauc.disqus.com/count.js" async></script>'))
   ) #End the dashboardBody
 
-) #End the dashboardPage,
+) #End the dashboardPage
 
 

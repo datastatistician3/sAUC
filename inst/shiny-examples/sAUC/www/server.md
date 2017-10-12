@@ -15,7 +15,7 @@ library(psych)
 library(Hmisc)
 library(googlesheets)
 
-# source("globals.R")
+source("globals.R")
 
 shinyServer(function(input, output){
   # output$menu <- renderMenu({
@@ -79,6 +79,7 @@ shinyServer(function(input, output){
     shinyjs::hide("reset_file")
     shinyjs::show("add_about_sauc")
   })
+
 
   output$add_about_sauc <- renderUI({
     tags$iframe(src = 'README.html', # put .html to /www
@@ -429,5 +430,4 @@ shinyServer(function(input, output){
      DT::datatable(ss_dat, rownames = F)
    })
 })
-
 ```

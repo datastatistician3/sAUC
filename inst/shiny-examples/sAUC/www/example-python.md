@@ -1,6 +1,8 @@
 
 
 
+<span style="color:red; font-size:150%">Warning: This package is still under development.</span>
+
 ### sAUC in Python (saucpy)
 
 #### Perform AUC analyses with discrete covariates and a semi-parametric estimation
