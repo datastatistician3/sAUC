@@ -128,21 +128,92 @@ fasd[<span class="op">:</span>x2]    =<span class="st"> </span><span class="kw">
 
 one_covariates_results =<span class="st"> </span><span class="kw">SemiparametricAUC.semiparametricAUC</span>(<span class="dt">model_formula =</span> y <span class="op">~</span><span class="st"> </span>x1, <span class="dt">treatment_group =</span> <span class="op">:</span>group, <span class="dt">data =</span> fasd)
 one_covariates_results</code></pre></div>
-<pre><code>Model Summary
-              Estimate      2.5%      97.5% Std.Error t value  Pr(&gt;|t|)
-(Intercept)   -0.1432 -0.471359   0.185059    0.1675 -0.8548  0.392634
-x1: 1         -0.7668  -1.47803 -0.0555374    0.3629  -2.113 0.0346002</code></pre>
+</div>
+<div id="model-summary-one-discrete-covariate" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model-summary-one-discrete-covariate" class="anchor"></a>Model Summary: one discrete covariate</h3>
+<table class="table">
+<thead><tr class="header">
+<th>Predictors</th>
+<th align="center">Estimate</th>
+<th align="center">2.5%</th>
+<th align="center">97.5%</th>
+<th align="center">Std. Error</th>
+<th align="center">t</th>
+<th align="right"><em>p</em></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td align="center">-0.1432</td>
+<td align="center">-0.471359</td>
+<td align="center">0.185059</td>
+<td align="center">0.1675</td>
+<td align="center">-0.8548</td>
+<td align="right">0.392634</td>
+</tr>
+<tr class="even">
+<td>x1: 1</td>
+<td align="center">-0.7668</td>
+<td align="center">-1.47803</td>
+<td align="center">-0.0555374</td>
+<td align="center">0.3629</td>
+<td align="center">-2.113</td>
+<td align="right">0.0346002</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="result-of-sauc-regression-with-two-discrete-covariates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#result-of-sauc-regression-with-two-discrete-covariates" class="anchor"></a>Result of sAUC Regression with two discrete covariates</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">two_covariates_results =<span class="st"> </span><span class="kw">SemiparametricAUC.semiparametricAUC</span>(<span class="dt">model_formula =</span> y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">treatment_group =</span> <span class="op">:</span>group, <span class="dt">data =</span> fasd)
 two_covariates_results</code></pre></div>
-<pre><code>Model Summary
-             Estimate      2.5%     97.5% Std.Error t value  Pr(&gt;|t|)
-(Intercept)   -0.1034  -0.49026  0.283465    0.1974 -0.5238  0.600387
-x1: 1         -0.2189 -0.881207   0.44348    0.3379 -0.6476  0.517213
-x2: 1         -0.7434  -1.46562 -0.021217    0.3685 -2.0175 0.0436388</code></pre>
+</div>
+<div id="model-summary-two-discrete-covariates" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model-summary-two-discrete-covariates" class="anchor"></a>Model Summary: two discrete covariates</h3>
+<table class="table">
+<thead><tr class="header">
+<th>Predictors</th>
+<th align="center">Estimate</th>
+<th align="center">2.5%</th>
+<th align="center">97.5%</th>
+<th align="center">Std. Error</th>
+<th align="center">t</th>
+<th align="right"><em>p</em></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td align="center">-0.1034</td>
+<td align="center">-0.49026</td>
+<td align="center">0.283465</td>
+<td align="center">0.1974</td>
+<td align="center">-0.5238</td>
+<td align="right">0.600387</td>
+</tr>
+<tr class="even">
+<td>x1: 1</td>
+<td align="center">-0.2189</td>
+<td align="center">-0.881207</td>
+<td align="center">0.44348</td>
+<td align="center">0.3379</td>
+<td align="center">-0.6476</td>
+<td align="right">0.517213</td>
+</tr>
+<tr class="odd">
+<td>x2: 1</td>
+<td align="center">-0.7434</td>
+<td align="center">-1.46562</td>
+<td align="center">-0.021217</td>
+<td align="center">0.3685</td>
+<td align="center">-2.0175</td>
+<td align="right">0.0436388</td>
+</tr>
+</tbody>
+</table>
+<p>```</p>
 </div>
 </div>
   </div>

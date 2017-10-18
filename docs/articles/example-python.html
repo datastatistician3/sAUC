@@ -117,22 +117,83 @@ fasd[<span class="st">'x1'</span>]    <span class="op">=</span> fasd[<span class
 fasd[<span class="st">'x2'</span>]    <span class="op">=</span> fasd[<span class="st">'x2'</span>].astype(<span class="st">'category'</span>)
 
 sAUC.semiparametricAUC(response <span class="op">=</span> <span class="st">"y"</span>, treatment_group <span class="op">=</span> [<span class="st">"group"</span>], input_covariates <span class="op">=</span> [<span class="st">"x1"</span>], data <span class="op">=</span> fasd)</code></pre></div>
-<pre><code>Model Summary
-Out[13]: 
-           Coefficients  Std. Error      2.5%     97.5%  Pr(&gt;|z|)
-Intercept     -0.909936    0.315218 -1.527751 -0.292121  0.003893
-x1[T.2]        0.766786    0.356420  0.068216  1.465356  0.031448</code></pre>
+</div>
+<div id="model-summary-one-predictor" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model-summary-one-predictor" class="anchor"></a>Model Summary: one predictor</h3>
+<table class="table">
+<thead><tr class="header">
+<th>Predictors</th>
+<th align="center">Coefficients</th>
+<th align="center">Std. Error</th>
+<th align="center">2.5%</th>
+<th align="center">97.5%</th>
+<th align="right"><em>p</em></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Intercept</td>
+<td align="center">-0.909936</td>
+<td align="center">0.315218</td>
+<td align="center">-1.527751</td>
+<td align="center">-0.292121</td>
+<td align="right">0.003893</td>
+</tr>
+<tr class="even">
+<td>x1[T.2]</td>
+<td align="center">0.766786</td>
+<td align="center">0.356420</td>
+<td align="center">0.068216</td>
+<td align="center">1.465356</td>
+<td align="right">0.031448</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="result-of-sauc-regression-with-two-discrete-covariates" class="section level3">
 <h3 class="hasAnchor">
 <a href="#result-of-sauc-regression-with-two-discrete-covariates" class="anchor"></a>Result of sAUC Regression with two discrete covariates</h3>
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">sAUC.semiparametricAUC(response <span class="op">=</span> <span class="st">"y"</span>, treatment_group <span class="op">=</span> [<span class="st">"group"</span>], input_covariates <span class="op">=</span> [<span class="st">"x1"</span>,<span class="st">"x2"</span>], data <span class="op">=</span> fasd)</code></pre></div>
-<pre><code>Model Summary
-Out[14]: 
-           Coefficients  Std. Error      2.5%     97.5%  Pr(&gt;|z|)
-Intercept     -1.125352    0.412748 -1.934324 -0.316380  0.006401
-x1[T.2]        0.781264    0.355340  0.084809  1.477718  0.027904
-x2[T.2]        0.252050    0.328229 -0.391267  0.895368  0.442541</code></pre>
+</div>
+<div id="model-summary-two-predictors" class="section level3">
+<h3 class="hasAnchor">
+<a href="#model-summary-two-predictors" class="anchor"></a>Model Summary : two predictors</h3>
+<table class="table">
+<thead><tr class="header">
+<th>Predictors</th>
+<th align="center">Coefficients</th>
+<th align="center">Std. Error</th>
+<th align="center">2.5%</th>
+<th align="center">97.5%</th>
+<th align="right"><em>p</em></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Intercept</td>
+<td align="center">-1.125352</td>
+<td align="center">0.412748</td>
+<td align="center">-1.934324</td>
+<td align="center">-0.316380</td>
+<td align="right">0.006401</td>
+</tr>
+<tr class="even">
+<td>x1[T.2]</td>
+<td align="center">0.781264</td>
+<td align="center">0.355340</td>
+<td align="center">0.084809</td>
+<td align="center">1.477718</td>
+<td align="right">0.027904</td>
+</tr>
+<tr class="odd">
+<td>x2[T.2]</td>
+<td align="center">0.252050</td>
+<td align="center">0.328229</td>
+<td align="center">-0.391267</td>
+<td align="center">0.895368</td>
+<td align="right">0.442541</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
   </div>
