@@ -257,7 +257,7 @@ dashboardPage(
           solidHeader = TRUE,
           status = "info",
           fileInput("file", "Upload a data file (for e.g. CSV) to be analyzed"),
-          shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:110%;background-color: white;")),
+          shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:105%;background-color: white;")),
           shinyjs::hidden(actionButton("reset", "Reset Analysis", style = "color: white;
                      background-color: red;")),
           helpText("Default maximum file size is 5MB."),
@@ -540,7 +540,7 @@ dashboardPage(
               collapsible = TRUE,
               solidHeader = TRUE,
               # p("This is about me.", style = "font-size:100%"),
-              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "nature.jpg", height = 700, width = 1055), target ="_blank")
+              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "nature.jpg", height = 700, width = 1000), target ="_blank")
               )
               )
         )
