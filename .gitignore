@@ -19,3 +19,5 @@ shiny_app_token.rds
 .httr-oauth
 
 /rsconnect
+
+/rsconnect/shinyapps.io/sombohora/sauc.dcf
