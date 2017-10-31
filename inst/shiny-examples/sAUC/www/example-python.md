@@ -1,9 +1,7 @@
 
 
 
-<span style="color:red; font-size:150%">Warning: This package is still under development.</span>
-
-### sAUC in Python (saucpy)
+<span style="color:black; font-size:130%"><a href = "https://sbohora.github.io/saucpy/">Please follow this link to go to sAUC in Python.</a></span>
 
 #### Perform AUC analyses with discrete covariates and a semi-parametric estimation
 
