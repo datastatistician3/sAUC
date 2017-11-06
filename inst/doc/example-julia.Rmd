@@ -12,7 +12,9 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<span style="color:red; font-size:150%">Warning: This package is still under development.</span>
+<span style="color:black; font-size:130%"><a href = "https://sbohora.github.io/saucpy/">Please follow this link to go to sAUC in Python package site.</a></span>
+
+<span style="color:red; font-size:120%">Warning: This package is still under development.</span>
 
 ### Perform AUC analyses with discrete covariates and a semi-parametric estimation
 
