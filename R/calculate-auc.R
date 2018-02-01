@@ -34,7 +34,7 @@ calculate_auc <- function (x, y=NULL, data=NULL){
     ya <- numeric_data[factor_vars %in% levels(factor_vars)[1]]
     yb <- numeric_data[factor_vars %in% levels(factor_vars)[2]]
   } else {
-    message("That's great!")
+    message("Input should be either formula or two vectors...")
   }
 
   finv <- function(x){
