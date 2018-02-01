@@ -21,12 +21,17 @@ compute_auc <- function (d, nd){
   p = length(nd)
   I=matrix(NA,m,p)
 
-  for (i in 1:m)
+  for (i in 1:m){
     for (j in 1:p){
-      if(d[i]>nd[j]){I[i,j]=1}
-      else if (d[i]==nd[j]){I[i,j]=0.5}
-      else {I[i,j]=0}
+      if (d[i]>nd[j]){
+        I[i,j]=1
+      } else if (d[i]==nd[j]) {
+        I[i,j]=0.5
+      } else {
+        I[i,j]=0
+      }
     }
+  }
   AUChat=mean(I)
   finvhat=compute_inverse(AUChat)
   vd=apply(I,1,mean)

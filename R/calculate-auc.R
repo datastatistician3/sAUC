@@ -40,15 +40,20 @@ calculate_auc <- function (x, y=NULL, data=NULL){
   finv <- function(x){
     -log( (1/x) -1)
   }
+
   m <- length(ya)
   p <- length(yb)
   I <- matrix(NA,m,p)
 
   for (i in 1:m){
     for (j in 1:p){
-      if(ya[i] > yb[j]) {I[i,j] <- 1 }
-      else if (ya[i] == yb[j]) {I[i,j] <- 0.5 }
-      else {I[i,j] <- 0}
+      if (ya[i] > yb[j]) {
+        I[i,j] <- 1
+      } else if (ya[i] == yb[j]) {
+        I[i,j] <- 0.5
+      } else {
+        I[i,j] <- 0
+      }
     }
   }
   auchat <- mean(I)
