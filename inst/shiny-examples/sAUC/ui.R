@@ -320,7 +320,6 @@ dashboardPage(
         box(footer = tags$p(strong(style = "font-size: 12px;color:red", "* = required arguments.")),
           title = tags$p(strong(style ="font-size: 18px;color:green","Data analysis")),
           width = 12,
-          ollapsible = TRUE,
           solidHeader = TRUE,
           collapsible = TRUE,
           status = "warning",
