@@ -221,7 +221,7 @@ shinyServer(function(input, output){
   output$show_data <- DT::renderDataTable({
     if(is.null(data())){return()}
     datatable(data(), filter = 'top', options = list(
-      pageLength = 8
+      pageLength = 6
     ))
   })
 
@@ -243,10 +243,9 @@ shinyServer(function(input, output){
     ds_plot_response <- data()
     ggplot(data=ds_plot_response, aes_string(input$response)) +
     geom_histogram(bins = 10, fill = "blue") +
-    labs(title = paste0("Histogram for ", input$response)) +
+    ggtitle(label = paste0("Histogram for ", input$response)) +
     theme(plot.title = element_text(hjust = 0.5), text=element_text(size=17)) +
-    labs(x=input$response, y="Count") +
-    theme(plot.title = element_text(hjust = 0.5))
+    labs(x=input$response, y="Count")
   })
 
   output$hist_plot <- renderPlot({
@@ -275,7 +274,7 @@ shinyServer(function(input, output){
       geom_bar(stat ="count", fill = "#990033")  +
       ggtitle("Barplots for discrete variables") +
       theme(plot.title = element_text(hjust = 0.5), text=element_text(size=17)) +
-      xlab("Covariates") + geom_text(stat='count', aes(label = ..count..), vjust = -1)
+      xlab("Covariates") + geom_text(stat='count', aes(label = ..count..), vjust = -1) +
       ylab("Frequency")
       cat_plot
   })
@@ -295,9 +294,10 @@ shinyServer(function(input, output){
     if (is.null(data())){
       # h3("Data are not uploaded yet. Please do so now if you'd like to run Semiparametric AUC Regression model.", style = "color:red")
     } else {
-      tabsetPanel(
+      tabBox(title = tagList(shiny::icon("line-chart"), "Graphics"), width = 12, height = "500px",
         tabPanel(
           title = "Plots",
+          fluidRow(
           column(
             width = 4,
             plotOutput("hist_plot")
@@ -305,6 +305,7 @@ shinyServer(function(input, output){
           column(
             width = 8,
             plotOutput("bar_plot")
+          )
           )
         ),
         tabPanel(

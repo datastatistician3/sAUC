@@ -1,3 +1,11 @@
+---
+# title: "Below is the ui.R code"
+# author: "Som Bohora"
+# date: "July 17, 2017"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 
@@ -259,11 +267,12 @@ dashboardPage(
         box(
           title="File upload",
           width = 12,
+          # height = "500px",
           collapsible = TRUE,
           solidHeader = TRUE,
           status = "info",
           fileInput("file", "Upload a data file (for e.g. CSV) to be analyzed"),
-          shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:110%;background-color: white;")),
+          shinyjs::hidden(actionButton("reset_file", HTML("Warning <br> You should reset analysis before uploading a file."), style = "color: red;font-size:105%;background-color: white;")),
           shinyjs::hidden(actionButton("reset", "Reset Analysis", style = "color: white;
                      background-color: red;")),
           helpText("Default maximum file size is 5MB."),
@@ -306,17 +315,15 @@ dashboardPage(
 
         column(
           width = 9,
-        box(
-          width = 22,
-          height = 20,
-          collapsible = TRUE,
-          solidHeader = TRUE,
-          status = "info",
-          uiOutput("describe_file"),
-          htmlOutput("add_about_sauc")
-          )
-        )
-         ),
+        status = "info",
+        uiOutput("describe_file"),
+        htmlOutput("add_about_sauc")
+        # tabBox(
+        #   tabPanel("Histogram",
+        #            fluidRow(
+        #            column(4, plotOutput("hist_plot")),
+        #            column(8, plotOutput("bar_plot")))),
+         )),
         br(),
         shinyjs::hidden(
         fluidRow(
@@ -326,7 +333,6 @@ dashboardPage(
         box(footer = tags$p(strong(style = "font-size: 12px;color:red", "* = required arguments.")),
           title = tags$p(strong(style ="font-size: 18px;color:green","Data analysis")),
           width = 12,
-          ollapsible = TRUE,
           solidHeader = TRUE,
           collapsible = TRUE,
           status = "warning",
@@ -353,15 +359,15 @@ dashboardPage(
         ),
         column(
           width = 4,
-        box(
-          # title = tags$p(strong(style ="font-size: 18px;color: green","ROC curve")),
-          width = 14,
-          height = 5,
+        # box(
+        #   # title = tags$p(strong(style ="font-size: 18px;color: green","ROC curve")),
+        #   width = 14,
+        #   height = 5,
           # collapsible = TRUE,
           # solidHeader = TRUE,
           # status = "warning",
           plotOutput("roc_plot", height = 350, width = 500)
-        )
+        # )
         )
         )
       )),
@@ -531,23 +537,29 @@ dashboardPage(
               br(),
               br(),
               br(),
+              br(),
               br()
               # downloadLink("download_cv", p("Download my CV", style = "font-size:130%"))
             )
           ),
           column(
             width = 8,
-            box(
-              title = "I like mornings",
-              width = 12,
-              height = 15,
-              status = "primary",
-              background = "navy",
-              collapsible = TRUE,
-              solidHeader = TRUE,
+            fluidRow(
+            # box(
+            #   title = "I like mornings",
+            #   width = 12,
+            #   height = 15,
+            #   status = "primary",
+            #   background = "navy",
+            #   collapsible = TRUE,
+            #   solidHeader = TRUE,
+            tabBox(width = 12,
+              tabPanel(
+                title = "I like mornings",
               # p("This is about me.", style = "font-size:100%"),
-              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "nature.jpg", height = 700, width = 1055), target ="_blank")
+              tags$a(href = "http://ouhsc.edu/bbmc/team/", img(src = "nature.jpg", height = 700, width = 1050), target ="_blank")
               )
+              ))
               )
         )
         ),
@@ -652,5 +664,4 @@ dashboardPage(
   ) #End the dashboardBody
 
 ) #End the dashboardPage
-
 ```
