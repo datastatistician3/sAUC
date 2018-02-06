@@ -204,7 +204,7 @@ shinyServer(function(input, output){
     # Display orginal data
   output$show_data <- DT::renderDataTable({
     if(is.null(data())){return()}
-    datatable(data(), filter = 'top', options = list(
+    datatable(data(), filter = 'top',colnames = Hmisc::capitalize(colnames(data())), options = list(
       pageLength = 6
     ))
   })
