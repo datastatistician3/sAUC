@@ -126,7 +126,6 @@ shinyServer(function(input, output){
     ds[, cov_variables] <- lapply(ds[, cov_variables], function(x) factor(x))
     sAUC::sAUC(formula = as.formula(paste(input$response," ~ ",paste(input$independent,collapse="+"))),
                treatment_group = input$group_var, data = ds)
-
   })
 
   # observe({
@@ -193,7 +192,6 @@ shinyServer(function(input, output){
       device <- function(..., width, height) grDevices::png(..., width = width, height = height, res = 300, units = "in")
       ggsave(file, plot = output_roc_plot(), device = device)
 })
-
 
   # Display orginal data
   output$show_input_file <- renderTable({
