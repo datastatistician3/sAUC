@@ -5,6 +5,6 @@ account: sombohora
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 223472
-bundleId: 1045451
+bundleId: 1211120
 url: https://sombohora.shinyapps.io/sauc/
-when: 1508980856.10547
+when: 1517970589.31567

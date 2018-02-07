@@ -18,6 +18,4 @@ unshared/unshared.csv
 shiny_app_token.rds
 .httr-oauth
 
-/rsconnect
-
-.dcf
+/inst/shiny-examples/sAUC/rsconnect/shinyapps.io/sombohora.dcf
