@@ -7,7 +7,7 @@ Perform AUC analyses with discrete covariates and a semi-parametric estimation
 ### Installation
 
 ``` r
-# This package has no tbeen submitted to to CRAN yet. You can install development version from GitHub:
+# This package has not been submitted to CRAN yet. You can install its development version from GitHub:
 
 # install.packages("devtools")
 devtools::install_github("sbohora/sAUC")
